@@ -27,6 +27,10 @@ export default function Header() {
             </span>
             <img alt="" src={"/logo.png"} className="h-20" />
           </a>
+
+          <span className="text-[#651212] self-center ml-4 text-xl font-semibold">
+            Cornerstone
+          </span>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -52,7 +56,7 @@ export default function Header() {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
             href="#"
-            className="px-8 py-2 bg-[#651212] font-extrabold leading-6 text-white rounded uppercase"
+            className="px-8 py-2 bg-[#651212] font-bold leading-6 text-white rounded uppercase"
           >
             Contact Us
           </a>
