@@ -100,10 +100,10 @@ export default function Header() {
               </div>
               <div className="py-6">
                 <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  href="/contact"
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 bg-[#651212] text-white hover:bg-[#903030]"
                 >
-                  Log in
+                  Contact Us
                 </a>
               </div>
             </div>

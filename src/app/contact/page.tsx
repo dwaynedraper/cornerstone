@@ -9,8 +9,8 @@ export default function Contact() {
                 Get in touch
               </h2>
               <p className="mt-4 leading-7 text-gray-600">
-                Quam nunc nunc eu sed. Sed rhoncus quis ultricies ac
-                pellentesque.
+                Reach out to a member of our team for information, quotes, or to
+                learn more about our services.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
