@@ -6,7 +6,6 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const navigation = [
   { name: "HOME", href: "/" },
-  { name: "PORTFOLIO", href: "/portfolio" },
   { name: "SERVICES", href: "/services" },
   { name: "ABOUT US", href: "/about" },
 ];
@@ -27,7 +26,6 @@ export default function Header() {
             </span>
             <img alt="" src={"/logo.png"} className="h-20" />
           </a>
-
           <span className="text-[#651212] self-center ml-4 text-xl font-semibold">
             Cornerstone
           </span>
@@ -55,7 +53,7 @@ export default function Header() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
-            href="#"
+            href="/contact"
             className="px-8 py-2 bg-[#651212] font-bold leading-6 text-white rounded uppercase"
           >
             Contact Us
