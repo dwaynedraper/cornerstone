@@ -13,16 +13,7 @@ import OurServices from "@/components/OurServices";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Footer from "@/components/Footer";
 
-export default async function Home() {
-  // Fetch images on the server side
-  const images = await getImagesByFolder("showcase");
-
-  // Transform the images into a format usable by the carousel
-  const carouselImages = images.map((image: any) => ({
-    src: image.secure_url,
-    alt: image.public_id,
-  }));
-
+export default function Home() {
   return (
     <div className="bg-white">
       <main className="isolate">
