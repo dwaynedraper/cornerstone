@@ -7,27 +7,27 @@ import {
 
 const features = [
   {
-    name: "Land Surveying",
+    name: "Civil Engineering",
     description:
-      "Precise boundary surveys, topographic mapping, and construction staking to ensure accurate property lines and elevations for your projects.",
+      "From site development and infrastructure design to environmental compliance, we handle projects of all scales with precision and care.",
     icon: MapIcon,
   },
   {
-    name: "Site Development",
+    name: "Land Surveying",
     description:
-      "Comprehensive site planning and design services, including grading plans, drainage solutions, and utility layout for residential and commercial developments.",
+      "Utilizing state-of-the-art equipment and techniques, we provide accurate and reliable surveying services for boundary determination, topographic mapping, and construction layout.",
     icon: BuildingOffice2Icon,
   },
   {
-    name: "Transportation Engineering",
+    name: "Project Management",
     description:
-      "Expert design of roadways, intersections, and traffic management systems to improve mobility and safety in urban and rural areas.",
+      "We oversee your project from concept to completion, ensuring seamless coordination and timely delivery.",
     icon: TruckIcon,
   },
   {
-    name: "Environmental Engineering",
+    name: "Sustainable Design",
     description:
-      "Sustainable solutions for water resources management, environmental impact assessments, and regulatory compliance to protect our natural environment.",
+      "Our commitment to environmental stewardship is reflected in our sustainable development practices.",
     icon: ChartBarIcon,
   },
 ];

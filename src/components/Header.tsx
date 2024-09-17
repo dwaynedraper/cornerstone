@@ -20,15 +20,17 @@ export default function Header() {
         className="mx-auto flex max-w-7xl items-center justify-between lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">
               Cornerstone Engineering and Surveying
             </span>
             <img alt="" src={"/logo.png"} className="h-20" />
           </a>
-          <span className="text-[#651212] self-center ml-4 text-xl font-semibold">
-            Cornerstone
-          </span>
+          <a href="/" className="flex justify-center">
+            <span className="text-[#651212] self-center ml-4 text-xl font-semibold">
+              Cornerstone
+            </span>{" "}
+          </a>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -40,7 +42,7 @@ export default function Header() {
             <Bars3Icon aria-hidden="true" className="h-6 w-6" />
           </button>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
+        {/* <div className="hidden lg:flex lg:gap-x-12">
           {navigation.map((item) => (
             <a
               key={item.name}
@@ -50,7 +52,7 @@ export default function Header() {
               {item.name}
             </a>
           ))}
-        </div>
+        </div> */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
             href="/contact"

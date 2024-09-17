@@ -16,27 +16,29 @@ export default function Contact() {
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
               <div className="rounded-2xl bg-gray-50 p-10">
                 <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Collaborate
+                  Cornerstone
                 </h3>
                 <dl className="mt-3 space-y-1 text-sm leading-6 text-gray-600">
                   <div>
                     <dt className="sr-only">Email</dt>
                     <dd>
                       <a
-                        href="mailto:collaborate@example.com"
+                        href="mailto:info@cesinbox.com"
                         className="font-semibold text-[#651212]"
                       >
-                        collaborate@example.com
+                        info@cesinbox.com
                       </a>
                     </dd>
                   </div>
                   <div className="mt-1">
                     <dt className="sr-only">Phone number</dt>
-                    <dd>+1 (555) 905-2345</dd>
+                    <dd>
+                      <a href="tel:+18179406027">+1 817-940-6027</a>
+                    </dd>
                   </div>
                 </dl>
               </div>
-              <div className="rounded-2xl bg-gray-50 p-10">
+              {/* <div className="rounded-2xl bg-gray-50 p-10">
                 <h3 className="text-base font-semibold leading-7 text-gray-900">
                   Press
                 </h3>
@@ -101,7 +103,7 @@ export default function Contact() {
                     <dd>+1 (555) 905-5678</dd>
                   </div>
                 </dl>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
