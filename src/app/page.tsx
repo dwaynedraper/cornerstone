@@ -21,14 +21,14 @@ export default function Home() {
         <OurServices />
         <ImageSection
           image={{
-            src: "https://img.freepik.com/free-photo/portrait-male-engineer-working-field-engineers-day-celebration_23-2151615117.jpg?t=st=1726604995~exp=1726608595~hmac=08822033b9210b4df6f4c9b8b463b914a3671312d847fbbdd29ddf08710f0d7a&w=1480",
+            src: "/subdivision.jpg",
             alt: "",
           }}
         />
         <WhyChooseUs />
         <ImageSection
           image={{
-            src: "https://img.freepik.com/free-photo/image-engineering-objects-workplace-top-view-construction-concept-engineering-tools-vintage-tone-retro-filter-effect-soft-focus-selective-focus_1418-704.jpg?w=1480&t=st=1726605600~exp=1726606200~hmac=bc9f888b1de9ae9c2994e8ae955990f5ee7c6a7581310d5685d0a521106f57b7",
+            src: "/engineer.jpg",
             alt: "",
           }}
         />
