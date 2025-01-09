@@ -1,31 +1,37 @@
 const team = [
   {
     name: "Mitchell Lenamond",
-    role: "Founder / Lead Engineer",
+    role: "Founder, PE",
     imageUrl:
       "https://images.unsplash.com/photo-1494648739040-d3d4e84136a9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    name: "Tom Jones",
-    role: "The guy with the weird shirts",
+    name: "Jason Lenamond",
+    role: "Civil Engineering Manager, PE",
     imageUrl:
       "https://images.unsplash.com/photo-1494648739040-d3d4e84136a9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    name: "Adam Even",
-    role: "Founder / Lead Engineer",
+    name: "Jacob Holmes",
+    role: "Land Survey Manager, RPLS",
     imageUrl:
       "https://images.unsplash.com/photo-1494648739040-d3d4e84136a9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    name: "Harold Dresden",
-    role: "Founder / Lead Engineer",
+    name: "Michael Landon",
+    role: "Land Surveyor, RPLS",
     imageUrl:
       "https://images.unsplash.com/photo-1494648739040-d3d4e84136a9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    name: "Jason Bourne",
-    role: "Founder / Lead Engineer",
+    name: "Mallory Draper",
+    role: "Operations Manager",
+    imageUrl:
+      "https://images.unsplash.com/photo-1494648739040-d3d4e84136a9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    name: "Bailey Lenamond",
+    role: "COO, HR",
     imageUrl:
       "https://images.unsplash.com/photo-1494648739040-d3d4e84136a9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
@@ -78,15 +84,15 @@ export default function Team() {
       </div>
       <ul
         role="list"
-        className="mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
+        className="mx-auto mt-20 pb-28 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
       >
         {team.map((person) => (
           <li key={person.name}>
-            <img
+            {/* <img
               alt=""
               src={person.imageUrl}
               className="mx-auto h-24 w-24 rounded-full"
-            />
+            /> */}
             <h3 className="mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900">
               {person.name}
             </h3>

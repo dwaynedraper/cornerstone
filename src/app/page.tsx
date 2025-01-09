@@ -22,14 +22,14 @@ export default function Home() {
         <ImageSection
           image={{
             src: "/subdivision.jpg",
-            alt: "",
+            alt: "a subdivision under construction",
           }}
         />
         <WhyChooseUs />
         <ImageSection
           image={{
             src: "/engineer.jpg",
-            alt: "",
+            alt: "a user working in AutoCAD",
           }}
         />
         <Footer />
