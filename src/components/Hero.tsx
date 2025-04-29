@@ -24,7 +24,7 @@ export default function Hero() {
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
         <img
           alt=""
-          src="https://images.pexels.com/photos/224924/pexels-photo-224924.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          src="IMG_0854.jpg"
           className="h-full w-full object-cover object-bottom"
         />
       </div>

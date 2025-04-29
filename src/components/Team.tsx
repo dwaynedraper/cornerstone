@@ -82,7 +82,6 @@ export default function Team() {
       <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
         Our team
       </h2>
-      <hr />
       <ul
         role="list"
         className="mx-auto mt-20 pb-28 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
@@ -101,6 +100,28 @@ export default function Team() {
           </li>
         ))}
       </ul>
+      <h2 className="mt-12 text-xl font-bold tracking-tight text-gray-900 sm:text-xl">
+        Licensing
+      </h2>
+      <div className="mx-auto flex flex-col max-w-7xl mb-12">
+        <div className=" max-w-7xl px-6 py-8 flex flex-col justify-between">
+          <p className="text-gray-500 mt-0">
+            Engineering Firm Registration Number: F-24969
+          </p>
+          <p className="text-gray-500 mt-0">
+            Surveying Firm Registration Number: 10194747
+          </p>
+          {/* </div>
+        <div className="max-w-7xl px-6 py-8 flex justify-between"> */}
+          <p className="text-gray-500 mt-4">
+            TEXAS BOARD OF PROFESSIONAL ENGINEERS & LAND SURVEYORS
+            <br /> 1917 S I-35 Frontage Road, Austin, TX 78741 | (512) 440-7723
+          </p>
+          <p className="text-blue-500 mt-4">
+            <a href="https://pels.texas.gov">https://pels.texas.gov</a>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

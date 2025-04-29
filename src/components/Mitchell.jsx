@@ -1,8 +1,12 @@
-import { LockClosedIcon, AcademicCapIcon } from "@heroicons/react/20/solid";
+import {
+  LockClosedIcon,
+  AcademicCapIcon,
+  LinkIcon,
+} from "@heroicons/react/20/solid";
 
 export default function Mitchell() {
   return (
-    <div className="relative isolate overflow-hidden bg-white px-6 py-12 sm:py-16 lg:overflow-visible lg:px-0 mt-12">
+    <div className="relative isolate overflow-hidden bg-white px-6 py-12 sm:py-16 lg:overflow-visible lg:px-0 my-12 border-l-2">
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <svg
           aria-hidden="true"
@@ -101,7 +105,7 @@ export default function Mitchell() {
                   </span>
                 </li>
                 <li className="flex gap-x-3">
-                  <LockClosedIcon
+                  <LinkIcon
                     aria-hidden="true"
                     className="mt-1 size-5 flex-none text-indigo-600"
                   />
