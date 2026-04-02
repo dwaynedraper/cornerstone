@@ -11,6 +11,7 @@ import {
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
 import { Montserrat } from "next/font/google";
+import Image from "next/image";
 
 const mont = Montserrat({
   subsets: ["latin"],
@@ -22,10 +23,12 @@ export default function Hero() {
     <div className={`relative bg-gray-900 ${mont.className}`}>
       {/* Decorative image and overlay */}
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-        <img
-          alt=""
-          src="IMG_0854.jpg"
-          className="h-full w-full object-cover object-bottom"
+        <Image
+          alt="Cornerstone Engineering & Surveying project background"
+          src="/IMG_0854.jpg"
+          fill
+          className="object-cover object-bottom"
+          priority
         />
       </div>
       <div
@@ -37,11 +40,9 @@ export default function Hero() {
         <span className="text-2xl tracking-tight text-white lg:text-3xl">
           Welcome to
         </span>
-        <h1 className="text-4xl font-bold tracking-tight text-white lg:text-6xl">
-          Cornerstone
-        </h1>
-        <h1 className="text-4xl font-bold tracking-tight text-white lg:text-6xl">
-          Engineering & Surveying
+        <h1 className="text-4xl font-bold tracking-tight text-white lg:text-6xl text-center flex flex-col">
+          <span>Cornerstone</span>
+          <span>Engineering & Surveying</span>
         </h1>
         {/* <p className="mt-8 text-xl text-white font-semibold bg-black/40 rounded-lg p-8">
           At Cornerstone Engineering & Surveying, we bring over 25 years of

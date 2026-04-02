@@ -1,3 +1,10 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact Us | Cornerstone Engineering and Surveying',
+  description: 'Get in touch with Cornerstone Engineering and Surveying. We are here to answer your questions and discuss your project needs.',
+};
+
 export default function Contact() {
   return (
     <div className="bg-white py-24 sm:py-32">
@@ -5,9 +12,9 @@ export default function Contact() {
         <div className="mx-auto max-w-2xl space-y-16 divide-y divide-gray-100 lg:mx-0 lg:max-w-none">
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900">
                 Get in touch
-              </h2>
+              </h1>
               <p className="mt-4 leading-7 text-gray-600">
                 Reach out to a member of our team for information, quotes, or to
                 learn more about our services.

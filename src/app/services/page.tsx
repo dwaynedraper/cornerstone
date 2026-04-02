@@ -4,6 +4,12 @@ import {
   TruckIcon,
   ChartBarIcon,
 } from "@heroicons/react/24/outline";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Services | Cornerstone Engineering and Surveying',
+  description: 'Comprehensive civil engineering and land surveying services tailored to your project needs.',
+};
 
 const features = [
   {
@@ -40,9 +46,9 @@ export default function Services() {
           <h2 className="text-base font-bold leading-7 text-[#651212]">
             Expert Solutions
           </h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Comprehensive Civil Engineering and Surveying Services
-          </p>
+          </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             From precise land surveys to complex infrastructure design, our team
             of experienced professionals delivers innovative solutions tailored

@@ -7,7 +7,17 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Cornerstone Engineering and Surveying",
-  description: "Cornerstone Engineering ",
+  description:
+    "Cornerstone Engineering and Surveying provides expert civil engineering, project management, sustainable design, and land surveying services tailored to your needs.",
+  openGraph: {
+    title: "Cornerstone Engineering and Surveying",
+    description:
+      "Cornerstone Engineering and Surveying provides expert civil engineering, project management, sustainable design, and land surveying services tailored to your needs.",
+    url: "https://www.cornerstoneengineeringandsurveying.com", // Adjust to the actual domain later
+    siteName: "Cornerstone Engineering and Surveying",
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
