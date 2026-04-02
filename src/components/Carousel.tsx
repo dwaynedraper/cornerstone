@@ -2,9 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import { Carousel } from "@material-tailwind/react";
-import Image from "next/image";
 
-export default function MyCarousel({ images }) {
+interface CarouselImage {
+  src: string;
+  alt: string;
+}
+
+interface MyCarouselProps {
+  images: CarouselImage[];
+}
+
+export default function MyCarousel({ images }: MyCarouselProps) {
   const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
@@ -15,18 +23,18 @@ export default function MyCarousel({ images }) {
       });
     }
 
-    updateDimensions(); // Set initial dimensions
-    window.addEventListener('resize', updateDimensions); // Update dimensions on resize
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
 
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  // Conditionally render only when dimensions are available
   if (windowDimensions.width === 0 || windowDimensions.height === 0) {
-    return null; // Or a loading spinner, placeholder, etc.
+    return null;
   }
 
   return (
+    // @ts-expect-error Material Tailwind Carousel has overly strict prop types
     <Carousel>
       {images.map((image, index) => (
         <div key={index} className="relative w-full h-full">

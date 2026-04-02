@@ -1,15 +1,3 @@
-import {
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-} from "@headlessui/react";
-import {
-  Bars3Icon,
-  MagnifyingGlassIcon,
-  QuestionMarkCircleIcon,
-  ShoppingBagIcon,
-} from "@heroicons/react/24/outline";
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
 
@@ -20,7 +8,7 @@ const mont = Montserrat({
 
 export default function Hero() {
   return (
-    <div className={`relative bg-gray-900 ${mont.className}`}>
+    <div className={`relative bg-navy ${mont.className}`}>
       {/* Decorative image and overlay */}
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
         <Image
@@ -31,19 +19,22 @@ export default function Hero() {
           priority
         />
       </div>
+      {/* Rich gradient overlay for cinematic depth */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gray-900 opacity-50"
+        className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/50 to-navy/30"
       />
 
-      <div className="relative mx-auto flex max-w-4xl flex-col items-center px-6 py-32 text-center sm:py-64 lg:px-0">
-        <span className="text-2xl tracking-tight text-white lg:text-3xl">
+      <div className="relative mx-auto flex max-w-4xl flex-col items-center px-6 py-36 text-center sm:py-64 lg:px-0">
+        <span className="text-lg tracking-[0.25em] uppercase text-gold-200 lg:text-xl font-heading font-medium">
           Welcome to
         </span>
-        <h1 className="text-4xl font-bold tracking-tight text-white lg:text-6xl text-center flex flex-col">
+        <h1 className="mt-4 text-4xl font-bold tracking-tight text-white lg:text-7xl text-center flex flex-col gap-1">
           <span>Cornerstone</span>
           <span>Engineering & Surveying</span>
         </h1>
+        {/* Decorative accent line */}
+        <div className="mt-8 w-48 h-1 bg-gradient-to-r from-heritage via-gold to-heritage rounded-full" />
         {/* <p className="mt-8 text-xl text-white font-semibold bg-black/40 rounded-lg p-8">
           At Cornerstone Engineering & Surveying, we bring over 25 years of
           expertise to every project, blending modern design techniques with
