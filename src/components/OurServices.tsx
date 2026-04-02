@@ -32,9 +32,9 @@ const features = [
 
 export default function OurServices() {
   return (
-    <div className="bg-white py-20 sm:py-24">
-      <p className="mx-auto max-w-5xl mb-16 text-xl text-black font-semibold rounded-lg p-8">
-        <span className="text-3xl">At Cornerstone Engineering & Surveying</span>
+    <div className="bg-surface py-20 sm:py-24">
+      <p className="mx-auto max-w-5xl mb-16 text-xl text-gray-800 font-semibold rounded-lg p-8">
+        <span className="text-3xl font-heading text-navy">At Cornerstone Engineering & Surveying</span>
         , we bring over 25 years of expertise to every project, blending modern
         design techniques with time-tested engineering and surveying principles.
         Our team of licensed professional engineers and registered professional
@@ -43,14 +43,18 @@ export default function OurServices() {
       </p>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          <h2 className="text-3xl font-bold underline decoration-teal-500 tracking-tight text-gray-900 sm:text-4xl">
-            Our Services
-          </h2>
-          <dl className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2">
+          <div>
+            <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold-600">What We Do</p>
+            <h2 className="mt-2 text-3xl font-heading font-bold tracking-tight text-navy sm:text-4xl">
+              Our Services
+            </h2>
+            <div className="mt-4 w-16 h-1 bg-gold rounded-full" />
+          </div>
+          <dl className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
             {features.map((feature) => (
-              <div key={feature.name}>
-                <dt className="text-base font-semibold leading-7 text-gray-900">
-                  <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500">
+              <div key={feature.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 transition-shadow duration-300 hover:shadow-md">
+                <dt className="text-base font-heading font-semibold leading-7 text-navy">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gold">
                     <feature.icon
                       aria-hidden="true"
                       className="h-6 w-6 text-white"
@@ -58,7 +62,7 @@ export default function OurServices() {
                   </div>
                   {feature.name}
                 </dt>
-                <dd className="mt-1 text-base leading-7 text-gray-600">
+                <dd className="mt-2 text-base leading-7 text-gray-600">
                   {feature.description}
                 </dd>
               </div>

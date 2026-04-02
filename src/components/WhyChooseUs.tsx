@@ -34,17 +34,21 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <div className="bg-white py-24 sm:py-32">
+    <div className="bg-surface py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          <h2 className="text-3xl font-bold underline decoration-indigo-500 tracking-tight text-gray-900 sm:text-4xl">
-            Why Choose Us?
-          </h2>
-          <dl className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2">
+          <div>
+            <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold-600">Our Advantage</p>
+            <h2 className="mt-2 text-3xl font-heading font-bold tracking-tight text-navy sm:text-4xl">
+              Why Choose Us?
+            </h2>
+            <div className="mt-4 w-16 h-1 bg-gold rounded-full" />
+          </div>
+          <dl className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
             {features.map((feature) => (
-              <div key={feature.name}>
-                <dt className="text-base font-semibold leading-7 text-gray-900">
-                  <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500">
+              <div key={feature.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 transition-shadow duration-300 hover:shadow-md">
+                <dt className="text-base font-heading font-semibold leading-7 text-navy">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gold">
                     <feature.icon
                       aria-hidden="true"
                       className="h-6 w-6 text-white"
@@ -52,14 +56,14 @@ export default function WhyChooseUs() {
                   </div>
                   {feature.name}
                 </dt>
-                <dd className="mt-1 text-base leading-7 text-gray-600">
+                <dd className="mt-2 text-base leading-7 text-gray-600">
                   {feature.description}
                 </dd>
               </div>
             ))}
           </dl>
         </div>
-        <p className="mx-auto max-w-5xl mb-8 text-xl text-black font-semibold rounded-lg p-8 mt-24 text-center">
+        <p className="mx-auto max-w-5xl mb-8 text-xl text-navy font-heading font-semibold rounded-lg p-8 mt-24 text-center">
           Whether you&apos;re planning a small residential development or a
           large-scale infrastructure project, Cornerstone Engineering &
           Surveying has the knowledge, skills, and dedication to bring your

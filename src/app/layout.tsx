@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 export const metadata: Metadata = {
   title: "Cornerstone Engineering and Surveying",
@@ -13,7 +22,7 @@ export const metadata: Metadata = {
     title: "Cornerstone Engineering and Surveying",
     description:
       "Cornerstone Engineering and Surveying provides expert civil engineering, project management, sustainable design, and land surveying services tailored to your needs.",
-    url: "https://www.cornerstoneengineeringandsurveying.com", // Adjust to the actual domain later
+    url: "https://www.cornerstoneengineeringandsurveying.com",
     siteName: "Cornerstone Engineering and Surveying",
     locale: "en_US",
     type: "website",
@@ -27,10 +36,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="bg-white text-black min-h-screen">
+      <body className={`${inter.variable} ${outfit.variable} font-body`}>
+        <div className="bg-white text-gray-800 min-h-screen">
           <Header />
-
           {children}
         </div>
       </body>

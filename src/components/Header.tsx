@@ -14,7 +14,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white">
+    <header className="bg-white border-b border-gray-100 shadow-sm">
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-7xl items-center justify-between lg:px-8"
@@ -24,10 +24,10 @@ export default function Header() {
             <span className="sr-only">
               Cornerstone Engineering and Surveying
             </span>
-            <img alt="" src={"/logo.png"} className="h-20" />
+            <img alt="Cornerstone Engineering and Surveying logo" src={"/logo.png"} className="h-20" />
           </a>
           <a href="/" className="flex justify-center">
-            <span className="text-[#651212] self-center ml-4 text-xl font-semibold">
+            <span className="text-heritage self-center ml-4 text-xl font-heading font-semibold">
               Cornerstone
             </span>{" "}
           </a>
@@ -36,7 +36,7 @@ export default function Header() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-navy"
           >
             <span className="sr-only">Open main menu</span>
             <Bars3Icon aria-hidden="true" className="h-6 w-6" />
@@ -47,7 +47,7 @@ export default function Header() {
             <a
               key={item.name}
               href={item.href}
-              className="font-extrabold leading-6 text-[#903030]"
+              className="text-sm font-heading font-semibold leading-6 text-navy tracking-wide transition-colors duration-200 hover:text-gold-600 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gold after:transition-all after:duration-300 hover:after:w-full"
             >
               {item.name}
             </a>
@@ -56,7 +56,7 @@ export default function Header() {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
             href="/contact"
-            className="px-8 py-2 bg-[#651212] font-bold leading-6 text-white rounded uppercase"
+            className="px-8 py-2.5 bg-heritage font-heading font-semibold text-sm leading-6 text-white rounded-md uppercase tracking-wider transition-colors duration-200 hover:bg-heritage-light"
           >
             Contact Us
           </a>
@@ -71,29 +71,29 @@ export default function Header() {
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5 flex justify-center">
-              <span className="sr-only">Your Company</span>
-              <img alt="" src="logo.png" className="h-8 w-auto" />
-              <span className="text-[#651212] self-center ml-4 text-xl font-semibold">
+              <span className="sr-only">Cornerstone Engineering and Surveying</span>
+              <img alt="Cornerstone Engineering and Surveying logo" src="/logo.png" className="h-8 w-auto" />
+              <span className="text-heritage self-center ml-4 text-xl font-heading font-semibold">
                 Cornerstone
               </span>
             </a>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
+              className="-m-2.5 rounded-md p-2.5 text-navy"
             >
               <span className="sr-only">Close menu</span>
               <XMarkIcon aria-hidden="true" className="h-6 w-6" />
             </button>
           </div>
           <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
+            <div className="-my-6 divide-y divide-gray-200">
               <div className="space-y-2 py-6">
                 {navigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-[#651212] hover:bg-gray-50"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-heading font-semibold leading-7 text-heritage hover:bg-surface"
                   >
                     {item.name}
                   </a>
@@ -102,7 +102,7 @@ export default function Header() {
               <div className="py-6">
                 <a
                   href="/contact"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 bg-[#651212] text-white hover:bg-[#903030]"
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-heading font-semibold leading-7 bg-heritage text-white hover:bg-heritage-light"
                 >
                   Contact Us
                 </a>

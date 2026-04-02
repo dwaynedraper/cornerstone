@@ -1,12 +1,11 @@
 import {
-  LockClosedIcon,
   AcademicCapIcon,
   LinkIcon,
 } from "@heroicons/react/20/solid";
 
 export default function Mitchell() {
   return (
-    <div className="relative isolate overflow-hidden bg-white px-6 py-12 sm:py-16 lg:overflow-visible lg:px-0 my-12 border-l-2">
+    <div className="relative isolate overflow-hidden bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-12 sm:py-16 lg:px-0 my-12">
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <svg
           aria-hidden="true"
@@ -24,7 +23,7 @@ export default function Mitchell() {
               <path d="M100 200V.5M.5 .5H200" fill="none" />
             </pattern>
           </defs>
-          <svg x="50%" y={-1} className="overflow-visible fill-gray-200">
+          <svg x="50%" y={-1} className="overflow-visible fill-surface">
             <path
               d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
               strokeWidth={0}
@@ -38,107 +37,109 @@ export default function Mitchell() {
           />
         </svg>
       </div>
-      <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
-        <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-          <div className="lg:pr-4">
-            <div className="lg:max-w-lg">
-              <p className="text-base/7 font-semibold text-indigo-600">
-                Founder, PE
-              </p>
-              <h1 className="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-                Mitchell Lenamond
-              </h1>
-              <p className="mt-6 text-xl/8 text-gray-700">
-                Licensed Professional Engineer
-              </p>
-            </div>
+
+      {/* ─── Header row ─── */}
+      <div className="mx-auto max-w-7xl lg:px-8 mb-10">
+        <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold-600">
+          Founder, PE
+        </p>
+        <h1 className="mt-2 text-pretty text-4xl font-heading font-bold tracking-tight text-navy sm:text-5xl">
+          Mitchell Lenamond
+        </h1>
+        <p className="mt-4 text-xl/8 text-gray-600">
+          Licensed Professional Engineer
+        </p>
+        <div className="mt-4 w-16 h-1 bg-gradient-to-r from-heritage via-gold to-heritage rounded-full" />
+      </div>
+
+      {/* ─── Two-column layout: bio on left, credentials on right ─── */}
+      <div className="mx-auto max-w-7xl lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* Left: Bio paragraphs */}
+          <div className="text-base/7 text-gray-600">
+            <p>
+              Mitchell K. Lenamond, P.E., is a highly experienced professional
+              engineer with over two decades of expertise in structural and
+              civil engineering. His experience includes roles such as Vice
+              President of Engineering, where he oversaw a team of 180+
+              professionals across multiple office locations, managing
+              engineering, surveying, and architectural projects. His
+              leadership extends to client relations, project planning,
+              budgeting, and regulatory compliance, ensuring that each project
+              meets the highest standards of quality and efficiency.
+            </p>
+            <br />
+            <p>
+              Mitchell&apos;s extensive engineering background includes
+              designing commercial and residential structures, specializing in
+              foundation and framing systems, wind load analysis, and
+              infrastructure projects such as highway bridges and culverts.
+              His civil engineering expertise encompasses site feasibility
+              studies, zoning coordination, grading, drainage, and utility
+              planning. Additionally, he is well-versed in forensic
+              inspections, providing structural assessments, foundation
+              deflection analysis, and expert witness testimony.
+            </p>
+            <p className="mt-8 text-gray-600 italic border-l-4 border-gold pl-4">
+              With a reputation for precision and excellence, Mitchell remains
+              dedicated to delivering innovative, reliable engineering
+              solutions that drive success for clients and communities alike.
+            </p>
           </div>
-        </div>
-        {/* <div className="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-          <img
-            alt=""
-            src="https://tailwindcss.com/plus-assets/img/component-images/dark-project-app-screenshot.png"
-            className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
-          />
-        </div> */}
-        <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-          <div className="lg:pr-4">
-            <div className="max-w-xl text-base/7 text-gray-700 lg:max-w-lg">
-              <p>
-                Mitchell K. Lenamond, P.E., is a highly experienced professional
-                engineer with over two decades of expertise in structural and
-                civil engineering. His experience includes roles such as Vice
-                President of Engineering, where he oversaw a team of 180+
-                professionals across multiple office locations, managing
-                engineering, surveying, and architectural projects. His
-                leadership extends to client relations, project planning,
-                budgeting, and regulatory compliance, ensuring that each project
-                meets the highest standards of quality and efficiency.
-              </p>
-              <br />
-              <p>
-                Mitchell&apos;s extensive engineering background includes
-                designing commercial and residential structures, specializing in
-                foundation and framing systems, wind load analysis, and
-                infrastructure projects such as highway bridges and culverts.
-                His civil engineering expertise encompasses site feasibility
-                studies, zoning coordination, grading, drainage, and utility
-                planning. Additionally, he is well-versed in forensic
-                inspections, providing structural assessments, foundation
-                deflection analysis, and expert witness testimony.
-              </p>
-              <ul role="list" className="mt-8 space-y-8 text-gray-600">
-                <li className="flex gap-x-3">
-                  <AcademicCapIcon
-                    aria-hidden="true"
-                    className="mt-1 size-5 flex-none text-indigo-600"
-                  />
-                  <span>
-                    <strong className="font-semibold text-gray-900">
-                      Texas A&M University
-                    </strong>{" "}
-                    A <em>Texas A&M University</em> graduate, Mitchell holds
-                    licensure in multiple states, including Texas, Oklahoma,
-                    Louisiana, Arkansas, Colorado, and beyond. He is also an
-                    appointed engineer for Windstorm Inspections by the{" "}
-                    <em>Texas Department of Insurance</em>.
-                  </span>
-                </li>
-                <li className="flex gap-x-3">
-                  <LinkIcon
-                    aria-hidden="true"
-                    className="mt-1 size-5 flex-none text-indigo-600"
-                  />
-                  <span>
-                    <strong className="font-semibold text-gray-900">
-                      Professional Affiliations.
-                    </strong>{" "}
-                    Mitch&apos;s professional affiliations include{" "}
-                    <em>American Society of Civil Engineers</em>, the{" "}
-                    <em>American Institute of Steel Construction</em>, and the{" "}
-                    <em>Dallas Builders Association</em>.
-                  </span>
-                </li>
-                {/* <li className="flex gap-x-3">
-                  <ServerIcon
-                    aria-hidden="true"
-                    className="mt-1 size-5 flex-none text-indigo-600"
-                  />
-                  <span>
-                    <strong className="font-semibold text-gray-900">
-                      Database backups.
-                    </strong>{" "}
-                    Ac tincidunt sapien vehicula erat auctor pellentesque
-                    rhoncus. Et magna sit morbi lobortis.
-                  </span>
-                </li> */}
-              </ul>
-              <p className="mt-8">
-                With a reputation for precision and excellence, Mitchell remains
-                dedicated to delivering innovative, reliable engineering
-                solutions that drive success for clients and communities alike.
-              </p>
-            </div>
+
+          {/* Right: Credentials & Affiliations */}
+          <div className="bg-surface rounded-xl p-8 border border-gray-100">
+            <h3 className="text-lg font-heading font-bold text-navy mb-1">
+              Credentials & Affiliations
+            </h3>
+            <div className="w-12 h-1 bg-gold rounded-full mb-6" />
+
+            <ul role="list" className="space-y-8 text-gray-600">
+              <li className="flex gap-x-3">
+                <AcademicCapIcon
+                  aria-hidden="true"
+                  className="mt-1 size-5 flex-none text-gold"
+                />
+                <span>
+                  <strong className="font-semibold text-navy">
+                    Texas A&M University
+                  </strong>{" "}
+                  A <em>Texas A&M University</em> graduate, Mitchell holds
+                  licensure in multiple states, including Texas, Oklahoma,
+                  Louisiana, Arkansas, Colorado, and beyond. He is also an
+                  appointed engineer for Windstorm Inspections by the{" "}
+                  <em>Texas Department of Insurance</em>.
+                </span>
+              </li>
+              <li className="flex gap-x-3">
+                <LinkIcon
+                  aria-hidden="true"
+                  className="mt-1 size-5 flex-none text-gold"
+                />
+                <span>
+                  <strong className="font-semibold text-navy">
+                    Professional Affiliations.
+                  </strong>{" "}
+                  Mitch&apos;s professional affiliations include{" "}
+                  <em>American Society of Civil Engineers</em>, the{" "}
+                  <em>American Institute of Steel Construction</em>, and the{" "}
+                  <em>Dallas Builders Association</em>.
+                </span>
+              </li>
+              {/* <li className="flex gap-x-3">
+                <ServerIcon
+                  aria-hidden="true"
+                  className="mt-1 size-5 flex-none text-indigo-600"
+                />
+                <span>
+                  <strong className="font-semibold text-gray-900">
+                    Database backups.
+                  </strong>{" "}
+                  Ac tincidunt sapien vehicula erat auctor pellentesque
+                  rhoncus. Et magna sit morbi lobortis.
+                </span>
+              </li> */}
+            </ul>
           </div>
         </div>
       </div>
