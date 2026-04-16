@@ -43,9 +43,9 @@ export default function Mitchell() {
         <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold-600">
           Founder, PE
         </p>
-        <h1 className="mt-2 text-pretty text-4xl font-heading font-bold tracking-tight text-navy sm:text-5xl">
+        <h2 className="mt-2 text-pretty text-4xl font-heading font-bold tracking-tight text-navy sm:text-5xl">
           Mitchell Lenamond
-        </h1>
+        </h2>
         <p className="mt-4 text-xl/8 text-gray-600">
           Licensed Professional Engineer
         </p>

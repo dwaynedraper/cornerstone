@@ -1,32 +1,37 @@
 import Mitchell from "@/components/Mitchell";
 
-const team = [
+const teams = [
   {
-    name: "Jason Lenamond",
-    role: "Civil Engineering Manager, PE",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494648739040-d3d4e84136a9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Executive Leadership",
+    members: [
+      { name: "Mitch Lenamond, P.E.", role: "Founder and CEO" },
+      { name: "Bailey Lenamond", role: "Chief Operating Officer" },
+    ],
   },
   {
-    name: "Jacob Holmes",
-    role: "Land Survey Manager, RPLS",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494648739040-d3d4e84136a9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Administration",
+    members: [
+      { name: "Mallory Draper", role: "Operations Manager" },
+      { name: "Katie Holmes", role: "Coordinator" },
+    ],
   },
   {
-    name: "Mallory Draper",
-    role: "Operations Manager",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494648739040-d3d4e84136a9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Civil Team",
+    members: [
+      { name: "Jason Lenamond", role: "P.E." },
+      { name: "Eric Chavez", role: "E.I.T." },
+      { name: "Tj Gonzales", role: "E.I.T." },
+    ],
   },
   {
-    name: "Bailey Lenamond",
-    role: "COO, HR",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494648739040-d3d4e84136a9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Survey Team",
+    members: [
+      { name: "Jacob Holmes", role: "R.P.L.S." },
+      { name: "Dayhibe Montilva", role: "Senior Survey Technician" },
+      { name: "Eddie Okala", role: "Party Chief" },
+      { name: "Ryan Korinek", role: "Party Chief" },
+    ],
   },
-
-  // More people...
 ];
 
 export default function Team() {
@@ -36,9 +41,9 @@ export default function Team() {
       <div className="bg-navy py-20 sm:py-28">
         <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
           <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold">Our Team</p>
-          <h2 className="mt-3 text-4xl font-heading font-bold tracking-tight text-white sm:text-5xl">
+          <h1 className="mt-3 text-4xl font-heading font-bold tracking-tight text-white sm:text-5xl">
             About Us
-          </h2>
+          </h1>
           <div className="mx-auto mt-6 w-16 h-1 bg-gradient-to-r from-heritage via-gold to-heritage rounded-full" />
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-gray-300">
             At the heart of our success lies a diverse and talented group of
@@ -110,51 +115,63 @@ export default function Team() {
         </div>
       </div>
 
-      {/* ─── Team grid ─── */}
+      {/* ─── Team sections by category ─── */}
       <div className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mb-12">
+          <div className="mb-16">
             <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold-600">The People</p>
             <h2 className="mt-2 text-3xl font-heading font-bold tracking-tight text-navy sm:text-4xl">
-              Our team
+              Our Team
             </h2>
             <div className="mt-4 w-16 h-1 bg-gold rounded-full" />
           </div>
-          <ul
-            role="list"
-            className="grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-4"
-          >
-            {team.map((person) => {
-              const initials = person.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("");
-              return (
-                <li
-                  key={person.name}
-                  className="group relative bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+
+          <div className="space-y-16">
+            {teams.map((team) => (
+              <section key={team.name}>
+                {/* Team category heading */}
+                <div className="mb-8 flex items-center gap-4">
+                  <div className="w-1.5 h-8 bg-gradient-to-b from-gold to-heritage rounded-full" />
+                  <h3 className="text-xl font-heading font-bold tracking-tight text-navy sm:text-2xl">
+                    {team.name}
+                  </h3>
+                  <div className="flex-1 h-px bg-gradient-to-r from-gold/30 to-transparent" />
+                </div>
+
+                {/* Team member cards */}
+                <ul
+                  role="list"
+                  className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
                 >
-                  {/* Gold top accent */}
-                  <div className="h-1 bg-gradient-to-r from-heritage via-gold to-gold" />
-                  <div className="p-6 text-center">
-                    {/* <img
-                      alt=""
-                      src={person.imageUrl}
-                      className="mx-auto h-24 w-24 rounded-full"
-                    /> */}
-                    {/* Initials avatar */}
-                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-navy text-white font-heading font-bold text-xl mb-4 ring-2 ring-gold/30 group-hover:ring-gold/60 transition-all duration-300">
-                      {initials}
-                    </div>
-                    <h3 className="text-base font-heading font-semibold leading-7 tracking-tight text-navy">
-                      {person.name}
-                    </h3>
-                    <p className="text-sm leading-6 text-gray-500">{person.role}</p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+                  {team.members.map((person) => {
+                    const initials = person.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("");
+                    return (
+                      <li
+                        key={person.name}
+                        className="group relative bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+                      >
+                        {/* Gold top accent */}
+                        <div className="h-1 bg-gradient-to-r from-heritage via-gold to-gold" />
+                        <div className="p-6 text-center">
+                          {/* Initials avatar */}
+                          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-navy text-white font-heading font-bold text-xl mb-4 ring-2 ring-gold/30 group-hover:ring-gold/60 transition-all duration-300">
+                            {initials}
+                          </div>
+                          <p className="text-base font-heading font-semibold leading-7 tracking-tight text-navy">
+                            {person.name}
+                          </p>
+                          <p className="text-sm leading-6 text-gray-500">{person.role}</p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            ))}
+          </div>
         </div>
       </div>
 

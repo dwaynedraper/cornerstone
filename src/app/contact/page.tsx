@@ -24,9 +24,9 @@ export default function Contact() {
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
               <div className="rounded-xl bg-white p-10 shadow-sm border border-gray-100">
-                <h3 className="text-base font-heading font-semibold leading-7 text-navy">
+                <h2 className="text-base font-heading font-semibold leading-7 text-navy">
                   Cornerstone
-                </h3>
+                </h2>
                 <dl className="mt-3 space-y-1 text-sm leading-6 text-gray-600">
                   <div>
                     <dt className="sr-only">Email</dt>
