@@ -58,8 +58,8 @@ export const teamGroups: TeamGroup[] = [
     id: "structural-team",
     name: "Structural Team",
     members: [
-      { id: "chris-pool", name: "Chris Pool", role: "Regional Structural Manager" },
-      { id: "jeremy-barnes", name: "Jeremy Barnes", role: "Senior Designer" },
+      { id: "chris-poole", name: "Chris Poole", role: "Regional Structural Manager" },
+      { id: "jeremy-barnes", name: "Jeremy Barnes", role: "Senior Structural Designer" },
     ],
   },
   {
