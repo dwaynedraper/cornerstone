@@ -1,40 +1,12 @@
 import Mitchell from "@/components/Mitchell";
+import { teamGroups as defaultTeamGroups, type TeamGroup } from "@/data/team";
 
-const teams = [
-  {
-    name: "Executive Leadership",
-    members: [
-      { name: "Mitch Lenamond, P.E.", role: "Founder and CEO" },
-      { name: "Bailey Lenamond", role: "Chief Operating Officer" },
-    ],
-  },
-  {
-    name: "Administration",
-    members: [
-      { name: "Mallory Draper", role: "Operations Manager" },
-      { name: "Katie Holmes", role: "Coordinator" },
-    ],
-  },
-  {
-    name: "Civil Team",
-    members: [
-      { name: "Jason Lenamond", role: "P.E." },
-      { name: "Eric Chavez", role: "E.I.T." },
-      { name: "Tj Gonzales", role: "E.I.T." },
-    ],
-  },
-  {
-    name: "Survey Team",
-    members: [
-      { name: "Jacob Holmes", role: "R.P.L.S." },
-      { name: "Dayhibe Montilva", role: "Senior Survey Technician" },
-      { name: "Eddie Okala", role: "Party Chief" },
-      { name: "Ryan Korinek", role: "Party Chief" },
-    ],
-  },
-];
+interface TeamProps {
+  /** Roster to render. Defaults to the data in `src/data/team.ts`. */
+  groups?: TeamGroup[];
+}
 
-export default function Team() {
+export default function Team({ groups = defaultTeamGroups }: TeamProps) {
   return (
     <div>
       {/* ─── Hero banner for the About page ─── */}
@@ -127,13 +99,13 @@ export default function Team() {
           </div>
 
           <div className="space-y-16">
-            {teams.map((team) => (
-              <section key={team.name}>
+            {groups.map((group) => (
+              <section key={group.id}>
                 {/* Team category heading */}
                 <div className="mb-8 flex items-center gap-4">
                   <div className="w-1.5 h-8 bg-gradient-to-b from-gold to-heritage rounded-full" />
                   <h3 className="text-xl font-heading font-bold tracking-tight text-navy sm:text-2xl">
-                    {team.name}
+                    {group.name}
                   </h3>
                   <div className="flex-1 h-px bg-gradient-to-r from-gold/30 to-transparent" />
                 </div>
@@ -143,14 +115,14 @@ export default function Team() {
                   role="list"
                   className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
                 >
-                  {team.members.map((person) => {
+                  {group.members.map((person) => {
                     const initials = person.name
                       .split(" ")
                       .map((n) => n[0])
                       .join("");
                     return (
                       <li
-                        key={person.name}
+                        key={person.id}
                         className="group relative bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1"
                       >
                         {/* Gold top accent */}
