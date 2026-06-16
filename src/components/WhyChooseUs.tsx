@@ -1,76 +1,54 @@
-import {
-  FaUsersCog,
-  FaLightbulb,
-  FaHandshake,
-  FaCheckCircle,
-} from "react-icons/fa";
+import { FaHardHat, FaLayerGroup, FaMapMarkedAlt, FaGlobeAmericas } from "react-icons/fa";
+import type { IconType } from "react-icons";
+import Reveal from "@/components/motion/Reveal";
+import CadBackdrop from "@/components/CadBackdrop";
+import { whyPoints, type WhyPoint } from "@/data/why";
 
-const features = [
-  {
-    name: "Expertise",
-    description:
-      "Our team's diverse skill set allows us to tackle complex challenges across various sectors.",
-    icon: FaUsersCog,
-  },
-  {
-    name: "Innovation",
-    description:
-      "Utilizing state-of-the-art equipment and techniques, we provide accurate and reliable surveying services for boundary determination, topographic mapping, and construction layout.",
-    icon: FaLightbulb,
-  },
-  {
-    name: "Client-Centric Approach",
-    description:
-      "We prioritize clear communication and collaboration, tailoring our services to meet your specific needs.",
-    icon: FaHandshake,
-  },
-  {
-    name: "Sustainable Design",
-    description:
-      "Our commitment to environmental stewardship is reflected in our sustainable development practices.",
-    icon: FaCheckCircle,
-  },
-];
+const ICONS: Record<WhyPoint["icon"], IconType> = {
+  builders: FaHardHat,
+  oneFirm: FaLayerGroup,
+  local: FaMapMarkedAlt,
+  national: FaGlobeAmericas,
+};
 
 export default function WhyChooseUs() {
   return (
-    <div className="bg-surface py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+    <section className="relative isolate overflow-hidden bg-paper py-20 sm:py-28">
+      <CadBackdrop className="text-blueprint opacity-[0.07]" />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+        <Reveal>
           <div>
-            <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold-600">Our Advantage</p>
-            <h2 className="mt-2 text-3xl font-heading font-bold tracking-tight text-navy sm:text-4xl">
-              Why Choose Us?
+            <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+              Our advantage
+            </p>
+            <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+              Why developers choose Cornerstone
             </h2>
-            <div className="mt-4 w-16 h-1 bg-gold rounded-full" />
+            <div className="mt-4 h-0.5 w-16 bg-amber" />
           </div>
-          <dl className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
-            {features.map((feature) => (
-              <div key={feature.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 transition-shadow duration-300 hover:shadow-md">
-                <dt className="text-base font-heading font-semibold leading-7 text-navy">
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gold">
-                    <feature.icon
-                      aria-hidden="true"
-                      className="h-6 w-6 text-white"
-                    />
+        </Reveal>
+
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {whyPoints.map((point, i) => {
+            const Icon = ICONS[point.icon];
+            return (
+              <Reveal key={point.id} delay={i * 0.08} className="h-full">
+                <div className="flex h-full flex-col rounded-md border border-ink/10 bg-sand-light p-7">
+                  <div className="flex h-11 w-11 items-center justify-center rounded bg-blueprint-50 text-blueprint">
+                    <Icon className="h-6 w-6" aria-hidden />
                   </div>
-                  {feature.name}
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-gray-600">
-                  {feature.description}
-                </dd>
-              </div>
-            ))}
-          </dl>
+                  <h3 className="mt-4 font-heading text-lg font-semibold text-ink">
+                    {point.title}
+                  </h3>
+                  <p className="mt-2 text-[15px] leading-7 text-ink-500">
+                    {point.description}
+                  </p>
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
-        <p className="mx-auto max-w-5xl mb-8 text-xl text-navy font-heading font-semibold rounded-lg p-8 mt-24 text-center">
-          Whether you&apos;re planning a small residential development or a
-          large-scale infrastructure project, Cornerstone Engineering &
-          Surveying has the knowledge, skills, and dedication to bring your
-          vision to life. Contact us today to discuss how we can help you
-          achieve your project goals.
-        </p>
       </div>
-    </div>
+    </section>
   );
 }

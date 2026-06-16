@@ -1,39 +1,68 @@
-import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import Image from "next/image";
-import HeroTwo from "@/components/HeroTwo";
-import Content from "@/components/Content";
-import ImageSection from "@/components/ImageSection";
-import Values from "@/components/Values";
-import LogoCloud from "@/components/LogoCloud";
-import Team from "@/components/Team";
-import MyCarousel from "@/components/Carousel";
-import { getImagesByFolder } from "@/utils/cloudinary"; // Ensure this path is correct
-import OurServices from "@/components/OurServices";
+import Services from "@/components/Services";
+import Projects from "@/components/Projects";
 import WhyChooseUs from "@/components/WhyChooseUs";
-import Footer from "@/components/Footer";
+import Faq from "@/components/Faq";
+import Cta from "@/components/Cta";
+import { site, stats } from "@/data/site";
 
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: site.name,
+    url: site.url,
+    telephone: site.phone,
+    email: site.email,
+    description:
+      "Civil engineering and land surveying for residential developers and homebuilders across North Texas, licensed in 15+ states.",
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "North Texas" },
+      { "@type": "Country", name: "United States" },
+    ],
+    knowsAbout: [
+      "Civil Engineering",
+      "Land Surveying",
+      "Residential Subdivision Design",
+      "Platting",
+      "Land Development",
+    ],
+  };
+
   return (
-    <div className="bg-white">
-      <main className="isolate">
-        <Hero />
-        <OurServices />
-        <ImageSection
-          image={{
-            src: "/subdivision.jpg",
-            alt: "a subdivision under construction",
-          }}
-        />
-        <WhyChooseUs />
-        <ImageSection
-          image={{
-            src: "/engineer.jpg",
-            alt: "a user working in AutoCAD",
-          }}
-        />
-        <Footer />
-      </main>
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <Hero />
+
+      {/* Credentials / stats band */}
+      <section className="border-b border-ink/10 bg-paper">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-y-4 px-6 py-6 lg:flex-row lg:justify-between lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+            {stats.map((s) => (
+              <div key={s.label} className="flex items-baseline gap-2">
+                <span className="font-heading text-2xl font-semibold text-ink">
+                  {s.value}
+                </span>
+                <span className="text-sm text-ink-500">{s.label}</span>
+              </div>
+            ))}
+          </div>
+          <p className="font-heading text-xs uppercase tracking-wider text-ink-400">
+            Engineering {site.engineeringReg} &nbsp;·&nbsp; Surveying{" "}
+            {site.surveyingReg}
+          </p>
+        </div>
+      </section>
+
+      <Services />
+      <Projects />
+      <WhyChooseUs />
+      <Faq />
+      <Cta />
+    </>
   );
 }

@@ -1,55 +1,84 @@
-import { Montserrat } from "next/font/google";
-import Image from "next/image";
+"use client";
 
-const mont = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+import { m } from "framer-motion";
+import { PhoneIcon } from "@heroicons/react/24/outline";
+import { site } from "@/data/site";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function Hero() {
   return (
-    <div className={`relative bg-navy ${mont.className}`}>
-      {/* Decorative image and overlay */}
-      <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-        <Image
-          alt="Cornerstone Engineering & Surveying project background"
-          src="/IMG_0854.jpg"
-          fill
-          className="object-cover object-bottom"
-          priority
-        />
-      </div>
-      {/* Rich gradient overlay for cinematic depth */}
+    <section className="relative isolate overflow-hidden bg-paper">
+      {/* subtle full-bleed blueprint wash */}
+      <div aria-hidden className="absolute inset-0 bg-blueprint-grid" />
       <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/50 to-navy/30"
+        aria-hidden
+        className="absolute right-[7%] top-28 hidden h-28 w-48 border border-blueprint/15 lg:block"
       />
 
-      <div className="relative mx-auto flex max-w-4xl flex-col items-center px-6 py-36 text-center sm:py-64 lg:px-0">
-        <span className="text-lg tracking-[0.25em] uppercase text-gold-200 lg:text-xl font-heading font-medium">
-          Welcome to
-        </span>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight text-white lg:text-7xl text-center flex flex-col gap-1">
-          <span>Cornerstone</span>
-          <span>Engineering & Surveying</span>
-        </h1>
-        {/* Decorative accent line */}
-        <div className="mt-8 w-48 h-1 bg-gradient-to-r from-heritage via-gold to-heritage rounded-full" />
-        {/* <p className="mt-8 text-xl text-white font-semibold bg-black/40 rounded-lg p-8">
-          At Cornerstone Engineering & Surveying, we bring over 25 years of
-          expertise to every project, blending modern design techniques with
-          time-tested engineering and surveying principles. Our team of licensed
-          professional engineers and registered professional land surveyors is
-          dedicated to delivering innovative, sustainable, and cost-effective
-          solutions for our clients.
-        </p> */}
-        {/* <a
-          href="tel:+18179406027"
-          className="mt-8 text-xl inline-block rounded-md font-bold uppercase text-white bg-[#651212] px-8 py-3 hover:bg-[rgb(120,38,38)] hover:text-white"
-        >
-          Call Today!
-        </a> */}
+      <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40">
+        <div className="max-w-2xl">
+          <m.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-blueprint sm:text-sm"
+          >
+            Civil Engineering + Land Surveying &nbsp;·&nbsp; North Texas
+          </m.p>
+
+          <m.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.08, ease: EASE }}
+            className="mt-5 font-heading text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-6xl"
+          >
+            Build-ready lots, on your schedule.
+          </m.h1>
+
+          <m.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.18, ease: EASE }}
+            className="mt-6 max-w-xl text-lg leading-8 text-ink-500"
+          >
+            We take raw land to recorded, build-ready lots — and keep your
+            pipeline moving for the next phase.
+          </m.p>
+
+          <m.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.28, ease: EASE }}
+            className="mt-9 flex flex-wrap items-center gap-3"
+          >
+            <a
+              href="/contact"
+              className="rounded bg-blueprint px-7 py-3 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-blueprint-dark"
+            >
+              Get a quote
+            </a>
+            <a
+              href={`tel:${site.phone}`}
+              className="inline-flex items-center gap-2 rounded border border-ink px-6 py-3 font-heading text-sm font-medium text-ink transition-colors duration-200 hover:bg-ink/5"
+            >
+              <PhoneIcon className="h-4 w-4 text-blueprint" aria-hidden />
+              {site.phoneDisplay}
+            </a>
+          </m.div>
+
+          <m.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.36, ease: EASE }}
+            className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-ink-500"
+          >
+            <span className="border-l-2 border-amber pl-3">25+ years</span>
+            <span className="border-l-2 border-amber pl-3">Licensed in 15+ states</span>
+            <span className="border-l-2 border-amber pl-3">North Texas</span>
+          </m.div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

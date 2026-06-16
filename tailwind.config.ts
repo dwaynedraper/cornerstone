@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
-const withMT = require("@material-tailwind/react/utils/withMT");
 
-const config: Config = withMT({
+const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,50 +9,52 @@ const config: Config = withMT({
   theme: {
     extend: {
       colors: {
-        navy: {
-          DEFAULT: "#1a2332",
-          50: "#f0f2f5",
-          100: "#d4d9e2",
-          200: "#a9b3c5",
-          300: "#7e8da8",
-          400: "#53678b",
-          500: "#2d3f5e",
-          600: "#1a2332",
-          700: "#141b27",
-          800: "#0e131c",
-          900: "#080b11",
+        // near-white base
+        paper: "#FBFAF8",
+        // charcoal / asphalt text + dark sections
+        ink: {
+          DEFAULT: "#23272C",
+          700: "#1a1d21",
+          500: "#565b62",
+          400: "#7b8088",
         },
-        gold: {
-          DEFAULT: "#c8913a",
-          50: "#fdf8f0",
-          100: "#f9edd6",
-          200: "#f0d5a3",
-          300: "#e4b96a",
-          400: "#d4a24e",
-          500: "#c8913a",
-          600: "#b07e2e",
-          700: "#8f6624",
-          800: "#6e4f1c",
-          900: "#4d3714",
+        // primary accent — blueprint blue
+        blueprint: {
+          DEFAULT: "#1B5390",
+          light: "#2f6aa8",
+          dark: "#143E6E",
+          600: "#174a82",
+          100: "#d6e3f0",
+          50: "#eef4fa",
         },
-        heritage: {
+        // secondary accent — light amber
+        amber: {
+          DEFAULT: "#E7AE4B",
+          dark: "#cf9530",
+          text: "#5c3d00",
+          100: "#f8e6bf",
+          50: "#fdf6e8",
+        },
+        // warm concrete / sand neutrals
+        sand: {
+          DEFAULT: "#E3DACA",
+          light: "#F1ECE3",
+          dark: "#D3C8B2",
+        },
+        // retained for the logo
+        maroon: {
           DEFAULT: "#651212",
           light: "#7a2020",
-          dark: "#4d0e0e",
-        },
-        surface: {
-          DEFAULT: "#f7f5f0",
-          warm: "#faf8f4",
         },
       },
       fontFamily: {
-        heading: ["var(--font-outfit)", "sans-serif"],
-        body: ["var(--font-inter)", "sans-serif"],
+        heading: ["var(--font-heading)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
       },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        // very subtle full-bleed blueprint wash
+        "blueprint-grid":
+          "repeating-linear-gradient(0deg, rgba(27,83,144,0.05) 0 1px, transparent 1px 40px), repeating-linear-gradient(90deg, rgba(27,83,144,0.05) 0 1px, transparent 1px 40px)",
       },
     },
   },
@@ -61,5 +62,6 @@ const config: Config = withMT({
     require("@tailwindcss/forms"),
     require("@tailwindcss/aspect-ratio"),
   ],
-});
+};
+
 export default config;
