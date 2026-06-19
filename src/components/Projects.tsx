@@ -50,7 +50,7 @@ export default function Projects() {
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-ink/90 via-ink/20 to-transparent" />
                 </div>
                 <figcaption className="absolute inset-x-0 bottom-0 p-5">
                   <p className="font-heading text-base font-semibold text-white">

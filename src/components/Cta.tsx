@@ -26,13 +26,13 @@ export default function Cta() {
             <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="/contact"
-                className="rounded bg-amber px-8 py-3 font-heading text-sm font-medium text-amber-text transition-colors duration-200 hover:bg-amber-dark"
+                className="rounded-sm bg-amber px-8 py-3 font-heading text-sm font-medium text-amber-text transition-colors duration-200 hover:bg-amber-dark"
               >
                 Get a quote
               </a>
               <a
                 href={`tel:${site.phone}`}
-                className="rounded border border-white/40 px-8 py-3 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-white/10"
+                className="rounded-sm border border-white/40 px-8 py-3 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-white/10"
               >
                 Call {site.phoneDisplay}
               </a>

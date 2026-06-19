@@ -1,24 +1,57 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+
+@theme {
+  --color-paper: #FBFAF8;
+
+  --color-ink: #23272C;
+  --color-ink-700: #1a1d21;
+  --color-ink-500: #565b62;
+  --color-ink-400: #7b8088;
+
+  --color-blueprint: #1B5390;
+  --color-blueprint-light: #2f6aa8;
+  --color-blueprint-dark: #143E6E;
+  --color-blueprint-600: #174a82;
+  --color-blueprint-100: #d6e3f0;
+  --color-blueprint-50: #eef4fa;
+
+  --color-amber: #E7AE4B;
+  --color-amber-dark: #cf9530;
+  --color-amber-text: #5c3d00;
+  --color-amber-100: #f8e6bf;
+  --color-amber-50: #fdf6e8;
+
+  --color-sand: #E3DACA;
+  --color-sand-light: #F1ECE3;
+  --color-sand-dark: #D3C8B2;
+
+  --color-maroon: #651212;
+  --color-maroon-light: #7a2020;
+
+  --font-heading: var(--ff-heading), sans-serif;
+  --font-body: var(--ff-body), sans-serif;
+}
+
+@utility blueprint-grid {
+  background-image:
+    repeating-linear-gradient(0deg, rgba(27, 83, 144, 0.05) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(90deg, rgba(27, 83, 144, 0.05) 0 1px, transparent 1px 40px);
+}
 
 @layer base {
+  /* v3 compatibility: default border/divide color */
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
   body {
     @apply bg-paper text-ink antialiased;
   }
-
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-/* Respect users who ask for reduced motion (Framer also honors this). */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

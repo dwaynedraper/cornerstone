@@ -24,7 +24,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   return (
     <Reveal delay={index * 0.08} className="h-full">
       <div className="flex h-full flex-col rounded-md border border-ink/10 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-blueprint/40 hover:shadow-md">
-        <div className="flex h-12 w-12 items-center justify-center rounded bg-blueprint-50 text-blueprint">
+        <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
           <Icon className="h-6 w-6" aria-hidden />
         </div>
         <h3 className="mt-5 font-heading text-lg font-semibold text-ink">

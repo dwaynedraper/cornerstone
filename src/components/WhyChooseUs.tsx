@@ -34,7 +34,7 @@ export default function WhyChooseUs() {
             return (
               <Reveal key={point.id} delay={i * 0.08} className="h-full">
                 <div className="flex h-full flex-col rounded-md border border-ink/10 bg-sand-light p-7">
-                  <div className="flex h-11 w-11 items-center justify-center rounded bg-blueprint-50 text-blueprint">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
                     <Icon className="h-6 w-6" aria-hidden />
                   </div>
                   <h3 className="mt-4 font-heading text-lg font-semibold text-ink">

@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <section className="relative isolate overflow-hidden bg-paper">
       {/* subtle full-bleed blueprint wash */}
-      <div aria-hidden className="absolute inset-0 bg-blueprint-grid" />
+      <div aria-hidden className="absolute inset-0 blueprint-grid" />
       <div
         aria-hidden
         className="absolute right-[7%] top-28 hidden h-28 w-48 border border-blueprint/15 lg:block"
@@ -54,13 +54,13 @@ export default function Hero() {
           >
             <a
               href="/contact"
-              className="rounded bg-blueprint px-7 py-3 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-blueprint-dark"
+              className="rounded-sm bg-blueprint px-7 py-3 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-blueprint-dark"
             >
               Get a quote
             </a>
             <a
               href={`tel:${site.phone}`}
-              className="inline-flex items-center gap-2 rounded border border-ink px-6 py-3 font-heading text-sm font-medium text-ink transition-colors duration-200 hover:bg-ink/5"
+              className="inline-flex items-center gap-2 rounded-sm border border-ink px-6 py-3 font-heading text-sm font-medium text-ink transition-colors duration-200 hover:bg-ink/5"
             >
               <PhoneIcon className="h-4 w-4 text-blueprint" aria-hidden />
               {site.phoneDisplay}

@@ -8,13 +8,13 @@ import { site } from "@/data/site";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-body",
+  variable: "--ff-body",
   display: "swap",
 });
 
 const libreFranklin = Libre_Franklin({
   subsets: ["latin"],
-  variable: "--font-heading",
+  variable: "--ff-heading",
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });

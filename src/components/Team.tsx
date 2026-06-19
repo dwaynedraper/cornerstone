@@ -13,7 +13,7 @@ export default function Team({ groups = defaultTeamGroups }: TeamProps) {
     <div>
       {/* ─── About header ─── */}
       <section className="relative isolate overflow-hidden bg-paper">
-        <div aria-hidden className="absolute inset-0 bg-blueprint-grid" />
+        <div aria-hidden className="absolute inset-0 blueprint-grid" />
         <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-24 lg:px-8">
           <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
             Our team
@@ -100,7 +100,7 @@ export default function Team({ groups = defaultTeamGroups }: TeamProps) {
                       .join("");
                     return (
                       <Reveal key={person.id} delay={i * 0.05}>
-                        <li className="group h-full overflow-hidden rounded-md border border-ink/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                        <li className="group h-full overflow-hidden rounded-md border border-ink/10 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                           <div className="h-1 bg-amber" />
                           <div className="p-6 text-center">
                             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-ink font-heading text-xl font-semibold text-white ring-2 ring-blueprint/20 transition-all duration-300 group-hover:ring-blueprint/50">
@@ -136,7 +136,7 @@ export default function Team({ groups = defaultTeamGroups }: TeamProps) {
           <div className="mt-4 h-0.5 w-12 bg-amber" />
 
           <div className="mb-10 mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <div className="rounded-md border border-ink/10 bg-white p-6 shadow-sm">
+            <div className="rounded-md border border-ink/10 bg-white p-6 shadow-xs">
               <p className="font-heading text-sm font-semibold text-ink">
                 Engineering
               </p>
@@ -144,7 +144,7 @@ export default function Team({ groups = defaultTeamGroups }: TeamProps) {
                 Firm Registration Number: {site.engineeringReg}
               </p>
             </div>
-            <div className="rounded-md border border-ink/10 bg-white p-6 shadow-sm">
+            <div className="rounded-md border border-ink/10 bg-white p-6 shadow-xs">
               <p className="font-heading text-sm font-semibold text-ink">
                 Surveying
               </p>

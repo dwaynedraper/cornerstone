@@ -4,7 +4,7 @@ import { useState } from "react";
 import { site } from "@/data/site";
 
 const inputClass =
-  "mt-1 block w-full rounded-md border-ink/20 bg-white text-ink shadow-sm focus:border-blueprint focus:ring-blueprint sm:text-sm";
+  "mt-1 block w-full rounded-md border-ink/20 bg-white text-ink shadow-xs focus:border-blueprint focus:ring-blueprint sm:text-sm";
 const labelClass = "block font-heading text-sm font-medium text-ink";
 
 export default function ContactForm() {
@@ -70,7 +70,7 @@ export default function ContactForm() {
       </div>
       <button
         type="submit"
-        className="rounded bg-blueprint px-7 py-3 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-blueprint-dark"
+        className="rounded-sm bg-blueprint px-7 py-3 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-blueprint-dark"
       >
         Send it over
       </button>

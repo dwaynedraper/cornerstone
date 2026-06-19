@@ -2,7 +2,7 @@ import { AcademicCapIcon, LinkIcon } from "@heroicons/react/20/solid";
 
 export default function Mitchell() {
   return (
-    <div className="relative isolate my-12 overflow-hidden rounded-lg border border-ink/10 bg-white px-6 py-12 shadow-sm sm:py-16 lg:px-12">
+    <div className="relative isolate my-12 overflow-hidden rounded-lg border border-ink/10 bg-white px-6 py-12 shadow-xs sm:py-16 lg:px-12">
       <div className="mx-auto mb-10 max-w-7xl">
         <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
           Founder, P.E.

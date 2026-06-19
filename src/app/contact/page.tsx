@@ -13,7 +13,7 @@ export default function Contact() {
   return (
     <div>
       <section className="relative isolate overflow-hidden bg-paper">
-        <div aria-hidden className="absolute inset-0 bg-blueprint-grid" />
+        <div aria-hidden className="absolute inset-0 blueprint-grid" />
         <div className="relative mx-auto max-w-4xl px-6 py-16 sm:py-20 lg:px-8">
           <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
             Get in touch
@@ -82,7 +82,7 @@ export default function Contact() {
             </div>
 
             {/* Inline form */}
-            <div className="rounded-lg border border-ink/10 bg-white p-8 shadow-sm">
+            <div className="rounded-lg border border-ink/10 bg-white p-8 shadow-xs">
               <h2 className="font-heading text-2xl font-semibold text-ink">
                 Send us your project
               </h2>

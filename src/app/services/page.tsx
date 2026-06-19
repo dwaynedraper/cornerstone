@@ -25,7 +25,7 @@ export default function ServicesPage() {
   return (
     <div>
       <section className="relative isolate overflow-hidden bg-paper">
-        <div aria-hidden className="absolute inset-0 bg-blueprint-grid" />
+        <div aria-hidden className="absolute inset-0 blueprint-grid" />
         <div className="relative mx-auto max-w-4xl px-6 py-16 sm:py-20 lg:px-8">
           <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
             What we do
@@ -50,7 +50,7 @@ export default function ServicesPage() {
               return (
                 <Reveal key={service.id} delay={i * 0.08} className="h-full">
                   <div className="flex h-full gap-5 rounded-md border border-ink/10 bg-white p-8">
-                    <div className="flex h-12 w-12 flex-none items-center justify-center rounded bg-blueprint-50 text-blueprint">
+                    <div className="flex h-12 w-12 flex-none items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
                       <Icon className="h-6 w-6" aria-hidden />
                     </div>
                     <div>
