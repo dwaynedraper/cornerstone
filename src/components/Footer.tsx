@@ -36,6 +36,7 @@ export default function Footer() {
                   {site.email}
                 </a>
               </li>
+              <li className="text-gray-400">{site.addressDisplay}</li>
             </ul>
           </div>
 

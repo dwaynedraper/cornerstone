@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Talk to Cornerstone Engineering & Surveying about your North Texas land development or homebuilding project. Call (817) 940-6027 or send us your project details.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function Contact() {
@@ -69,12 +70,15 @@ export default function Contact() {
                   </span>
                 </a>
 
-                <div className="flex items-center gap-4 rounded-md border border-ink/10 bg-white p-5">
-                  <MapPinIcon className="h-6 w-6 flex-none text-blueprint" aria-hidden />
+                <div className="flex items-start gap-4 rounded-md border border-ink/10 bg-white p-5">
+                  <MapPinIcon className="mt-0.5 h-6 w-6 flex-none text-blueprint" aria-hidden />
                   <span>
-                    <span className="block text-sm text-ink-500">Service area</span>
+                    <span className="block text-sm text-ink-500">Office</span>
                     <span className="block font-heading text-lg font-semibold text-ink">
-                      North Texas &amp; nationwide (15+ states)
+                      {site.addressDisplay}
+                    </span>
+                    <span className="mt-1 block text-sm text-ink-500">
+                      Surveying across Texas · Civil &amp; structural engineering nationwide
                     </span>
                   </span>
                 </div>

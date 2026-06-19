@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { MdDesignServices } from "react-icons/md";
 import { PiBlueprint } from "react-icons/pi";
-import { FaChartGantt } from "react-icons/fa6";
+import { FaChartGantt, FaBuildingColumns } from "react-icons/fa6";
 import { GiEarthAmerica } from "react-icons/gi";
 import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
@@ -12,10 +12,12 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "Civil engineering, land surveying, project management, and sustainable design for residential land development and homebuilders across North Texas.",
+  alternates: { canonical: "/services" },
 };
 
 const ICONS: Record<Service["icon"], IconType> = {
   civil: MdDesignServices,
+  structural: FaBuildingColumns,
   survey: PiBlueprint,
   management: FaChartGantt,
   sustainable: GiEarthAmerica,

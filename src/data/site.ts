@@ -10,6 +10,13 @@ export const site = {
   phoneDisplay: "(817) 940-6027",
   email: "info@cesinbox.com",
   region: "North Texas",
+  address: {
+    street: "5000 S Collins St, Suite 209",
+    city: "Arlington",
+    state: "TX",
+    zip: "76018",
+  },
+  addressDisplay: "5000 S Collins St, Suite 209, Arlington, TX 76018",
   statesLicensed: "15+ states",
   yearsExperience: "25+",
   engineeringReg: "F-24969",

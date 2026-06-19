@@ -14,14 +14,23 @@ export default function Home() {
     url: site.url,
     telephone: site.phone,
     email: site.email,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "5000 S Collins St, Suite 209",
+      addressLocality: "Arlington",
+      addressRegion: "TX",
+      postalCode: "76018",
+      addressCountry: "US",
+    },
     description:
-      "Civil engineering and land surveying for residential developers and homebuilders across North Texas, licensed in 15+ states.",
+      "Civil engineering and land surveying for residential developers and homebuilders. Based in Arlington, TX — surveying across Texas, civil and structural engineering nationwide.",
     areaServed: [
-      { "@type": "AdministrativeArea", name: "North Texas" },
+      { "@type": "State", name: "Texas" },
       { "@type": "Country", name: "United States" },
     ],
     knowsAbout: [
       "Civil Engineering",
+      "Structural Engineering",
       "Land Surveying",
       "Residential Subdivision Design",
       "Platting",

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { MdDesignServices } from "react-icons/md";
 import { PiBlueprint } from "react-icons/pi";
-import { FaChartGantt } from "react-icons/fa6";
+import { FaChartGantt, FaBuildingColumns } from "react-icons/fa6";
 import { GiEarthAmerica } from "react-icons/gi";
 import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
@@ -12,6 +12,7 @@ import { services, type Service } from "@/data/services";
 
 const ICONS: Record<Service["icon"], IconType> = {
   civil: MdDesignServices,
+  structural: FaBuildingColumns,
   survey: PiBlueprint,
   management: FaChartGantt,
   sustainable: GiEarthAmerica,

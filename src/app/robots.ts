@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { site } from "@/data/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -6,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://cornerstone.com/sitemap.xml", // Adjust domain as needed
+    sitemap: `${site.url}/sitemap.xml`,
   };
 }

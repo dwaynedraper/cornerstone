@@ -1,32 +1,23 @@
 import { MetadataRoute } from "next";
+import { site } from "@/data/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://www.cornerstoneengineeringandsurveying.com"; // Change to live URL eventually
-
-  return [
-    {
-      url: `${baseUrl}`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/services`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.8,
-    },
+  const pages: {
+    path: string;
+    priority: number;
+    changeFrequency: "monthly" | "yearly";
+  }[] = [
+    { path: "", priority: 1, changeFrequency: "monthly" },
+    { path: "/services", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/about", priority: 0.6, changeFrequency: "monthly" },
+    { path: "/contact", priority: 0.7, changeFrequency: "yearly" },
   ];
+
+  const lastModified = new Date();
+  return pages.map((p) => ({
+    url: `${site.url}${p.path}`,
+    lastModified,
+    changeFrequency: p.changeFrequency,
+    priority: p.priority,
+  }));
 }
