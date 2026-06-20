@@ -2,7 +2,7 @@ import { FaHardHat, FaLayerGroup, FaMapMarkedAlt, FaGlobeAmericas } from "react-
 import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
 import CadBackdrop from "@/components/CadBackdrop";
-import { whyPoints, type WhyPoint } from "@/data/why";
+import { whyPoints as defaultWhyPoints, type WhyPoint } from "@/data/why";
 
 const ICONS: Record<WhyPoint["icon"], IconType> = {
   builders: FaHardHat,
@@ -11,10 +11,15 @@ const ICONS: Record<WhyPoint["icon"], IconType> = {
   national: FaGlobeAmericas,
 };
 
-export default function WhyChooseUs() {
+export default function WhyChooseUs({
+  points = defaultWhyPoints,
+}: {
+  /** Value props to render. Defaults to the seed data in `src/data/why.ts`. */
+  points?: WhyPoint[];
+}) {
   return (
     <section className="relative isolate overflow-hidden bg-paper py-20 sm:py-28">
-      <CadBackdrop className="text-blueprint opacity-[0.07]" />
+      <CadBackdrop className="text-blueprint opacity-10" />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal>
           <div>
@@ -28,8 +33,8 @@ export default function WhyChooseUs() {
           </div>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {whyPoints.map((point, i) => {
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:auto-rows-[1fr] sm:grid-cols-2 lg:grid-cols-4">
+          {points.map((point, i) => {
             const Icon = ICONS[point.icon];
             return (
               <Reveal key={point.id} delay={i * 0.08} className="h-full">

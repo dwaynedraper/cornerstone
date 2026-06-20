@@ -1,5 +1,6 @@
 import Team from "@/components/Team";
 import { Metadata } from 'next';
+import { getTeamGroups } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About",
@@ -8,6 +9,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-export default function About() {
-  return <Team />;
+export const revalidate = 300;
+
+export default async function About() {
+  const groups = await getTeamGroups();
+  return <Team groups={groups} />;
 }

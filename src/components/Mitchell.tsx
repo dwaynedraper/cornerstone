@@ -1,6 +1,8 @@
 import { AcademicCapIcon, LinkIcon } from "@heroicons/react/20/solid";
+import { getSiteCopy } from "@/lib/content";
 
-export default function Mitchell() {
+export default async function Mitchell() {
+  const copy = await getSiteCopy();
   return (
     <div className="relative isolate my-12 overflow-hidden rounded-lg border border-ink/10 bg-white px-6 py-12 shadow-xs sm:py-16 lg:px-12">
       <div className="mx-auto mb-10 max-w-7xl">
@@ -8,10 +10,10 @@ export default function Mitchell() {
           Founder, P.E.
         </p>
         <h2 className="mt-2 text-pretty font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-          Mitchell Lenamond
+          {copy.founderName}
         </h2>
         <p className="mt-3 text-xl leading-8 text-ink-500">
-          Licensed Professional Engineer
+          {copy.founderTitle}
         </p>
         <div className="mt-4 h-0.5 w-16 bg-amber" />
       </div>
@@ -19,32 +21,10 @@ export default function Mitchell() {
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="text-base leading-7 text-ink-500">
-            <p>
-              Mitchell K. Lenamond, P.E., is a highly experienced professional
-              engineer with over two decades of expertise in structural and
-              civil engineering. His experience includes roles such as Vice
-              President of Engineering, where he oversaw a team of 180+
-              professionals across multiple office locations, managing
-              engineering, surveying, and architectural projects. His leadership
-              extends to client relations, project planning, budgeting, and
-              regulatory compliance, ensuring that each project meets the highest
-              standards of quality and efficiency.
-            </p>
-            <p className="mt-6">
-              Mitchell&apos;s extensive engineering background includes designing
-              commercial and residential structures, specializing in foundation
-              and framing systems, wind load analysis, and infrastructure
-              projects such as highway bridges and culverts. His civil
-              engineering expertise encompasses site feasibility studies, zoning
-              coordination, grading, drainage, and utility planning.
-              Additionally, he is well-versed in forensic inspections, providing
-              structural assessments, foundation deflection analysis, and expert
-              witness testimony.
-            </p>
+            <p>{copy.founderBio1}</p>
+            <p className="mt-6">{copy.founderBio2}</p>
             <p className="mt-8 border-l-2 border-blueprint pl-4 italic text-ink-500">
-              With a reputation for precision and excellence, Mitchell remains
-              dedicated to delivering innovative, reliable engineering solutions
-              that drive success for clients and communities alike.
+              {copy.founderQuote}
             </p>
           </div>
 

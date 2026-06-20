@@ -6,7 +6,8 @@ import { GiEarthAmerica } from "react-icons/gi";
 import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
 import Cta from "@/components/Cta";
-import { services, type Service } from "@/data/services";
+import { type Service } from "@/data/services";
+import { getServices } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -23,7 +24,10 @@ const ICONS: Record<Service["icon"], IconType> = {
   sustainable: GiEarthAmerica,
 };
 
-export default function ServicesPage() {
+export const revalidate = 300;
+
+export default async function ServicesPage() {
+  const services = await getServices();
   return (
     <div>
       <section className="relative isolate overflow-hidden bg-paper">

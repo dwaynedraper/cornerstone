@@ -8,7 +8,7 @@ import { FaChartGantt, FaBuildingColumns } from "react-icons/fa6";
 import { GiEarthAmerica } from "react-icons/gi";
 import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
-import { services, type Service } from "@/data/services";
+import { services as defaultServices, type Service } from "@/data/services";
 
 const ICONS: Record<Service["icon"], IconType> = {
   civil: MdDesignServices,
@@ -18,12 +18,47 @@ const ICONS: Record<Service["icon"], IconType> = {
   sustainable: GiEarthAmerica,
 };
 
-function ServiceCard({ service, index }: { service: Service; index: number }) {
+/**
+ * Centers an incomplete final row. The grid is 6 cols (3 cards) at lg and
+ * 4 cols (2 cards) at sm; cards span 2. When the last row isn't full, we give
+ * the orphan card(s) an explicit column start so the row sits centered.
+ * Works for any card count, so adding a 6th service (3/3) just falls through.
+ */
+function centerLastRow(index: number, total: number): string {
+  const c: string[] = [];
+
+  // lg — 3 per row
+  const lgRem = total % 3;
+  if (lgRem === 2) {
+    if (index === total - 2) c.push("lg:col-start-2");
+    if (index === total - 1) c.push("lg:col-start-4");
+  } else if (lgRem === 1 && index === total - 1) {
+    c.push("lg:col-start-3");
+  }
+
+  // sm — 2 per row
+  if (total % 2 === 1 && index === total - 1) c.push("sm:col-start-2");
+
+  return c.join(" ");
+}
+
+function ServiceCard({
+  service,
+  index,
+  total,
+}: {
+  service: Service;
+  index: number;
+  total: number;
+}) {
   const [open, setOpen] = useState(false);
   const Icon = ICONS[service.icon];
 
   return (
-    <Reveal delay={index * 0.08} className="h-full">
+    <Reveal
+      delay={index * 0.08}
+      className={`col-span-1 h-full sm:col-span-2 ${centerLastRow(index, total)}`}
+    >
       <div className="flex h-full flex-col rounded-md border border-ink/10 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-blueprint/40 hover:shadow-md">
         <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
           <Icon className="h-6 w-6" aria-hidden />
@@ -62,10 +97,24 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   );
 }
 
-export default function Services() {
+export default function Services({
+  services = defaultServices,
+  intro = "For more than 25 years, Cornerstone has helped North Texas developers and homebuilders turn raw land into build-ready residential lots — engineering and surveying, under one roof.",
+}: {
+  /** Service cards to render. Defaults to the seed data in `src/data/services.ts`. */
+  services?: Service[];
+  /** Intro paragraph under the heading. */
+  intro?: string;
+}) {
   return (
-    <section id="services" className="scroll-mt-24 bg-sand-light py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section
+      id="services"
+      className="relative isolate scroll-mt-24 overflow-hidden bg-paper py-20 sm:py-28"
+    >
+      {/* Blueprint grid motif, carried over from the hero */}
+      <div aria-hidden className="absolute inset-0 blueprint-grid-strong" />
+
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal>
           <div>
             <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
@@ -83,9 +132,14 @@ export default function Services() {
           </div>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:auto-rows-[1fr] sm:grid-cols-4 lg:grid-cols-6">
           {services.map((service, i) => (
-            <ServiceCard key={service.id} service={service} index={i} />
+            <ServiceCard
+              key={service.id}
+              service={service}
+              index={i}
+              total={services.length}
+            />
           ))}
         </div>
       </div>

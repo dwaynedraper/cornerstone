@@ -1,8 +1,13 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Reveal from "@/components/motion/Reveal";
-import { faqs } from "@/data/faqs";
+import { faqs as defaultFaqs, type Faq as FaqItem } from "@/data/faqs";
 
-export default function Faq() {
+export default function Faq({
+  faqs = defaultFaqs,
+}: {
+  /** FAQ entries to render. Defaults to the seed data in `src/data/faqs.ts`. */
+  faqs?: FaqItem[];
+}) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

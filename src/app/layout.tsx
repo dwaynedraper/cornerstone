@@ -3,6 +3,7 @@ import { Inter, Libre_Franklin } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SiteChrome from "@/components/SiteChrome";
 import MotionProvider from "@/components/motion/MotionProvider";
 import { site } from "@/data/site";
 
@@ -62,13 +63,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${libreFranklin.variable} font-body`}>
+      <body
+        className={`${inter.variable} ${libreFranklin.variable} bg-paper font-body text-ink`}
+      >
         <MotionProvider>
-          <div className="flex min-h-screen flex-col bg-paper text-ink">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
+          <SiteChrome header={<Header />} footer={<Footer />}>
+            {children}
+          </SiteChrome>
         </MotionProvider>
       </body>
     </html>

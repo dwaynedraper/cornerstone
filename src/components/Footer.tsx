@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { site } from "@/data/site";
+import { getSiteCopy } from "@/lib/content";
 
-export default function Footer() {
+export default async function Footer() {
+  const copy = await getSiteCopy();
   return (
     <footer aria-labelledby="footer-heading" className="bg-ink text-gray-300">
       <h2 id="footer-heading" className="sr-only">
@@ -27,16 +29,16 @@ export default function Footer() {
             <h3 className="font-heading text-sm font-semibold text-white">Contact</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <a href={`tel:${site.phone}`} className="transition-colors hover:text-white">
-                  {site.phoneDisplay}
+                <a href={`tel:${copy.contactPhone}`} className="transition-colors hover:text-white">
+                  {copy.contactPhoneDisplay}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${site.email}`} className="transition-colors hover:text-white">
-                  {site.email}
+                <a href={`mailto:${copy.contactEmail}`} className="transition-colors hover:text-white">
+                  {copy.contactEmail}
                 </a>
               </li>
-              <li className="text-gray-400">{site.addressDisplay}</li>
+              <li className="text-gray-400">{copy.addressDisplay}</li>
             </ul>
           </div>
 

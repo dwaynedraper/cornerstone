@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PhoneIcon, EnvelopeIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import ContactForm from "@/components/ContactForm";
-import { site } from "@/data/site";
+import { getSiteCopy } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -10,7 +10,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-export default function Contact() {
+export const revalidate = 300;
+
+export default async function Contact() {
+  const copy = await getSiteCopy();
   return (
     <div>
       <section className="relative isolate overflow-hidden bg-paper">
@@ -45,27 +48,27 @@ export default function Contact() {
 
               <div className="mt-8 space-y-5">
                 <a
-                  href={`tel:${site.phone}`}
+                  href={`tel:${copy.contactPhone}`}
                   className="flex items-center gap-4 rounded-md border border-ink/10 bg-white p-5 transition-colors hover:border-blueprint/40"
                 >
                   <PhoneIcon className="h-6 w-6 flex-none text-blueprint" aria-hidden />
                   <span>
                     <span className="block text-sm text-ink-500">Call us</span>
                     <span className="block font-heading text-lg font-semibold text-ink">
-                      {site.phoneDisplay}
+                      {copy.contactPhoneDisplay}
                     </span>
                   </span>
                 </a>
 
                 <a
-                  href={`mailto:${site.email}`}
+                  href={`mailto:${copy.contactEmail}`}
                   className="flex items-center gap-4 rounded-md border border-ink/10 bg-white p-5 transition-colors hover:border-blueprint/40"
                 >
                   <EnvelopeIcon className="h-6 w-6 flex-none text-blueprint" aria-hidden />
                   <span>
                     <span className="block text-sm text-ink-500">Email us</span>
                     <span className="block font-heading text-lg font-semibold text-ink">
-                      {site.email}
+                      {copy.contactEmail}
                     </span>
                   </span>
                 </a>
@@ -75,7 +78,7 @@ export default function Contact() {
                   <span>
                     <span className="block text-sm text-ink-500">Office</span>
                     <span className="block font-heading text-lg font-semibold text-ink">
-                      {site.addressDisplay}
+                      {copy.addressDisplay}
                     </span>
                     <span className="mt-1 block text-sm text-ink-500">
                       Surveying across Texas · Civil &amp; structural engineering nationwide

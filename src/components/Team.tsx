@@ -2,13 +2,15 @@ import Mitchell from "@/components/Mitchell";
 import Reveal from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 import { teamGroups as defaultTeamGroups, type TeamGroup } from "@/data/team";
+import { getSiteCopy } from "@/lib/content";
 
 interface TeamProps {
   /** Roster to render. Defaults to the data in `src/data/team.ts`. */
   groups?: TeamGroup[];
 }
 
-export default function Team({ groups = defaultTeamGroups }: TeamProps) {
+export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
+  const copy = await getSiteCopy();
   return (
     <div>
       {/* ─── About header ─── */}
@@ -19,13 +21,11 @@ export default function Team({ groups = defaultTeamGroups }: TeamProps) {
             Our team
           </p>
           <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-            The people behind your projects
+            {copy.aboutHeading}
           </h1>
           <div className="mx-auto mt-5 h-0.5 w-16 bg-amber" />
           <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-ink-500">
-            A licensed, hands-on team of engineers and surveyors who know North
-            Texas land development — and how to keep a builder&apos;s pipeline
-            moving.
+            {copy.aboutSubhead}
           </p>
         </div>
       </section>
@@ -35,22 +35,10 @@ export default function Team({ groups = defaultTeamGroups }: TeamProps) {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-16 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-2">
             <div className="border-l-2 border-blueprint pl-8">
-              <p className="text-lg leading-8 text-ink-500">
-                From seasoned engineers with decades of expertise to sharp young
-                talent bringing fresh perspective, every member of our team plays
-                a role in delivering build-ready results. We pride ourselves on a
-                collaborative approach — combining individual strengths to tackle
-                complex sites and drive projects to completion.
-              </p>
+              <p className="text-lg leading-8 text-ink-500">{copy.aboutIntro1}</p>
             </div>
             <div className="border-l-2 border-blueprint pl-8">
-              <p className="text-lg leading-8 text-ink-500">
-                Our engineers and surveyors aren&apos;t just technically
-                proficient; they&apos;re problem-solvers who thrive on turning
-                raw land into reality. Whether it&apos;s designing infrastructure,
-                running precise surveys, or shepherding a plat through approval,
-                the team brings precision and attention to every project.
-              </p>
+              <p className="text-lg leading-8 text-ink-500">{copy.aboutIntro2}</p>
             </div>
           </div>
         </div>
