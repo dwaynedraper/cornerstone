@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton, ConfirmButton } from "@/components/admin/FormButtons";
 import ImageUpload from "@/components/admin/ImageUpload";
@@ -9,15 +10,31 @@ import {
   moveProject,
   togglePublish,
   uploadProjectCover,
+  addProjectImage,
+  updateImageAlt,
+  deleteProjectImage,
+  moveProjectImage,
 } from "./actions";
 
 type ProjectRow = {
   id: string;
+  name: string;
   category: string;
   summary: string;
   location: string;
+  scope: string;
+  key_stats: unknown;
+  body: string;
   cover_image_url: string | null;
   is_published: boolean;
+  sort_order: number;
+};
+
+type ImageRow = {
+  id: string;
+  project_id: string;
+  image_url: string;
+  alt: string;
   sort_order: number;
 };
 
@@ -30,7 +47,12 @@ const saveClass =
 const ctrlClass =
   "rounded-sm border border-ink/15 px-2.5 py-1 text-ink-500 hover:bg-sand-light disabled:opacity-30";
 
+const statHints = ["120 acres", "450 lots", "Platted 2023", "18 months"];
+
 function Fields({ project }: { project?: ProjectRow }) {
+  const stats = Array.isArray(project?.key_stats)
+    ? (project?.key_stats as string[])
+    : [];
   return (
     <div className="grid gap-4">
       <label className="block">
@@ -71,17 +93,91 @@ function Fields({ project }: { project?: ProjectRow }) {
           className={fieldClass}
         />
       </label>
+
+      <div className="mt-1 border-t border-ink/10 pt-4">
+        <p className="font-heading text-xs font-semibold uppercase tracking-wider text-ink-400">
+          Project page — used once 3+ projects are published
+        </p>
+      </div>
+
+      <label className="block">
+        <span className={labelClass}>
+          Project title{" "}
+          <span className="font-normal text-ink-400">
+            (optional — defaults to the category)
+          </span>
+        </span>
+        <input
+          name="name"
+          maxLength={60}
+          defaultValue={project?.name ?? ""}
+          className={fieldClass}
+        />
+      </label>
+      <label className="block">
+        <span className={labelClass}>
+          Scope / services{" "}
+          <span className="font-normal text-ink-400">(max 120)</span>
+        </span>
+        <input
+          name="scope"
+          maxLength={120}
+          defaultValue={project?.scope ?? ""}
+          className={fieldClass}
+        />
+      </label>
+      <div>
+        <span className={labelClass}>
+          Key stats{" "}
+          <span className="font-normal text-ink-400">
+            (up to 4 — shown as badges)
+          </span>
+        </span>
+        <div className="mt-1.5 grid gap-2 sm:grid-cols-2">
+          {[0, 1, 2, 3].map((i) => (
+            <input
+              key={i}
+              name={`stat_${i}`}
+              maxLength={24}
+              defaultValue={stats[i] ?? ""}
+              placeholder={`e.g. ${statHints[i]}`}
+              className="block w-full rounded-sm border-ink/15 text-ink shadow-xs focus:border-blueprint focus:ring-blueprint"
+            />
+          ))}
+        </div>
+      </div>
+      <label className="block">
+        <span className={labelClass}>
+          Project page text{" "}
+          <span className="font-normal text-ink-400">
+            (paragraphs — leave a blank line between them)
+          </span>
+        </span>
+        <textarea
+          name="body"
+          rows={5}
+          defaultValue={project?.body ?? ""}
+          className={fieldClass}
+        />
+      </label>
     </div>
   );
 }
 
 export default async function ProjectsAdmin() {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("projects")
-    .select("*")
-    .order("sort_order", { ascending: true });
-  const projects = (data ?? []) as ProjectRow[];
+  const [{ data: projData }, { data: imgData }] = await Promise.all([
+    supabase
+      .from("projects")
+      .select("*")
+      .order("sort_order", { ascending: true }),
+    supabase
+      .from("project_images")
+      .select("*")
+      .order("sort_order", { ascending: true }),
+  ]);
+  const projects = (projData ?? []) as ProjectRow[];
+  const images = (imgData ?? []) as ImageRow[];
 
   return (
     <div>
@@ -103,7 +199,9 @@ export default async function ProjectsAdmin() {
       </p>
 
       <div className="mt-8 space-y-6">
-        {projects.map((p, i) => (
+        {projects.map((p, i) => {
+          const gallery = images.filter((im) => im.project_id === p.id);
+          return (
           <article
             key={p.id}
             className="rounded-lg border border-ink/10 bg-sand-light/50 p-6"
@@ -182,8 +280,111 @@ export default async function ProjectsAdmin() {
               <Fields project={p} />
               <SubmitButton className={saveClass}>Save details</SubmitButton>
             </form>
+
+            <div className="mt-5 border-t border-ink/10 pt-5">
+              <p className="font-heading text-sm font-medium text-ink">
+                Photo gallery
+              </p>
+              <p className="mt-0.5 text-xs text-ink-400">
+                Shown on the project page. Up to 4 sit inline; 5+ become a grid
+                with a lightbox.
+              </p>
+
+              {gallery.length > 0 && (
+                <ul className="mt-3 space-y-2">
+                  {gallery.map((im, gi) => (
+                    <li
+                      key={im.id}
+                      className="flex flex-wrap items-center gap-2 rounded-sm bg-white p-2"
+                    >
+                      <div className="relative h-14 w-20 flex-none overflow-hidden rounded-sm border border-ink/10">
+                        <Image
+                          src={im.image_url}
+                          alt=""
+                          fill
+                          sizes="80px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <form
+                        action={updateImageAlt}
+                        className="flex flex-1 items-center gap-2"
+                      >
+                        <input type="hidden" name="id" value={im.id} />
+                        <input
+                          name="alt"
+                          defaultValue={im.alt}
+                          maxLength={120}
+                          placeholder="Describe the photo (accessibility + SEO)"
+                          className="min-w-40 flex-1 rounded-sm border-ink/15 text-sm text-ink shadow-xs focus:border-blueprint focus:ring-blueprint"
+                        />
+                        <SubmitButton className="rounded-sm border border-ink/15 px-3 py-1.5 font-heading text-sm font-medium text-ink hover:bg-sand-light">
+                          Save
+                        </SubmitButton>
+                      </form>
+                      <div className="flex items-center gap-1">
+                        <form action={moveProjectImage}>
+                          <input type="hidden" name="id" value={im.id} />
+                          <input type="hidden" name="dir" value="up" />
+                          <button
+                            type="submit"
+                            disabled={gi === 0}
+                            aria-label="Move up"
+                            className={ctrlClass}
+                          >
+                            ↑
+                          </button>
+                        </form>
+                        <form action={moveProjectImage}>
+                          <input type="hidden" name="id" value={im.id} />
+                          <input type="hidden" name="dir" value="down" />
+                          <button
+                            type="submit"
+                            disabled={gi === gallery.length - 1}
+                            aria-label="Move down"
+                            className={ctrlClass}
+                          >
+                            ↓
+                          </button>
+                        </form>
+                        <form action={deleteProjectImage}>
+                          <input type="hidden" name="id" value={im.id} />
+                          <ConfirmButton
+                            message="Remove this photo?"
+                            className="rounded-sm border border-maroon/30 px-2.5 py-1 font-heading text-sm font-medium text-maroon hover:bg-maroon/5"
+                          >
+                            ✕
+                          </ConfirmButton>
+                        </form>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <form
+                action={addProjectImage}
+                className="mt-3 flex flex-wrap items-center gap-2"
+              >
+                <input type="hidden" name="project_id" value={p.id} />
+                <input
+                  type="file"
+                  name="file"
+                  accept="image/*"
+                  required
+                  className="text-sm text-ink-500 file:mr-3 file:rounded-sm file:border-0 file:bg-blueprint file:px-4 file:py-2 file:font-heading file:text-sm file:font-medium file:text-white hover:file:bg-blueprint-dark"
+                />
+                <SubmitButton
+                  pendingText="Uploading…"
+                  className="rounded-sm bg-blueprint px-4 py-2 font-heading text-sm font-medium text-white hover:bg-blueprint-dark disabled:opacity-60"
+                >
+                  Add photo
+                </SubmitButton>
+              </form>
+            </div>
           </article>
-        ))}
+          );
+        })}
       </div>
 
       {projects.length < MAX ? (

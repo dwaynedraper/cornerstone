@@ -9,6 +9,7 @@
 create table if not exists public.projects (
   id              uuid primary key default gen_random_uuid(),
   slug            text unique not null,
+  name            text not null default '',   -- full project title (detail-page H1)
   category        text not null default '',   -- card label / page eyebrow
   summary         text not null default '',    -- card caption / page lead
   location        text not null default '',
@@ -20,6 +21,9 @@ create table if not exists public.projects (
   sort_order      int not null default 0,
   updated_at      timestamptz not null default now()
 );
+
+-- Safe if you ran an earlier version of this file without the name column.
+alter table public.projects add column if not exists name text not null default '';
 
 create table if not exists public.project_images (
   id         uuid primary key default gen_random_uuid(),

@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import Reveal from "@/components/motion/Reveal";
 
 type ProjectItem = {
   id: string;
+  slug: string;
   src: string;
   alt: string;
   label: string;
@@ -12,6 +14,7 @@ type ProjectItem = {
 const defaultProjects: ProjectItem[] = [
   {
     id: "seed-subdivision",
+    slug: "",
     src: "/subdivision.jpg",
     alt: "Residential subdivision under construction in North Texas",
     label: "Residential Subdivision",
@@ -19,6 +22,7 @@ const defaultProjects: ProjectItem[] = [
   },
   {
     id: "seed-civil",
+    slug: "",
     src: "/engineer.jpg",
     alt: "Civil engineering site and construction plans",
     label: "Civil & Site Design",
@@ -26,6 +30,7 @@ const defaultProjects: ProjectItem[] = [
   },
   {
     id: "seed-survey",
+    slug: "",
     src: "/IMG_0854.jpg",
     alt: "Aerial view of a land development project",
     label: "Land & Boundary Survey",
@@ -35,9 +40,12 @@ const defaultProjects: ProjectItem[] = [
 
 export default function Projects({
   projects = defaultProjects,
+  workEnabled = false,
 }: {
   /** Cards to show. Defaults to the seed set in this file. */
   projects?: ProjectItem[];
+  /** When true (3+ published projects), cards link to their detail pages. */
+  workEnabled?: boolean;
 }) {
   return (
     <section className="bg-ink py-20 sm:py-28">
@@ -55,9 +63,9 @@ export default function Projects({
         </Reveal>
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((p, i) => (
-            <Reveal key={p.id} delay={i * 0.08}>
-              <figure className="group relative overflow-hidden rounded-md border border-white/10">
+          {projects.map((p, i) => {
+            const inner = (
+              <figure className="relative overflow-hidden rounded-md border border-white/10">
                 <div className="relative aspect-[4/3]">
                   <Image
                     src={p.src}
@@ -74,11 +82,38 @@ export default function Projects({
                   </p>
                   <p className="mt-0.5 text-sm text-gray-300">{p.caption}</p>
                 </figcaption>
-                <span aria-hidden className="absolute left-0 top-0 h-1 w-12 bg-amber" />
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-0 h-1 w-12 bg-amber"
+                />
               </figure>
-            </Reveal>
-          ))}
+            );
+            return (
+              <Reveal key={p.id} delay={i * 0.08}>
+                {workEnabled && p.slug ? (
+                  <Link href={`/work/${p.slug}`} className="group block">
+                    {inner}
+                  </Link>
+                ) : (
+                  <div className="group">{inner}</div>
+                )}
+              </Reveal>
+            );
+          })}
         </div>
+
+        {workEnabled && (
+          <Reveal>
+            <div className="mt-10">
+              <Link
+                href="/work"
+                className="inline-flex items-center gap-1.5 font-heading text-sm font-semibold text-amber transition-colors hover:text-amber-dark"
+              >
+                See all work →
+              </Link>
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );

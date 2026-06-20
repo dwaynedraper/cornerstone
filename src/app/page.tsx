@@ -11,7 +11,7 @@ import {
   getFaqs,
   getSiteCopy,
   getMedia,
-  getFeaturedProjects,
+  getPublishedProjects,
 } from "@/lib/content";
 
 // Statically rendered, refreshed every 5 min — and on demand when an admin
@@ -19,15 +19,18 @@ import {
 export const revalidate = 300;
 
 export default async function Home() {
-  const [services, whyPoints, faqs, copy, heroImage, featured] =
+  const [services, whyPoints, faqs, copy, heroImage, published] =
     await Promise.all([
       getServices(),
       getWhyPoints(),
       getFaqs(),
       getSiteCopy(),
       getMedia("hero"),
-      getFeaturedProjects(3),
+      getPublishedProjects(),
     ]);
+
+  const workEnabled = published.length >= 3;
+  const featuredProjects = published.length ? published.slice(0, 3) : undefined;
 
   const statItems = [
     { value: copy.statYears, label: "Years of experience" },
@@ -105,7 +108,7 @@ export default async function Home() {
       </section>
 
       <Services services={services} intro={copy.servicesIntro} />
-      <Projects projects={featured ?? undefined} />
+      <Projects projects={featuredProjects} workEnabled={workEnabled} />
       <WhyChooseUs points={whyPoints} />
       <Faq faqs={faqs} />
       <Cta />

@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import SiteChrome from "@/components/SiteChrome";
 import MotionProvider from "@/components/motion/MotionProvider";
 import { site } from "@/data/site";
+import { isWorkEnabled } from "@/lib/content";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -56,18 +57,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const workEnabled = await isWorkEnabled();
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${libreFranklin.variable} bg-paper font-body text-ink`}
       >
         <MotionProvider>
-          <SiteChrome header={<Header />} footer={<Footer />}>
+          <SiteChrome header={<Header showWork={workEnabled} />} footer={<Footer />}>
             {children}
           </SiteChrome>
         </MotionProvider>

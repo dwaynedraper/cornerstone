@@ -5,13 +5,13 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Services", href: "/services" },
-  { name: "About", href: "/about" },
-];
-
-export default function Header() {
+export default function Header({ showWork = false }: { showWork?: boolean }) {
+  const navigation = [
+    { name: "Home", href: "/" },
+    { name: "Services", href: "/services" },
+    ...(showWork ? [{ name: "Work", href: "/work" }] : []),
+    { name: "About", href: "/about" },
+  ];
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
