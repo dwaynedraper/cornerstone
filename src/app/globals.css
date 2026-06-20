@@ -35,15 +35,15 @@
 
 @utility blueprint-grid {
   background-image:
-    repeating-linear-gradient(0deg, rgba(27, 83, 144, 0.05) 0 1px, transparent 1px 40px),
-    repeating-linear-gradient(90deg, rgba(27, 83, 144, 0.05) 0 1px, transparent 1px 40px);
+    repeating-linear-gradient(0deg, rgba(18, 92, 186, 0.05) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(90deg, rgba(18, 92, 186, 0.05) 0 1px, transparent 1px 40px);
 }
 
 /* Slightly stronger grid for the (now near-white) Our Services section. */
 @utility blueprint-grid-strong {
   background-image:
-    repeating-linear-gradient(0deg, rgba(27, 83, 144, 0.08) 0 1px, transparent 1px 40px),
-    repeating-linear-gradient(90deg, rgba(27, 83, 144, 0.08) 0 1px, transparent 1px 40px);
+    repeating-linear-gradient(0deg, rgba(18, 92, 186, 0.08) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(90deg, rgba(18, 92, 186, 0.08) 0 1px, transparent 1px 40px);
 }
 
 @layer base {

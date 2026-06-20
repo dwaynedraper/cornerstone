@@ -19,7 +19,7 @@ export default function WhyChooseUs({
 }) {
   return (
     <section className="relative isolate overflow-hidden bg-paper py-20 sm:py-28">
-      <CadBackdrop className="text-blueprint opacity-10" />
+      <CadBackdrop className="text-[#1a64c8] opacity-10" />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal>
           <div>

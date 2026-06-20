@@ -5,19 +5,29 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import Faq from "@/components/Faq";
 import Cta from "@/components/Cta";
 import { site } from "@/data/site";
-import { getServices, getWhyPoints, getFaqs, getSiteCopy } from "@/lib/content";
+import {
+  getServices,
+  getWhyPoints,
+  getFaqs,
+  getSiteCopy,
+  getMedia,
+  getFeaturedProjects,
+} from "@/lib/content";
 
 // Statically rendered, refreshed every 5 min — and on demand when an admin
 // saves (the admin will call revalidatePath("/")).
 export const revalidate = 300;
 
 export default async function Home() {
-  const [services, whyPoints, faqs, copy] = await Promise.all([
-    getServices(),
-    getWhyPoints(),
-    getFaqs(),
-    getSiteCopy(),
-  ]);
+  const [services, whyPoints, faqs, copy, heroImage, featured] =
+    await Promise.all([
+      getServices(),
+      getWhyPoints(),
+      getFaqs(),
+      getSiteCopy(),
+      getMedia("hero"),
+      getFeaturedProjects(3),
+    ]);
 
   const statItems = [
     { value: copy.statYears, label: "Years of experience" },
@@ -71,6 +81,7 @@ export default async function Home() {
         statStates={copy.statStates}
         phone={copy.contactPhone}
         phoneDisplay={copy.contactPhoneDisplay}
+        imageSrc={heroImage ?? undefined}
       />
 
       {/* Credentials / stats band */}
@@ -94,7 +105,7 @@ export default async function Home() {
       </section>
 
       <Services services={services} intro={copy.servicesIntro} />
-      <Projects />
+      <Projects projects={featured ?? undefined} />
       <WhyChooseUs points={whyPoints} />
       <Faq faqs={faqs} />
       <Cta />

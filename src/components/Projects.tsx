@@ -1,20 +1,31 @@
 import Image from "next/image";
 import Reveal from "@/components/motion/Reveal";
 
-const projects = [
+type ProjectItem = {
+  id: string;
+  src: string;
+  alt: string;
+  label: string;
+  caption: string;
+};
+
+const defaultProjects: ProjectItem[] = [
   {
+    id: "seed-subdivision",
     src: "/subdivision.jpg",
     alt: "Residential subdivision under construction in North Texas",
     label: "Residential Subdivision",
     caption: "Site design through build-ready lots",
   },
   {
+    id: "seed-civil",
     src: "/engineer.jpg",
     alt: "Civil engineering site and construction plans",
     label: "Civil & Site Design",
     caption: "Grading, drainage, and construction plans",
   },
   {
+    id: "seed-survey",
     src: "/IMG_0854.jpg",
     alt: "Aerial view of a land development project",
     label: "Land & Boundary Survey",
@@ -22,7 +33,12 @@ const projects = [
   },
 ];
 
-export default function Projects() {
+export default function Projects({
+  projects = defaultProjects,
+}: {
+  /** Cards to show. Defaults to the seed set in this file. */
+  projects?: ProjectItem[];
+}) {
   return (
     <section className="bg-ink py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -40,7 +56,7 @@ export default function Projects() {
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, i) => (
-            <Reveal key={p.label} delay={i * 0.08}>
+            <Reveal key={p.id} delay={i * 0.08}>
               <figure className="group relative overflow-hidden rounded-md border border-white/10">
                 <div className="relative aspect-[4/3]">
                   <Image

@@ -26,6 +26,8 @@ export default function PanelLayout({
                 { href: "/admin/why", label: "Why" },
                 { href: "/admin/faq", label: "FAQ" },
                 { href: "/admin/settings", label: "Site text" },
+                { href: "/admin/media", label: "Photos" },
+                { href: "/admin/projects", label: "Projects" },
               ].map((item) => (
                 <Link
                   key={item.href}

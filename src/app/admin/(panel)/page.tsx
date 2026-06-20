@@ -9,6 +9,18 @@ const sections = [
     ready: true,
   },
   {
+    name: "Photos",
+    href: "/admin/media",
+    description: "Swap the hero photo (more slots arrive with projects).",
+    ready: true,
+  },
+  {
+    name: "Projects",
+    href: "/admin/projects",
+    description: "Your portfolio cards (full project pages coming next).",
+    ready: true,
+  },
+  {
     name: "Team",
     href: "/admin/team",
     description: "People and groups on the About page.",

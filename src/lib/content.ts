@@ -245,3 +245,59 @@ export const getSiteCopy = cache(async (): Promise<SiteCopy> => {
     addressDisplay: `${street}, ${city}, ${state} ${zip}`,
   };
 });
+
+/** Current image URL for a named slot (e.g. "hero"), or null if none set yet.
+ *  Callers fall back to the bundled image in /public. */
+export const getMedia = cache(async (slot: string): Promise<string | null> => {
+  try {
+    const { data, error } = await createPublicClient()
+      .from("media")
+      .select("image_url")
+      .eq("slot", slot)
+      .maybeSingle();
+    if (error || !data) return null;
+    return (data as { image_url: string }).image_url;
+  } catch {
+    return null;
+  }
+});
+
+export type ProjectCard = {
+  id: string;
+  src: string;
+  alt: string;
+  label: string;
+  caption: string;
+};
+
+/** Top published projects for the homepage "Selected Work". Returns null on
+ *  error/empty so the component falls back to its built-in cards. */
+export const getFeaturedProjects = cache(
+  async (limit = 3): Promise<ProjectCard[] | null> => {
+    try {
+      const { data, error } = await createPublicClient()
+        .from("projects")
+        .select("id,category,summary,cover_image_url")
+        .eq("is_published", true)
+        .order("sort_order", { ascending: true })
+        .limit(limit);
+      if (error || !data?.length) return null;
+      return (
+        data as {
+          id: string;
+          category: string;
+          summary: string;
+          cover_image_url: string | null;
+        }[]
+      ).map((r) => ({
+        id: r.id,
+        src: r.cover_image_url ?? "/IMG_0854.jpg",
+        alt: r.category,
+        label: r.category,
+        caption: r.summary,
+      }));
+    } catch {
+      return null;
+    }
+  },
+);

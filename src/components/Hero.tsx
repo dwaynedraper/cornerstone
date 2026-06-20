@@ -14,6 +14,7 @@ export default function Hero({
   statStates = "15+",
   phone = "+18179406027",
   phoneDisplay = "(817) 940-6027",
+  imageSrc = "/IMG_0854.jpg",
 }: {
   eyebrow?: string;
   headline?: string;
@@ -22,13 +23,14 @@ export default function Hero({
   statStates?: string;
   phone?: string;
   phoneDisplay?: string;
+  imageSrc?: string;
 }) {
   return (
     <section className="relative isolate overflow-hidden bg-ink">
       {/* Full-bleed project photo */}
       <div aria-hidden className="absolute inset-0">
         <Image
-          src="/IMG_0854.jpg"
+          src={imageSrc}
           alt=""
           fill
           priority
