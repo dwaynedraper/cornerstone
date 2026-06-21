@@ -51,13 +51,15 @@ type MemberRow = {
 
 type SettingRow = { key: string; value: string };
 
-export const getServices = cache(async (): Promise<Service[]> => {
-  try {
-    const { data, error } = await createPublicClient()
-      .from("services")
-      .select("slug,name,icon,summary,detail")
-      .eq("is_published", true)
-      .order("sort_order", { ascending: true });
+export const getServices = cache(
+  async (page: string = "home"): Promise<Service[]> => {
+    try {
+      const { data, error } = await createPublicClient()
+        .from("services")
+        .select("slug,name,icon,summary,detail")
+        .eq("is_published", true)
+        .eq("page", page)
+        .order("sort_order", { ascending: true });
     if (error || !data?.length) return fallbackServices;
     return (data as ServiceRow[]).map((r) => ({
       id: r.slug,
@@ -182,6 +184,8 @@ export type SiteCopy = {
   contactPhoneDisplay: string;
   contactEmail: string;
   addressDisplay: string;
+  servicesPageHeading: string;
+  servicesPageIntro: string;
 };
 
 export const getSiteCopy = cache(async (): Promise<SiteCopy> => {
@@ -243,6 +247,14 @@ export const getSiteCopy = cache(async (): Promise<SiteCopy> => {
     contactPhoneDisplay: pick("contact_phone_display", site.phoneDisplay),
     contactEmail: pick("contact_email", site.email),
     addressDisplay: `${street}, ${city}, ${state} ${zip}`,
+    servicesPageHeading: pick(
+      "services_page_heading",
+      "Engineering and surveying for North Texas development",
+    ),
+    servicesPageIntro: pick(
+      "services_page_intro",
+      "From raw land to recorded, build-ready lots, we handle the engineering and surveying that keeps residential development moving — under one roof.",
+    ),
   };
 });
 

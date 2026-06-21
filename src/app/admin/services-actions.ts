@@ -27,8 +27,11 @@ function cleanIcon(value: FormDataEntryValue | null) {
   return (ICONS as readonly string[]).includes(v) ? v : "civil";
 }
 
-/** Verify the caller is signed in; bounce to login if not. Returns a client
- *  carrying their session, so writes run under RLS as that user. */
+/** Which page's list this row belongs to: the home section or the /services page. */
+function cleanPage(value: FormDataEntryValue | null) {
+  return String(value ?? "") === "services" ? "services" : "home";
+}
+
 async function requireClient() {
   const supabase = await createClient();
   const {
@@ -38,21 +41,23 @@ async function requireClient() {
   return supabase;
 }
 
-/** Refresh every page that renders services so edits show up immediately. */
 function refresh() {
   revalidatePath("/");
   revalidatePath("/services");
   revalidatePath("/admin/services");
+  revalidatePath("/admin/services-page");
 }
 
 export async function createService(formData: FormData) {
   const supabase = await requireClient();
   const name = String(formData.get("name") ?? "").trim();
   if (!name) return;
+  const page = cleanPage(formData.get("page"));
 
   const { data: last } = await supabase
     .from("services")
     .select("sort_order")
+    .eq("page", page)
     .order("sort_order", { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -65,6 +70,7 @@ export async function createService(formData: FormData) {
     summary: String(formData.get("summary") ?? "").trim(),
     detail: String(formData.get("detail") ?? "").trim(),
     sort_order: nextOrder,
+    page,
   });
   refresh();
 }
@@ -100,9 +106,19 @@ export async function moveService(formData: FormData) {
   const dir = String(formData.get("dir") ?? "");
   if (!id || (dir !== "up" && dir !== "down")) return;
 
+  // Only reorder within the same page's list.
+  const { data: me } = await supabase
+    .from("services")
+    .select("page")
+    .eq("id", id)
+    .maybeSingle();
+  if (!me) return;
+  const page = (me as { page: string }).page;
+
   const { data } = await supabase
     .from("services")
     .select("id,sort_order")
+    .eq("page", page)
     .order("sort_order", { ascending: true });
   if (!data) return;
   const list = data as { id: string; sort_order: number }[];

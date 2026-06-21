@@ -80,8 +80,23 @@ export const CONTACT_FIELDS: SettingGroup[] = [
   },
 ];
 
+export const SERVICES_PAGE_TEXT: SettingGroup[] = [
+  {
+    title: "Services page",
+    fields: [
+      { key: "services_page_heading", label: "Heading" },
+      {
+        key: "services_page_intro",
+        label: "Intro paragraph",
+        multiline: true,
+      },
+    ],
+  },
+];
+
 export const SETTINGS_KEYS: string[] = [
   ...HOME_TEXT,
   ...ABOUT_TEXT,
+  ...SERVICES_PAGE_TEXT,
   ...CONTACT_FIELDS,
 ].flatMap((g) => g.fields.map((f) => f.key));

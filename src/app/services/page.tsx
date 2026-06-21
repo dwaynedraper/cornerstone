@@ -7,7 +7,7 @@ import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
 import Cta from "@/components/Cta";
 import { type Service } from "@/data/services";
-import { getServices } from "@/lib/content";
+import { getServices, getSiteCopy } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -27,7 +27,10 @@ const ICONS: Record<Service["icon"], IconType> = {
 export const revalidate = 300;
 
 export default async function ServicesPage() {
-  const services = await getServices();
+  const [services, copy] = await Promise.all([
+    getServices("services"),
+    getSiteCopy(),
+  ]);
   return (
     <div>
       <section className="relative isolate overflow-hidden bg-paper">
@@ -37,13 +40,11 @@ export default async function ServicesPage() {
             What we do
           </p>
           <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-            Engineering and surveying for North Texas development
+            {copy.servicesPageHeading}
           </h1>
           <div className="mt-5 h-0.5 w-16 bg-amber" />
           <p className="mt-7 max-w-2xl text-lg leading-8 text-ink-500">
-            From raw land to recorded, build-ready lots, we handle the
-            engineering and surveying that keeps residential development moving —
-            under one roof.
+            {copy.servicesPageIntro}
           </p>
         </div>
       </section>
