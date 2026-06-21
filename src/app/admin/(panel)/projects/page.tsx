@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { SubmitButton, ConfirmButton } from "@/components/admin/FormButtons";
 import ImageUpload from "@/components/admin/ImageUpload";
 import AdminPage from "@/components/admin/AdminPage";
+import Tour, { type TourStep } from "@/components/admin/Tour";
 import {
   createProject,
   updateProject,
@@ -48,6 +49,38 @@ const ctrlClass =
   "rounded-sm border border-ink/15 px-2.5 py-1 text-ink-500 hover:bg-sand-light disabled:opacity-30";
 
 const statHints = ["120 acres", "450 lots", "Platted 2023", "18 months"];
+
+const projectsSteps: TourStep[] = [
+  {
+    title: "Your portfolio",
+    text: "This is where your projects live, each with its own page on the site. Quick walkthrough — it shows once.",
+  },
+  {
+    selector: '[data-tour="project"]',
+    title: "One card per project",
+    text: "Edit the details, set a cover photo, and add gallery photos right here. The arrows reorder them — your top three show on the home page.",
+    side: "top",
+  },
+  {
+    selector: '[data-tour="project"]',
+    title: "Draft vs. Published",
+    text: "New projects start as a private Draft. Hit Publish when it's ready — only published projects appear on your site.",
+    side: "top",
+  },
+  {
+    selector: '[data-tour="add"]',
+    title: "Add a project",
+    text: "Start a new one here. Keep it to your best nine — a tight portfolio always looks stronger.",
+    side: "top",
+  },
+  {
+    selector: '[data-tour="help"]',
+    title: "Replay anytime",
+    text: "This button brings the walkthrough back whenever you need it.",
+    side: "left",
+    align: "end",
+  },
+];
 
 function Fields({ project }: { project?: ProjectRow }) {
   const stats = Array.isArray(project?.key_stats)
@@ -191,6 +224,7 @@ export default async function ProjectsAdmin() {
           return (
           <article
             key={p.id}
+            data-tour={i === 0 ? "project" : undefined}
             className="rounded-lg border border-ink/10 bg-sand-light/50 p-6"
           >
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -375,7 +409,10 @@ export default async function ProjectsAdmin() {
       </div>
 
       {projects.length < MAX ? (
-        <div className="mt-8 rounded-lg border border-dashed border-blueprint/30 bg-blueprint-50/40 p-6">
+        <div
+          data-tour="add"
+          className="mt-8 rounded-lg border border-dashed border-blueprint/30 bg-blueprint-50/40 p-6"
+        >
           <h2 className="font-heading text-lg font-semibold text-ink">
             Add a project
           </h2>
@@ -395,6 +432,8 @@ export default async function ProjectsAdmin() {
           another. A tight, curated set always shows better than a long list.
         </p>
       )}
+
+      <Tour tourId="projects" steps={projectsSteps} />
     </AdminPage>
   );
 }

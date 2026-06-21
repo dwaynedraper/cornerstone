@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton, ConfirmButton } from "@/components/admin/FormButtons";
 import AdminPage from "@/components/admin/AdminPage";
+import Tour, { type TourStep } from "@/components/admin/Tour";
 import {
   createGroup,
   updateGroup,
@@ -31,6 +32,32 @@ const ctrlClass =
 const deleteClass =
   "rounded-sm border border-maroon/30 px-3 py-1 font-heading text-sm font-medium text-maroon hover:bg-maroon/5";
 
+const teamSteps: TourStep[] = [
+  {
+    title: "Your team",
+    text: "People are organized into groups — the headings on your About page. Quick walkthrough — it shows once.",
+  },
+  {
+    selector: '[data-tour="group"]',
+    title: "Groups & people",
+    text: "Rename or reorder a group up top, then add and edit the people inside it. Arrows reorder; the trash removes.",
+    side: "top",
+  },
+  {
+    selector: '[data-tour="add-group"]',
+    title: "Add a group",
+    text: "Need a whole new section, like a new department? Add it here.",
+    side: "top",
+  },
+  {
+    selector: '[data-tour="help"]',
+    title: "Replay anytime",
+    text: "This button brings the walkthrough back whenever you need it.",
+    side: "left",
+    align: "end",
+  },
+];
+
 export default async function TeamAdmin() {
   const supabase = await createClient();
   const [{ data: groupData }, { data: memberData }] = await Promise.all([
@@ -55,6 +82,7 @@ export default async function TeamAdmin() {
           return (
             <section
               key={g.id}
+              data-tour={gi === 0 ? "group" : undefined}
               className="rounded-lg border border-ink/10 bg-white p-6 shadow-xs"
             >
               {/* Group header */}
@@ -219,7 +247,10 @@ export default async function TeamAdmin() {
       </div>
 
       {/* Add group */}
-      <div className="mt-8 rounded-lg border border-dashed border-blueprint/30 bg-blueprint-50/40 p-6">
+      <div
+        data-tour="add-group"
+        className="mt-8 rounded-lg border border-dashed border-blueprint/30 bg-blueprint-50/40 p-6"
+      >
         <h2 className="font-heading text-lg font-semibold text-ink">
           Add a group
         </h2>
@@ -241,6 +272,8 @@ export default async function TeamAdmin() {
           </SubmitButton>
         </form>
       </div>
+
+      <Tour tourId="team" steps={teamSteps} />
     </AdminPage>
   );
 }

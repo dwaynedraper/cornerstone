@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { accents } from "@/components/admin/AdminPage";
+import Tour, { type TourStep } from "@/components/admin/Tour";
 
 const groups = [
   {
@@ -106,6 +107,36 @@ const groups = [
   },
 ];
 
+const dashboardSteps: TourStep[] = [
+  {
+    title: "Welcome to your control center",
+    text: "This is where you edit your whole site. Quick tour — it only pops up the first time.",
+  },
+  {
+    selector: '[data-tour="category"]',
+    title: "Grouped by page",
+    text: "Everything's organized by the page it lives on. This block is your home page; the ones below are About, Work, and more.",
+  },
+  {
+    selector: '[data-tour="card"]',
+    title: "Click to edit",
+    text: "Open any card to edit that piece. Each one says exactly what's inside, so you're never guessing.",
+  },
+  {
+    selector: '[data-tour="view-site"]',
+    title: "See your live site",
+    text: "Open your real website anytime — changes show up within seconds of saving.",
+    align: "end",
+  },
+  {
+    selector: '[data-tour="help"]',
+    title: "Need a refresher?",
+    text: "This button replays the walkthrough whenever you want, on any page that has one.",
+    side: "left",
+    align: "end",
+  },
+];
+
 export default async function AdminDashboard() {
   const supabase = await createClient();
   const {
@@ -128,11 +159,12 @@ export default async function AdminDashboard() {
       </p>
 
       <div className="mt-10 space-y-8">
-        {groups.map((group) => {
+        {groups.map((group, gi) => {
           const accent = accents[group.accent];
           return (
             <section
               key={group.heading}
+              data-tour={gi === 0 ? "category" : undefined}
               className="relative overflow-hidden rounded-xl border border-ink/10 shadow-xs"
             >
               {/* full-height colored spine */}
@@ -150,10 +182,11 @@ export default async function AdminDashboard() {
               </div>
 
               <div className="grid grid-cols-1 gap-4 bg-white p-6 pl-7 sm:grid-cols-2">
-                {group.items.map((item) => (
+                {group.items.map((item, ii) => (
                   <Link
                     key={item.name}
                     href={item.href}
+                    data-tour={gi === 0 && ii === 0 ? "card" : undefined}
                     className="group rounded-lg border border-ink/10 bg-white p-5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-blueprint/40 hover:shadow-md"
                   >
                     <h3 className="font-heading text-base font-semibold text-ink group-hover:text-blueprint">
@@ -172,6 +205,8 @@ export default async function AdminDashboard() {
           );
         })}
       </div>
+
+      <Tour tourId="dashboard" steps={dashboardSteps} />
     </div>
   );
 }

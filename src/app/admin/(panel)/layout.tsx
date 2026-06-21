@@ -20,6 +20,7 @@ export default function PanelLayout({
           <div className="flex items-center gap-3">
             <a
               href="/"
+              data-tour="view-site"
               target="_blank"
               rel="noreferrer"
               className="hidden font-heading text-sm font-medium text-ink-500 transition-colors hover:text-blueprint sm:inline"
