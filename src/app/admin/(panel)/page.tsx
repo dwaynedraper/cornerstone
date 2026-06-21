@@ -1,11 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-
-const accents: Record<string, { bar: string; bg: string }> = {
-  blueprint: { bar: "bg-blueprint", bg: "bg-blueprint-50" },
-  amber: { bar: "bg-amber", bg: "bg-amber-50" },
-  neutral: { bar: "bg-ink/40", bg: "bg-sand" },
-};
+import { accents } from "@/components/admin/AdminPage";
 
 const groups = [
   {

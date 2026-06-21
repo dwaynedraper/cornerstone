@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton, ConfirmButton } from "@/components/admin/FormButtons";
+import AdminPage from "@/components/admin/AdminPage";
 import {
   createService,
   updateService,
@@ -98,10 +98,12 @@ export default async function ServicesEditor({
   page,
   title,
   description,
+  accent = "blueprint",
 }: {
   page: string;
   title: string;
   description: string;
+  accent?: string;
 }) {
   const supabase = await createClient();
   const { data } = await supabase
@@ -112,21 +114,8 @@ export default async function ServicesEditor({
   const services = (data ?? []) as ServiceRow[];
 
   return (
-    <div>
-      <Link
-        href="/admin"
-        className="font-heading text-sm font-medium text-blueprint hover:text-blueprint-dark"
-      >
-        ← Dashboard
-      </Link>
-
-      <h1 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-ink">
-        {title}
-      </h1>
-      <div className="mt-4 h-0.5 w-16 bg-amber" />
-      <p className="mt-4 max-w-2xl text-ink-500">{description}</p>
-
-      <div className="mt-8 space-y-5">
+    <AdminPage title={title} description={description} accent={accent}>
+      <div className="space-y-5">
         {services.map((s, i) => (
           <article
             key={s.id}
@@ -194,6 +183,6 @@ export default async function ServicesEditor({
           </SubmitButton>
         </form>
       </div>
-    </div>
+    </AdminPage>
   );
 }

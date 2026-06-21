@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton, ConfirmButton } from "@/components/admin/FormButtons";
+import AdminPage from "@/components/admin/AdminPage";
 import { createWhy, updateWhy, deleteWhy, moveWhy } from "./actions";
 
 type WhyRow = {
@@ -76,24 +76,12 @@ export default async function WhyAdmin() {
   const points = (data ?? []) as WhyRow[];
 
   return (
-    <div>
-      <Link
-        href="/admin"
-        className="font-heading text-sm font-medium text-blueprint hover:text-blueprint-dark"
-      >
-        ← Dashboard
-      </Link>
-
-      <h1 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-ink">
-        Why Choose Us
-      </h1>
-      <div className="mt-4 h-0.5 w-16 bg-amber" />
-      <p className="mt-4 max-w-2xl text-ink-500">
-        The value points on the home page. Edit and Save, reorder with the
-        arrows, or add a new one below.
-      </p>
-
-      <div className="mt-8 space-y-5">
+    <AdminPage
+      title="Why choose us"
+      description="The value points on the home page. Edit and Save, reorder with the arrows, or add a new one below."
+      accent="blueprint"
+    >
+      <div className="space-y-5">
         {points.map((p, i) => (
           <article
             key={p.id}
@@ -160,6 +148,6 @@ export default async function WhyAdmin() {
           </SubmitButton>
         </form>
       </div>
-    </div>
+    </AdminPage>
   );
 }

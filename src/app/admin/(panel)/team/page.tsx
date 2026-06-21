@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton, ConfirmButton } from "@/components/admin/FormButtons";
+import AdminPage from "@/components/admin/AdminPage";
 import {
   createGroup,
   updateGroup,
@@ -44,25 +44,12 @@ export default async function TeamAdmin() {
   const members = (memberData ?? []) as MemberRow[];
 
   return (
-    <div>
-      <Link
-        href="/admin"
-        className="font-heading text-sm font-medium text-blueprint hover:text-blueprint-dark"
-      >
-        ← Dashboard
-      </Link>
-
-      <h1 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-ink">
-        Team
-      </h1>
-      <div className="mt-4 h-0.5 w-16 bg-amber" />
-      <p className="mt-4 max-w-2xl text-ink-500">
-        People are organized into groups (the headings on the About page). Edit
-        a person and Save, reorder with the arrows, or add people and groups
-        below.
-      </p>
-
-      <div className="mt-8 space-y-6">
+    <AdminPage
+      title="Team"
+      description="People are organized into groups (the headings on the About page). Edit a person and Save, reorder with the arrows, or add people and groups below."
+      accent="blueprint"
+    >
+      <div className="space-y-6">
         {groups.map((g, gi) => {
           const groupMembers = members.filter((m) => m.group_id === g.id);
           return (
@@ -254,6 +241,6 @@ export default async function TeamAdmin() {
           </SubmitButton>
         </form>
       </div>
-    </div>
+    </AdminPage>
   );
 }

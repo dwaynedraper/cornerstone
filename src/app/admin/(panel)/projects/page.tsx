@@ -1,8 +1,8 @@
-import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton, ConfirmButton } from "@/components/admin/FormButtons";
 import ImageUpload from "@/components/admin/ImageUpload";
+import AdminPage from "@/components/admin/AdminPage";
 import {
   createProject,
   updateProject,
@@ -180,25 +180,12 @@ export default async function ProjectsAdmin() {
   const images = (imgData ?? []) as ImageRow[];
 
   return (
-    <div>
-      <Link
-        href="/admin"
-        className="font-heading text-sm font-medium text-blueprint hover:text-blueprint-dark"
-      >
-        ← Dashboard
-      </Link>
-
-      <h1 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-ink">
-        Projects
-      </h1>
-      <div className="mt-4 h-0.5 w-16 bg-amber" />
-      <p className="mt-4 max-w-2xl text-ink-500">
-        Your portfolio. The top published projects show on the home page; use
-        the arrows to choose their order. New projects start as a draft (hidden)
-        until you publish them. Up to nine — pick your best work.
-      </p>
-
-      <div className="mt-8 space-y-6">
+    <AdminPage
+      title="Projects"
+      description="Your portfolio. The top published projects show on the home page; use the arrows to choose their order. New projects start as a draft (hidden) until you publish them. Up to nine — pick your best work."
+      accent="amber"
+    >
+      <div className="space-y-6">
         {projects.map((p, i) => {
           const gallery = images.filter((im) => im.project_id === p.id);
           return (
@@ -408,6 +395,6 @@ export default async function ProjectsAdmin() {
           another. A tight, curated set always shows better than a long list.
         </p>
       )}
-    </div>
+    </AdminPage>
   );
 }

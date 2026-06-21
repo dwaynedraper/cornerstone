@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton } from "@/components/admin/FormButtons";
+import AdminPage from "@/components/admin/AdminPage";
 import { saveSettings } from "@/app/admin/settings-actions";
 import type { SettingGroup } from "@/lib/settings-fields";
 
@@ -13,10 +13,12 @@ export default async function SettingsForm({
   title,
   description,
   groups,
+  accent = "blueprint",
 }: {
   title: string;
   description: string;
   groups: SettingGroup[];
+  accent?: string;
 }) {
   const supabase = await createClient();
   const { data } = await supabase.from("site_settings").select("key,value");
@@ -28,21 +30,8 @@ export default async function SettingsForm({
   );
 
   return (
-    <div>
-      <Link
-        href="/admin"
-        className="font-heading text-sm font-medium text-blueprint hover:text-blueprint-dark"
-      >
-        ← Dashboard
-      </Link>
-
-      <h1 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-ink">
-        {title}
-      </h1>
-      <div className="mt-4 h-0.5 w-16 bg-amber" />
-      <p className="mt-4 max-w-2xl text-ink-500">{description}</p>
-
-      <form action={saveSettings} className="mt-8 space-y-6">
+    <AdminPage title={title} description={description} accent={accent}>
+      <form action={saveSettings} className="space-y-6">
         {groups.map((group) => (
           <fieldset
             key={group.title}
@@ -92,6 +81,6 @@ export default async function SettingsForm({
           </SubmitButton>
         </div>
       </form>
-    </div>
+    </AdminPage>
   );
 }

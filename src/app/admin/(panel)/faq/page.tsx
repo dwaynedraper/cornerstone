@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton, ConfirmButton } from "@/components/admin/FormButtons";
+import AdminPage from "@/components/admin/AdminPage";
 import { createFaq, updateFaq, deleteFaq, moveFaq } from "./actions";
 
 type FaqRow = {
@@ -53,24 +53,12 @@ export default async function FaqAdmin() {
   const faqs = (data ?? []) as FaqRow[];
 
   return (
-    <div>
-      <Link
-        href="/admin"
-        className="font-heading text-sm font-medium text-blueprint hover:text-blueprint-dark"
-      >
-        ← Dashboard
-      </Link>
-
-      <h1 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-ink">
-        FAQ
-      </h1>
-      <div className="mt-4 h-0.5 w-16 bg-amber" />
-      <p className="mt-4 max-w-2xl text-ink-500">
-        Questions and answers on the home page. These also power the FAQ results
-        Google can show. Edit and Save, reorder, or add a new one below.
-      </p>
-
-      <div className="mt-8 space-y-5">
+    <AdminPage
+      title="FAQ"
+      description="Questions and answers on the home page. These also power the FAQ results Google can show. Edit and Save, reorder, or add a new one below."
+      accent="blueprint"
+    >
+      <div className="space-y-5">
         {faqs.map((f, i) => (
           <article
             key={f.id}
@@ -137,6 +125,6 @@ export default async function FaqAdmin() {
           </SubmitButton>
         </form>
       </div>
-    </div>
+    </AdminPage>
   );
 }
