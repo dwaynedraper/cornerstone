@@ -80,8 +80,6 @@ export default async function Home() {
         eyebrow={copy.heroEyebrow}
         headline={copy.heroHeadline}
         subhead={copy.heroSubhead}
-        statYears={copy.statYears}
-        statStates={copy.statStates}
         phone={copy.contactPhone}
         phoneDisplay={copy.contactPhoneDisplay}
         imageSrc={heroImage ?? undefined}

@@ -1,14 +1,23 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton } from "@/components/admin/FormButtons";
-import { saveSettings } from "./actions";
-import { SETTINGS_GROUPS } from "./fields";
+import { saveSettings } from "@/app/admin/settings-actions";
+import type { SettingGroup } from "@/lib/settings-fields";
 
 const fieldClass =
   "mt-1.5 block w-full rounded-sm border-ink/15 text-ink shadow-xs focus:border-blueprint focus:ring-blueprint";
 const labelClass = "font-heading text-sm font-medium text-ink";
 
-export default async function SettingsAdmin() {
+/** Renders a Save-all form for a set of site_settings field groups. */
+export default async function SettingsForm({
+  title,
+  description,
+  groups,
+}: {
+  title: string;
+  description: string;
+  groups: SettingGroup[];
+}) {
   const supabase = await createClient();
   const { data } = await supabase.from("site_settings").select("key,value");
   const values = new Map<string, string>(
@@ -28,16 +37,13 @@ export default async function SettingsAdmin() {
       </Link>
 
       <h1 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-ink">
-        Site text &amp; contact
+        {title}
       </h1>
       <div className="mt-4 h-0.5 w-16 bg-amber" />
-      <p className="mt-4 max-w-2xl text-ink-500">
-        Wording and contact details used across the site. Make your changes and
-        press Save once at the bottom — everything updates together.
-      </p>
+      <p className="mt-4 max-w-2xl text-ink-500">{description}</p>
 
       <form action={saveSettings} className="mt-8 space-y-6">
-        {SETTINGS_GROUPS.map((group) => (
+        {groups.map((group) => (
           <fieldset
             key={group.title}
             className="rounded-lg border border-ink/10 bg-white p-6 shadow-xs"
@@ -51,7 +57,10 @@ export default async function SettingsAdmin() {
                   <span className={labelClass}>
                     {f.label}
                     {f.hint && (
-                      <span className="font-normal text-ink-400"> — {f.hint}</span>
+                      <span className="font-normal text-ink-400">
+                        {" "}
+                        — {f.hint}
+                      </span>
                     )}
                   </span>
                   {f.multiline ? (

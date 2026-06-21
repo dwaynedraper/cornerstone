@@ -10,8 +10,6 @@ export default function Hero({
   eyebrow = "Civil Engineering + Land Surveying · North Texas",
   headline = "Cornerstone Engineering & Surveying",
   subhead = "We take raw land to recorded, build-ready lots — and keep your pipeline moving for the next phase.",
-  statYears = "25+",
-  statStates = "15+",
   phone = "+18179406027",
   phoneDisplay = "(817) 940-6027",
   imageSrc = "/IMG_0854.jpg",
@@ -19,8 +17,6 @@ export default function Hero({
   eyebrow?: string;
   headline?: string;
   subhead?: string;
-  statYears?: string;
-  statStates?: string;
   phone?: string;
   phoneDisplay?: string;
   imageSrc?: string;
@@ -100,19 +96,6 @@ export default function Hero({
               <PhoneIcon className="h-4 w-4 text-amber" aria-hidden />
               {phoneDisplay}
             </a>
-          </m.div>
-
-          <m.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
-            className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-gray-200"
-          >
-            <span className="border-l-2 border-amber pl-3">{statYears} years</span>
-            <span className="border-l-2 border-amber pl-3">
-              Licensed in {statStates} states
-            </span>
-            <span className="border-l-2 border-amber pl-3">North Texas</span>
           </m.div>
         </div>
       </div>

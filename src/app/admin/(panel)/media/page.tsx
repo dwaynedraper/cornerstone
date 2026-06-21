@@ -16,12 +16,13 @@ export default async function MediaAdmin() {
       </Link>
 
       <h1 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-ink">
-        Photos
+        Hero photo
       </h1>
       <div className="mt-4 h-0.5 w-16 bg-amber" />
       <p className="mt-4 max-w-2xl text-ink-500">
-        Swap the photos used across the site. Upload any size — we compress and
-        optimize automatically, and the change appears live within a few seconds.
+        The full-width photo at the top of the home page. Upload any size — we
+        compress and optimize it automatically, and the change appears live
+        within a few seconds. (Project photos are managed inside Projects.)
       </p>
 
       <div className="mt-8 space-y-6">

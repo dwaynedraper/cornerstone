@@ -10,35 +10,24 @@ export type SettingGroup = {
   fields: SettingField[];
 };
 
-/** Single source of truth for the editable copy/contact fields. The editor
- *  renders these; the save action saves exactly these keys. */
-export const SETTINGS_GROUPS: SettingGroup[] = [
+/** Editable copy, organized by the page it appears on. */
+
+export const HOME_TEXT: SettingGroup[] = [
   {
-    title: "Contact",
-    fields: [
-      { key: "contact_phone_display", label: "Phone (as shown on the site)" },
-      {
-        key: "contact_phone",
-        label: "Phone (tap-to-call)",
-        hint: "Digits with country code, e.g. +18179406027",
-      },
-      { key: "contact_email", label: "Email" },
-      { key: "address_street", label: "Street address" },
-      { key: "address_city", label: "City" },
-      { key: "address_state", label: "State" },
-      { key: "address_zip", label: "ZIP" },
-    ],
-  },
-  {
-    title: "Home page",
+    title: "Hero",
     fields: [
       {
         key: "hero_eyebrow",
-        label: "Hero eyebrow",
+        label: "Eyebrow",
         hint: "Small line above the name",
       },
-      { key: "hero_headline", label: "Hero headline" },
-      { key: "hero_subhead", label: "Hero sub-headline", multiline: true },
+      { key: "hero_headline", label: "Headline" },
+      { key: "hero_subhead", label: "Sub-headline", multiline: true },
+    ],
+  },
+  {
+    title: "Stats bar & services intro",
+    fields: [
       { key: "stat_years", label: "Stat — years", hint: "e.g. 25+" },
       { key: "stat_states", label: "Stat — states", hint: "e.g. 15+" },
       {
@@ -48,6 +37,9 @@ export const SETTINGS_GROUPS: SettingGroup[] = [
       },
     ],
   },
+];
+
+export const ABOUT_TEXT: SettingGroup[] = [
   {
     title: "About page",
     fields: [
@@ -69,6 +61,27 @@ export const SETTINGS_GROUPS: SettingGroup[] = [
   },
 ];
 
-export const SETTINGS_KEYS: string[] = SETTINGS_GROUPS.flatMap((g) =>
-  g.fields.map((f) => f.key),
-);
+export const CONTACT_FIELDS: SettingGroup[] = [
+  {
+    title: "Contact",
+    fields: [
+      { key: "contact_phone_display", label: "Phone (as shown on the site)" },
+      {
+        key: "contact_phone",
+        label: "Phone (tap-to-call)",
+        hint: "Digits with country code, e.g. +18179406027",
+      },
+      { key: "contact_email", label: "Email" },
+      { key: "address_street", label: "Street address" },
+      { key: "address_city", label: "City" },
+      { key: "address_state", label: "State" },
+      { key: "address_zip", label: "ZIP" },
+    ],
+  },
+];
+
+export const SETTINGS_KEYS: string[] = [
+  ...HOME_TEXT,
+  ...ABOUT_TEXT,
+  ...CONTACT_FIELDS,
+].flatMap((g) => g.fields.map((f) => f.key));
