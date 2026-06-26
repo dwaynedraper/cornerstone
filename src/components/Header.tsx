@@ -45,12 +45,6 @@ export default function Header({ showWork = false }: { showWork?: boolean }) {
 
   return (
     <>
-      <div
-        className="fixed left-0 right-0 top-0 z-40 h-[100px]"
-        onMouseEnter={() => setVisible(true)}
-        aria-hidden="true"
-      />
-
       <header
         className={`fixed left-0 right-0 top-0 z-50 border-b border-ink/10 bg-paper/95 shadow-xs backdrop-blur-sm transition-transform duration-300 ease-in-out ${
           visible ? "translate-y-0" : "-translate-y-full"

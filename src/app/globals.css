@@ -51,6 +51,11 @@
   *, ::after, ::before, ::backdrop, ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+  html {
+    /* Always reserve the scrollbar gutter so the page doesn't reflow
+       (and the fixed header doesn't shift) when a scrollbar appears. */
+    scrollbar-gutter: stable;
+  }
   body {
     @apply bg-paper text-ink antialiased;
   }

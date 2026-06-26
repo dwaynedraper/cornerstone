@@ -98,7 +98,7 @@ export default async function Home() {
               </div>
             ))}
           </div>
-          <p className="font-heading text-xs uppercase tracking-wider text-ink-400">
+          <p className="font-heading text-xs uppercase tracking-wider text-ink-500">
             Engineering {site.engineeringReg} &nbsp;·&nbsp; Surveying{" "}
             {site.surveyingReg}
           </p>
