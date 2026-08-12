@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Ping Supabase REST endpoint
         run: |
-          response=$(curl -s -w "\n%{http_code}" "https://yywqmbyymfdxaqtfvanc.supabase.co/rest/v1/media?select=id&limit=1&apikey=sb_publishable_Rok4eIsXskXiYHvVBcoLuA_ZGv4kzFS")
+          response=$(curl -s -w "\n%{http_code}" "https://yywqmbyymfdxaqtfvanc.supabase.co/rest/v1/media?select=slot&limit=1&apikey=sb_publishable_Rok4eIsXskXiYHvVBcoLuA_ZGv4kzFS")
           body=$(echo "$response" | head -n -1)
           code=$(echo "$response" | tail -n1)
           echo "HTTP status: $code"
