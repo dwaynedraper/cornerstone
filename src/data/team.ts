@@ -51,7 +51,6 @@ export const teamGroups: TeamGroup[] = [
     members: [
       { id: "jason-lenamond", name: "Jason Lenamond", role: "P.E." },
       { id: "eric-chavez", name: "Eric Chavez", role: "E.I.T." },
-      { id: "tj-gonzales", name: "Tj Gonzales", role: "E.I.T." },
     ],
   },
   {
@@ -59,7 +58,7 @@ export const teamGroups: TeamGroup[] = [
     name: "Structural Team",
     members: [
       { id: "chris-poole", name: "Chris Poole", role: "Regional Structural Manager" },
-      { id: "jeremy-barnes", name: "Jeremy Barnes", role: "Senior Structural Designer" },
+      { id: "brad-west", name: "Brad West", role: "Senior Structural Designer" },
     ],
   },
   {
