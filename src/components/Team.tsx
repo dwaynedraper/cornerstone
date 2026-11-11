@@ -1,6 +1,5 @@
 import Mitchell from "@/components/Mitchell";
 import Reveal from "@/components/motion/Reveal";
-import { balancedCols, LG_COLS } from "@/lib/grid";
 import { site } from "@/data/site";
 import { teamGroups as defaultTeamGroups, type TeamGroup } from "@/data/team";
 import { getSiteCopy } from "@/lib/content";
@@ -107,7 +106,10 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
 
                 <ul
                   role="list"
-                  className={`grid grid-cols-1 gap-6 sm:grid-cols-2 ${LG_COLS[balancedCols(group.members.length)]}`}
+                  /* Fixed-width badge slots: every badge is the same size in every
+                     group, so a small group's badges never stretch wider than others
+                     (wider would read as more senior). */
+                  className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-6"
                 >
                   {group.members.map((person, i) => {
                     const initials = person.name
