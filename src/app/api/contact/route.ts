@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { getResend, EMAIL_FROM } from "@/lib/email";
 import { site } from "@/data/site";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Where inquiries land. Comma-separate CONTACT_TO for multiple recipients.
 const TO = (process.env.CONTACT_TO || site.email)
@@ -10,8 +8,7 @@ const TO = (process.env.CONTACT_TO || site.email)
   .map((s) => s.trim())
   .filter(Boolean);
 
-// Must be an address on a domain verified in Resend (onboarding@resend.dev works for testing).
-const FROM = process.env.CONTACT_FROM || "Cornerstone Website <onboarding@resend.dev>";
+const FROM = EMAIL_FROM;
 
 export async function POST(request: Request) {
   let data: Record<string, string>;
@@ -34,7 +31,8 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!process.env.RESEND_API_KEY) {
+  const resend = getResend();
+  if (!resend) {
     return NextResponse.json({ error: "Email isn't configured yet." }, { status: 500 });
   }
 

@@ -6,17 +6,25 @@ import { PhoneIcon } from "@heroicons/react/24/outline";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+/**
+ * Home page hero. Text comes from the admin ("Home text"). Optional pieces
+ * (eyebrow, sentence, buttons) hide when left blank, which is how the approved
+ * live wording renders today.
+ */
 export default function Hero({
-  eyebrow = "Civil Engineering + Land Surveying · North Texas",
+  eyebrow = "Welcome to",
   headline = "Cornerstone Engineering & Surveying",
-  subhead = "We take raw land to recorded, build-ready lots — and keep your pipeline moving for the next phase.",
+  subhead = "",
+  ctaLabel = "",
   phone = "+18179406027",
-  phoneDisplay = "(817) 940-6027",
+  phoneDisplay = "+1 817-940-6027",
   imageSrc = "/IMG_0854.jpg",
 }: {
   eyebrow?: string;
   headline?: string;
   subhead?: string;
+  /** Hero button text. Empty hides both hero buttons. */
+  ctaLabel?: string;
   phone?: string;
   phoneDisplay?: string;
   imageSrc?: string;
@@ -42,6 +50,7 @@ export default function Hero({
 
       <div className="relative mx-auto max-w-7xl px-6 py-32 sm:py-44 lg:px-8 lg:py-52">
         <div className="max-w-3xl">
+          {eyebrow && (
           <m.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -50,6 +59,7 @@ export default function Hero({
           >
             {eyebrow}
           </m.p>
+          )}
 
           <m.h1
             initial={{ opacity: 0, y: 16 }}
@@ -68,6 +78,7 @@ export default function Hero({
             className="mt-8 h-1 w-24 bg-amber"
           />
 
+          {subhead && (
           <m.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -76,7 +87,9 @@ export default function Hero({
           >
             {subhead}
           </m.p>
+          )}
 
+          {ctaLabel && (
           <m.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -87,7 +100,7 @@ export default function Hero({
               href="/contact"
               className="rounded-sm bg-blueprint px-7 py-3 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-blueprint-light"
             >
-              Get a quote
+              {ctaLabel}
             </a>
             <a
               href={`tel:${phone}`}
@@ -97,6 +110,7 @@ export default function Hero({
               {phoneDisplay}
             </a>
           </m.div>
+          )}
         </div>
       </div>
     </section>

@@ -3,11 +3,20 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin, slugify } from "@/lib/admin";
 
-const ICONS = ["builders", "oneFirm", "local", "national"] as const;
+const ICONS = [
+  "expertise",
+  "innovation",
+  "client",
+  "sustainable",
+  "builders",
+  "oneFirm",
+  "local",
+  "national",
+] as const;
 
 function cleanIcon(value: FormDataEntryValue | null) {
   const v = String(value ?? "");
-  return (ICONS as readonly string[]).includes(v) ? v : "builders";
+  return (ICONS as readonly string[]).includes(v) ? v : "expertise";
 }
 
 function refresh() {

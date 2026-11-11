@@ -1,59 +1,80 @@
 import type { Metadata } from "next";
-import { Inter, Libre_Franklin } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SiteChrome from "@/components/SiteChrome";
 import MotionProvider from "@/components/motion/MotionProvider";
 import { site } from "@/data/site";
-import { isWorkEnabled } from "@/lib/content";
+import { getSiteCopy, isWorkEnabled } from "@/lib/content";
+import { HOME_TITLE, HOME_DESCRIPTION } from "@/lib/seo";
+import { organizationSchema } from "@/lib/schema";
+import JsonLd from "@/components/JsonLd";
+import { Analytics } from "@vercel/analytics/next";
 
-const inter = Inter({
-  subsets: ["latin"],
+// Fonts are self-hosted (no request to Google at build or run time).
+// Same families as before: Inter for body, Libre Franklin for headings.
+const inter = localFont({
+  src: "./fonts/Inter-Variable.woff2",
   variable: "--ff-body",
+  weight: "100 900",
   display: "swap",
 });
 
-const libreFranklin = Libre_Franklin({
-  subsets: ["latin"],
+const libreFranklin = localFont({
+  src: "./fonts/LibreFranklin-Variable.woff2",
   variable: "--ff-heading",
-  weight: ["400", "500", "600", "700"],
+  weight: "100 900",
   display: "swap",
 });
-
-const description =
-  "Civil engineering and land surveying for residential developers and homebuilders across North Texas. Subdivision design, platting, and surveying from a firm with 25+ years of experience, licensed in 15+ states.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default:
-      "Cornerstone Engineering & Surveying | North Texas Civil Engineering & Land Surveying",
+    default: HOME_TITLE,
     template: "%s | Cornerstone Engineering & Surveying",
   },
-  description,
+  description: HOME_DESCRIPTION,
+  applicationName: site.name,
+  category: "Engineering",
   keywords: [
-    "civil engineering North Texas",
-    "land surveying North Texas",
-    "residential land development",
-    "subdivision design",
-    "platting",
-    "land surveyor for homebuilders",
-    "Fort Worth civil engineer",
+    "civil engineering Arlington TX",
+    "land surveying Arlington TX",
+    "civil engineer Fort Worth",
+    "land surveyor Dallas Fort Worth",
+    "DFW civil engineering firm",
+    "boundary survey Texas",
+    "topographic survey",
+    "construction layout",
+    "site development engineering",
+    "North Texas land surveyor",
   ],
   alternates: { canonical: "/" },
+  formatDetection: { telephone: true, email: true, address: true },
   openGraph: {
-    title: "Cornerstone Engineering & Surveying",
-    description,
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     url: "/",
-    siteName: "Cornerstone Engineering & Surveying",
+    siteName: site.name,
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cornerstone Engineering & Surveying",
-    description,
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
+  // Paste the codes from Google Search Console / Bing Webmaster into Vercel env vars.
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.BING_SITE_VERIFICATION
+      ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION }
+      : undefined,
   },
 };
 
@@ -62,17 +83,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const workEnabled = await isWorkEnabled();
+  const [workEnabled, copy] = await Promise.all([isWorkEnabled(), getSiteCopy()]);
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${libreFranklin.variable} bg-paper font-body text-ink`}
       >
+        <JsonLd data={organizationSchema(copy)} />
         <MotionProvider>
           <SiteChrome header={<Header showWork={workEnabled} />} footer={<Footer />}>
             {children}
           </SiteChrome>
         </MotionProvider>
+        <Analytics />
       </body>
     </html>
   );

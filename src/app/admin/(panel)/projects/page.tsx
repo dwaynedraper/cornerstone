@@ -28,6 +28,7 @@ type ProjectRow = {
   body: string;
   cover_image_url: string | null;
   is_published: boolean;
+  is_suggestion?: boolean;
   sort_order: number;
 };
 
@@ -241,6 +242,11 @@ export default async function ProjectsAdmin() {
                 >
                   {p.is_published ? "Published" : "Draft"}
                 </span>
+                {p.is_suggestion && !p.is_published && (
+                  <span className="rounded-full border border-amber/60 bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-text">
+                    Sample project (placeholder text)
+                  </span>
+                )}
               </div>
 
               <div className="flex items-center gap-1.5">

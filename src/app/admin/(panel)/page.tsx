@@ -2,6 +2,8 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { accents } from "@/components/admin/AdminPage";
 import Tour, { type TourStep } from "@/components/admin/Tour";
+import AnalyticsPanel from "@/components/admin/AnalyticsPanel";
+import { getAnalyticsReport } from "@/lib/analytics";
 
 const groups = [
   {
@@ -13,7 +15,7 @@ const groups = [
         name: "Home text",
         href: "/admin/home-text",
         description:
-          "The headline and sub-text in the hero, the 25+ years / 15+ states stats bar, and the intro line above the services.",
+          "The hero text, the intro above Our Services, and the Why Choose Us closing line. Also holds optional pieces (stats bar, call-to-action band) that stay hidden until you fill them in. Suggested wording sits beside each field.",
       },
       {
         name: "Hero photo",
@@ -25,19 +27,19 @@ const groups = [
         name: "Services",
         href: "/admin/services",
         description:
-          "The service cards in the 'Our services' block on the home page.",
+          "The service cards in the 'Our Services' block on the home page. Suggested versions are saved as drafts you can publish.",
       },
       {
         name: "Why choose us",
         href: "/admin/why",
         description:
-          "The four value points under 'Why developers choose Cornerstone.'",
+          "The value points under 'Why Choose Us?' Suggested points are saved as drafts you can publish.",
       },
       {
         name: "FAQ",
         href: "/admin/faq",
         description:
-          "The questions and answers near the bottom of the home page (these also power Google's FAQ results).",
+          "Questions and answers for the home page. The section stays hidden until at least one is published. Suggested questions are waiting as drafts.",
       },
     ],
   },
@@ -69,7 +71,7 @@ const groups = [
         name: "About text",
         href: "/admin/about-text",
         description:
-          "The About heading, the two intro paragraphs, and Mitchell's founder bio.",
+          "The About heading, intro paragraphs, callout, and Mitchell's founder bio.",
       },
       {
         name: "Team",
@@ -93,6 +95,25 @@ const groups = [
     ],
   },
   {
+    heading: "Your account and team",
+    subtitle: "Sign-in, email preferences, and who has access",
+    accent: "neutral",
+    items: [
+      {
+        name: "My account",
+        href: "/admin/account",
+        description:
+          "Change your password and turn the Monday visitor email on or off.",
+      },
+      {
+        name: "People",
+        href: "/admin/people",
+        description:
+          "Everyone who can sign in. The owner can add or remove people here.",
+      },
+    ],
+  },
+  {
     heading: "Across the whole site",
     subtitle: "Shows on every page",
     accent: "neutral",
@@ -101,7 +122,7 @@ const groups = [
         name: "Contact info",
         href: "/admin/contact",
         description:
-          "Phone, email, and office address. Used in the footer on every page and on the contact page.",
+          "Phone, email, office address, and the contact page intro. Used in the footer on every page and on the contact page.",
       },
     ],
   },
@@ -137,11 +158,18 @@ const dashboardSteps: TourStep[] = [
   },
 ];
 
-export default async function AdminDashboard() {
+export default async function AdminDashboard({
+  searchParams,
+}: {
+  searchParams: Promise<{ range?: string }>;
+}) {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  const requested = Number((await searchParams).range);
+  const range = [7, 30, 90].includes(requested) ? requested : 30;
+  const report = await getAnalyticsReport(supabase, range);
 
   return (
     <div>
@@ -158,7 +186,11 @@ export default async function AdminDashboard() {
         inside, and edits go live within a few seconds.
       </p>
 
-      <div className="mt-10 space-y-8">
+      <div className="mt-10">
+        <AnalyticsPanel report={report} range={range} />
+      </div>
+
+      <div className="space-y-8">
         {groups.map((group, gi) => {
           const accent = accents[group.accent];
           return (

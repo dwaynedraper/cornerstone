@@ -3,6 +3,7 @@ import { SubmitButton } from "@/components/admin/FormButtons";
 import AdminPage from "@/components/admin/AdminPage";
 import { saveSettings } from "@/app/admin/settings-actions";
 import type { SettingGroup } from "@/lib/settings-fields";
+import WordingHelpers from "@/components/admin/WordingHelpers";
 
 const fieldClass =
   "mt-1.5 block w-full rounded-sm border-ink/15 text-ink shadow-xs focus:border-blueprint focus:ring-blueprint";
@@ -48,24 +49,30 @@ export default async function SettingsForm({
                     {f.hint && (
                       <span className="font-normal text-ink-400">
                         {" "}
-                        — {f.hint}
+                        ({f.hint})
                       </span>
                     )}
                   </span>
                   {f.multiline ? (
                     <textarea
                       name={f.key}
-                      rows={3}
-                      defaultValue={values.get(f.key) ?? ""}
+                      rows={f.default.length > 240 ? 6 : 3}
+                      defaultValue={values.get(f.key) ?? f.default}
                       className={fieldClass}
                     />
                   ) : (
                     <input
                       name={f.key}
-                      defaultValue={values.get(f.key) ?? ""}
+                      defaultValue={values.get(f.key) ?? f.default}
                       className={fieldClass}
                     />
                   )}
+                  <WordingHelpers
+                    name={f.key}
+                    current={values.get(f.key) ?? f.default}
+                    original={f.default}
+                    suggested={f.suggested}
+                  />
                 </label>
               ))}
             </div>

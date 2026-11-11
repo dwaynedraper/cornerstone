@@ -5,7 +5,7 @@ export default function HomeTextAdmin() {
   return (
     <SettingsForm
       title="Home page text"
-      description="The hero headline and sub-text at the top of the home page, the small stats in the white bar, and the intro paragraph above the services."
+      description="Text on the home page. Fields that say leave blank to hide are optional. Suggested wording from the 2026 redesign appears under a field when there is one. Nothing changes on the site until you press Save."
       groups={HOME_TEXT}
     />
   );

@@ -1,7 +1,11 @@
 import "server-only";
 import { cache } from "react";
 import { createPublicClient } from "@/lib/supabase/public";
-import { services as fallbackServices, type Service } from "@/data/services";
+import {
+  services as fallbackServices,
+  servicesPage as fallbackServicesPage,
+  type Service,
+} from "@/data/services";
 import {
   teamGroups as fallbackTeam,
   type TeamGroup,
@@ -9,13 +13,13 @@ import {
 } from "@/data/team";
 import { whyPoints as fallbackWhy, type WhyPoint } from "@/data/why";
 import { faqs as fallbackFaqs, type Faq } from "@/data/faqs";
-import { site } from "@/data/site";
+import { SETTING_DEFAULTS } from "@/lib/settings-fields";
 
 /**
- * Server-side content layer. Every getter reads from Supabase and, on ANY
- * error or empty result, falls back to the seed data in `src/data/*`. That
- * means the site always renders — before env is set, if Supabase is down, or
- * during an offline build — and switches to live DB content seamlessly.
+ * Server-side content layer. Every getter reads from Supabase. On an ERROR
+ * (env not set, Supabase down, offline build) it falls back to the approved
+ * content in `src/data/*`, so the site always renders. An EMPTY result is
+ * respected: if every FAQ is unpublished, the FAQ section simply hides.
  *
  * `cache()` dedupes calls within a single request. Pages set `revalidate`, and
  * the admin will call `revalidatePath` on save so edits appear within seconds.
@@ -60,7 +64,8 @@ export const getServices = cache(
         .eq("is_published", true)
         .eq("page", page)
         .order("sort_order", { ascending: true });
-    if (error || !data?.length) return fallbackServices;
+    const fallback = page === "services" ? fallbackServicesPage : fallbackServices;
+    if (error || !data) return fallback;
     return (data as ServiceRow[]).map((r) => ({
       id: r.slug,
       name: r.name,
@@ -69,7 +74,7 @@ export const getServices = cache(
       detail: r.detail,
     }));
   } catch {
-    return fallbackServices;
+    return page === "services" ? fallbackServicesPage : fallbackServices;
   }
 });
 
@@ -80,7 +85,7 @@ export const getWhyPoints = cache(async (): Promise<WhyPoint[]> => {
       .select("slug,icon,title,description")
       .eq("is_published", true)
       .order("sort_order", { ascending: true });
-    if (error || !data?.length) return fallbackWhy;
+    if (error || !data) return fallbackWhy;
     return (data as WhyRow[]).map((r) => ({
       id: r.slug,
       icon: r.icon as WhyPoint["icon"],
@@ -99,7 +104,7 @@ export const getFaqs = cache(async (): Promise<Faq[]> => {
       .select("question,answer")
       .eq("is_published", true)
       .order("sort_order", { ascending: true });
-    if (error || !data?.length) return fallbackFaqs;
+    if (error || !data) return fallbackFaqs;
     return (data as FaqRow[]).map((r) => ({
       question: r.question,
       answer: r.answer,
@@ -160,101 +165,91 @@ export const getSettings = cache(async (): Promise<SiteSettings> => {
 });
 
 /**
- * Resolved site copy: every field is the DB value if set, otherwise the exact
- * current default — so the pages look identical when nothing has been edited.
- * Server-only; used by Hero/Services/Team/Mitchell/Footer/contact.
+ * Resolved site copy. Each field is the database value when set, otherwise the
+ * approved default from `settings-fields.ts`. An empty result means "hidden".
  */
 export type SiteCopy = {
   heroEyebrow: string;
   heroHeadline: string;
   heroSubhead: string;
+  heroCtaLabel: string;
   statYears: string;
   statStates: string;
   servicesIntro: string;
+  whyClosing: string;
+  ctaHeading: string;
+  ctaBody: string;
   aboutHeading: string;
   aboutSubhead: string;
   aboutIntro1: string;
   aboutIntro2: string;
+  aboutIntro3: string;
+  aboutCallout: string;
   founderName: string;
   founderTitle: string;
   founderBio1: string;
   founderBio2: string;
   founderQuote: string;
+  contactIntro: string;
   contactPhone: string;
   contactPhoneDisplay: string;
   contactEmail: string;
+  address: { street: string; city: string; state: string; zip: string };
   addressDisplay: string;
+  footerTagline: string;
   servicesPageHeading: string;
   servicesPageIntro: string;
 };
 
 export const getSiteCopy = cache(async (): Promise<SiteCopy> => {
   const s = await getSettings();
-  const pick = (key: string, fallback: string) => {
+  // A stored value wins, even an empty one, so admins can hide optional text.
+  // Required fields (headline, name, contact details) fall back when blank.
+  const pick = (key: string, required = false) => {
     const v = s[key];
-    return v && v.trim() ? v : fallback;
+    if (v === undefined) return SETTING_DEFAULTS[key] ?? "";
+    if (required && !v.trim()) return SETTING_DEFAULTS[key] ?? "";
+    return v.trim();
   };
 
-  const street = pick("address_street", site.address.street);
-  const city = pick("address_city", site.address.city);
-  const state = pick("address_state", site.address.state);
-  const zip = pick("address_zip", site.address.zip);
+  const address = {
+    street: pick("address_street", true),
+    city: pick("address_city", true),
+    state: pick("address_state", true),
+    zip: pick("address_zip", true),
+  };
 
   return {
-    heroEyebrow: pick(
-      "hero_eyebrow",
-      "Civil Engineering + Land Surveying · North Texas",
-    ),
-    heroHeadline: pick("hero_headline", site.name),
-    heroSubhead: pick(
-      "hero_subhead",
-      "We take raw land to recorded, build-ready lots — and keep your pipeline moving for the next phase.",
-    ),
-    statYears: pick("stat_years", site.yearsExperience),
-    statStates: pick("stat_states", "15+"),
-    servicesIntro: pick(
-      "services_intro",
-      "For more than 25 years, Cornerstone has helped North Texas developers and homebuilders turn raw land into build-ready residential lots — engineering and surveying, under one roof.",
-    ),
-    aboutHeading: pick("about_heading", "The people behind your projects"),
-    aboutSubhead: pick(
-      "about_subhead",
-      "A licensed, hands-on team of engineers and surveyors who know North Texas land development — and how to keep a builder's pipeline moving.",
-    ),
-    aboutIntro1: pick(
-      "about_intro_1",
-      "From seasoned engineers with decades of expertise to sharp young talent bringing fresh perspective, every member of our team plays a role in delivering build-ready results. We pride ourselves on a collaborative approach — combining individual strengths to tackle complex sites and drive projects to completion.",
-    ),
-    aboutIntro2: pick(
-      "about_intro_2",
-      "Our engineers and surveyors aren't just technically proficient; they're problem-solvers who thrive on turning raw land into reality. Whether it's designing infrastructure, running precise surveys, or shepherding a plat through approval, the team brings precision and attention to every project.",
-    ),
-    founderName: pick("founder_name", "Mitchell Lenamond"),
-    founderTitle: pick("founder_title", "Licensed Professional Engineer"),
-    founderBio1: pick(
-      "founder_bio_1",
-      "Mitchell K. Lenamond, P.E., is a highly experienced professional engineer with over two decades of expertise in structural and civil engineering. His experience includes roles such as Vice President of Engineering, where he oversaw a team of 180+ professionals across multiple office locations, managing engineering, surveying, and architectural projects. His leadership extends to client relations, project planning, budgeting, and regulatory compliance, ensuring that each project meets the highest standards of quality and efficiency.",
-    ),
-    founderBio2: pick(
-      "founder_bio_2",
-      "Mitchell's extensive engineering background includes designing commercial and residential structures, specializing in foundation and framing systems, wind load analysis, and infrastructure projects such as highway bridges and culverts. His civil engineering expertise encompasses site feasibility studies, zoning coordination, grading, drainage, and utility planning. Additionally, he is well-versed in forensic inspections, providing structural assessments, foundation deflection analysis, and expert witness testimony.",
-    ),
-    founderQuote: pick(
-      "founder_quote",
-      "With a reputation for precision and excellence, Mitchell remains dedicated to delivering innovative, reliable engineering solutions that drive success for clients and communities alike.",
-    ),
-    contactPhone: pick("contact_phone", site.phone),
-    contactPhoneDisplay: pick("contact_phone_display", site.phoneDisplay),
-    contactEmail: pick("contact_email", site.email),
-    addressDisplay: `${street}, ${city}, ${state} ${zip}`,
-    servicesPageHeading: pick(
-      "services_page_heading",
-      "Engineering and surveying for North Texas development",
-    ),
-    servicesPageIntro: pick(
-      "services_page_intro",
-      "From raw land to recorded, build-ready lots, we handle the engineering and surveying that keeps residential development moving — under one roof.",
-    ),
+    heroEyebrow: pick("hero_eyebrow"),
+    heroHeadline: pick("hero_headline", true),
+    heroSubhead: pick("hero_subhead"),
+    heroCtaLabel: pick("hero_cta_label"),
+    statYears: pick("stat_years"),
+    statStates: pick("stat_states"),
+    servicesIntro: pick("services_intro"),
+    whyClosing: pick("why_closing"),
+    ctaHeading: pick("cta_heading"),
+    ctaBody: pick("cta_body"),
+    aboutHeading: pick("about_heading", true),
+    aboutSubhead: pick("about_subhead"),
+    aboutIntro1: pick("about_intro_1"),
+    aboutIntro2: pick("about_intro_2"),
+    aboutIntro3: pick("about_intro_3"),
+    aboutCallout: pick("about_callout"),
+    founderName: pick("founder_name", true),
+    founderTitle: pick("founder_title"),
+    founderBio1: pick("founder_bio_1"),
+    founderBio2: pick("founder_bio_2"),
+    founderQuote: pick("founder_quote"),
+    contactIntro: pick("contact_intro"),
+    contactPhone: pick("contact_phone", true),
+    contactPhoneDisplay: pick("contact_phone_display", true),
+    contactEmail: pick("contact_email", true),
+    address,
+    addressDisplay: `${address.street}, ${address.city}, ${address.state} ${address.zip}`,
+    footerTagline: pick("footer_tagline"),
+    servicesPageHeading: pick("services_page_heading", true),
+    servicesPageIntro: pick("services_page_intro"),
   };
 });
 

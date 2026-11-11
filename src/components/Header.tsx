@@ -10,7 +10,7 @@ export default function Header({ showWork = false }: { showWork?: boolean }) {
     { name: "Home", href: "/" },
     { name: "Services", href: "/services" },
     ...(showWork ? [{ name: "Work", href: "/work" }] : []),
-    { name: "About", href: "/about" },
+    { name: "About Us", href: "/about" },
   ];
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [visible, setVisible] = useState(true);
@@ -94,7 +94,7 @@ export default function Header({ showWork = false }: { showWork?: boolean }) {
               href="/contact"
               className="rounded-sm bg-blueprint px-5 py-2.5 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-blueprint-dark"
             >
-              Get a quote
+              Contact Us
             </a>
           </div>
         </nav>
@@ -137,7 +137,7 @@ export default function Header({ showWork = false }: { showWork?: boolean }) {
                     href="/contact"
                     className="-mx-3 block rounded-md bg-blueprint px-3 py-2.5 text-center font-heading text-base font-medium text-white hover:bg-blueprint-dark"
                   >
-                    Get a quote
+                    Contact Us
                   </a>
                 </div>
               </div>

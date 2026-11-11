@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton, ConfirmButton } from "@/components/admin/FormButtons";
 import AdminPage from "@/components/admin/AdminPage";
+import StatusBar from "@/components/admin/StatusBar";
 import {
   createService,
   updateService,
@@ -16,6 +17,7 @@ type ServiceRow = {
   detail: string;
   sort_order: number;
   is_published: boolean;
+  is_suggestion?: boolean;
 };
 
 const ICON_OPTIONS = [
@@ -78,13 +80,12 @@ function Fields({ service }: { service?: ServiceRow }) {
         <span className={labelClass}>
           Details{" "}
           <span className="font-normal text-ink-400">
-            (the longer description)
+            (optional, adds a &ldquo;Read more&rdquo; link)
           </span>
         </span>
         <textarea
           name="detail"
           rows={4}
-          required
           defaultValue={service?.detail ?? ""}
           className={fieldClass}
         />
@@ -122,9 +123,17 @@ export default async function ServicesEditor({
             className="rounded-lg border border-ink/10 bg-white p-6 shadow-xs"
           >
             <div className="mb-4 flex items-center justify-between gap-3">
-              <span className="font-heading text-xs font-semibold uppercase tracking-wider text-ink-400">
-                #{i + 1}
-              </span>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="font-heading text-xs font-semibold uppercase tracking-wider text-ink-400">
+                  #{i + 1}
+                </span>
+                <StatusBar
+                  table="services"
+                  id={s.id}
+                  isPublished={s.is_published}
+                  isSuggestion={s.is_suggestion}
+                />
+              </div>
               <div className="flex items-center gap-1.5">
                 <form action={moveService}>
                   <input type="hidden" name="id" value={s.id} />

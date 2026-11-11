@@ -1,5 +1,6 @@
 import Mitchell from "@/components/Mitchell";
 import Reveal from "@/components/motion/Reveal";
+import { balancedCols, LG_COLS } from "@/lib/grid";
 import { site } from "@/data/site";
 import { teamGroups as defaultTeamGroups, type TeamGroup } from "@/data/team";
 import { getSiteCopy } from "@/lib/content";
@@ -18,15 +19,17 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
         <div aria-hidden className="absolute inset-0 blueprint-grid" />
         <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-24 lg:px-8">
           <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
-            Our team
+            Our Team
           </p>
           <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
             {copy.aboutHeading}
           </h1>
           <div className="mx-auto mt-5 h-0.5 w-16 bg-amber" />
-          <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-ink-500">
-            {copy.aboutSubhead}
-          </p>
+          {copy.aboutSubhead && (
+            <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-ink-500">
+              {copy.aboutSubhead}
+            </p>
+          )}
         </div>
       </section>
 
@@ -34,15 +37,40 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
       <section className="bg-sand-light py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-16 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-            <div className="border-l-2 border-blueprint pl-8">
-              <p className="text-lg leading-8 text-ink-500">{copy.aboutIntro1}</p>
-            </div>
-            <div className="border-l-2 border-blueprint pl-8">
-              <p className="text-lg leading-8 text-ink-500">{copy.aboutIntro2}</p>
-            </div>
+            {copy.aboutIntro1 && (
+              <div className="border-l-2 border-blueprint pl-8">
+                <p className="text-lg leading-8 text-ink-500">{copy.aboutIntro1}</p>
+              </div>
+            )}
+            {copy.aboutIntro2 && (
+              <div className="border-l-2 border-blueprint pl-8">
+                <p className="text-lg leading-8 text-ink-500">{copy.aboutIntro2}</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
+
+      {/* ─── Learning paragraph + highlighted callout ─── */}
+      {(copy.aboutIntro3 || copy.aboutCallout) && (
+        <section className="bg-white py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-16 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+              {copy.aboutIntro3 && (
+                <p className="text-lg leading-8 text-ink-500">{copy.aboutIntro3}</p>
+              )}
+              {copy.aboutCallout && (
+                <div className="relative overflow-hidden rounded-md border border-blueprint/20 bg-paper p-8">
+                  <div aria-hidden className="absolute inset-0 blueprint-grid" />
+                  <p className="relative text-center font-heading text-xl font-semibold italic leading-8 text-ink">
+                    {copy.aboutCallout}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ─── Founder ─── */}
       <section className="bg-paper">
@@ -57,10 +85,10 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
           <Reveal>
             <div className="mb-14">
               <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
-                The people
+                The People
               </p>
               <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-                Our team
+                Our Team
               </h2>
               <div className="mt-4 h-0.5 w-16 bg-amber" />
             </div>
@@ -79,7 +107,7 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
 
                 <ul
                   role="list"
-                  className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                  className={`grid grid-cols-1 gap-6 sm:grid-cols-2 ${LG_COLS[balancedCols(group.members.length)]}`}
                 >
                   {group.members.map((person, i) => {
                     const initials = person.name
@@ -152,7 +180,7 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
               href="https://pels.texas.gov"
               className="transition-colors hover:text-blueprint-dark"
             >
-              pels.texas.gov
+              https://pels.texas.gov
             </a>
           </p>
         </div>

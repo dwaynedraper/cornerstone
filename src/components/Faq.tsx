@@ -8,6 +8,9 @@ export default function Faq({
   /** FAQ entries to render. Defaults to the seed data in `src/data/faqs.ts`. */
   faqs?: FaqItem[];
 }) {
+  // No published questions = no section and no FAQ schema (Google requires the
+  // markup to match questions visible on the page).
+  if (!faqs.length) return null;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

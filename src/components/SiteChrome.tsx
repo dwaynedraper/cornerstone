@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import PageViewTracker from "@/components/PageViewTracker";
 
 /**
  * Renders the public site chrome (Header / Footer) for normal pages, and gets
@@ -26,6 +27,7 @@ export default function SiteChrome({
 
   return (
     <div className="flex min-h-screen flex-col">
+      <PageViewTracker />
       {header}
       <main className="flex-1">{children}</main>
       {footer}

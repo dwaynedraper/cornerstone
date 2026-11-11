@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton, ConfirmButton } from "@/components/admin/FormButtons";
 import AdminPage from "@/components/admin/AdminPage";
+import StatusBar from "@/components/admin/StatusBar";
 import { createFaq, updateFaq, deleteFaq, moveFaq } from "./actions";
 
 type FaqRow = {
@@ -9,6 +10,7 @@ type FaqRow = {
   answer: string;
   sort_order: number;
   is_published: boolean;
+  is_suggestion?: boolean;
 };
 
 const fieldClass =
@@ -65,9 +67,17 @@ export default async function FaqAdmin() {
             className="rounded-lg border border-ink/10 bg-white p-6 shadow-xs"
           >
             <div className="mb-4 flex items-center justify-between gap-3">
-              <span className="font-heading text-xs font-semibold uppercase tracking-wider text-ink-400">
-                #{i + 1}
-              </span>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="font-heading text-xs font-semibold uppercase tracking-wider text-ink-400">
+                  #{i + 1}
+                </span>
+                <StatusBar
+                  table="faqs"
+                  id={f.id}
+                  isPublished={f.is_published}
+                  isSuggestion={f.is_suggestion}
+                />
+              </div>
               <div className="flex items-center gap-1.5">
                 <form action={moveFaq}>
                   <input type="hidden" name="id" value={f.id} />

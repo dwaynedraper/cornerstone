@@ -6,17 +6,20 @@ import { GiEarthAmerica } from "react-icons/gi";
 import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
 import Cta from "@/components/Cta";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbSchema, serviceListSchema } from "@/lib/schema";
+import { pageMetadata } from "@/lib/seo";
 import { type Service } from "@/data/services";
 import { getServices, getSiteCopy } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Services",
+export const metadata: Metadata = pageMetadata({
+  title: "Civil Engineering & Land Surveying Services",
   description:
-    "Civil engineering, land surveying, project management, and sustainable design for residential land development and homebuilders across North Texas.",
-  alternates: { canonical: "/services" },
-};
+    "Civil engineering, land surveying, project management, and sustainable design from licensed professional engineers and registered professional land surveyors in Arlington, TX. Boundary determination, topographic mapping, construction layout, and site development.",
+  path: "/services",
+});
 
-const ICONS: Record<Service["icon"], IconType> = {
+const ICONS: Partial<Record<string, IconType>> & Record<Service["icon"], IconType> = {
   civil: MdDesignServices,
   structural: FaBuildingColumns,
   survey: PiBlueprint,
@@ -33,19 +36,23 @@ export default async function ServicesPage() {
   ]);
   return (
     <div>
+      <JsonLd data={breadcrumbSchema([{ name: "Services", path: "/services" }])} />
+      <JsonLd data={serviceListSchema(services, "/services")} />
       <section className="relative isolate overflow-hidden bg-paper">
         <div aria-hidden className="absolute inset-0 blueprint-grid" />
         <div className="relative mx-auto max-w-4xl px-6 py-16 sm:py-20 lg:px-8">
           <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
-            What we do
+            Expert Solutions
           </p>
           <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
             {copy.servicesPageHeading}
           </h1>
           <div className="mt-5 h-0.5 w-16 bg-amber" />
-          <p className="mt-7 max-w-2xl text-lg leading-8 text-ink-500">
-            {copy.servicesPageIntro}
-          </p>
+          {copy.servicesPageIntro && (
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-ink-500">
+              {copy.servicesPageIntro}
+            </p>
+          )}
         </div>
       </section>
 
@@ -53,7 +60,7 @@ export default async function ServicesPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-2">
             {services.map((service, i) => {
-              const Icon = ICONS[service.icon];
+              const Icon = ICONS[service.icon] ?? MdDesignServices;
               return (
                 <Reveal key={service.id} delay={i * 0.08} className="h-full">
                   <div className="flex h-full gap-5 rounded-md border border-ink/10 bg-white p-8">
@@ -64,12 +71,18 @@ export default async function ServicesPage() {
                       <h2 className="font-heading text-xl font-semibold text-ink">
                         {service.name}
                       </h2>
-                      <p className="mt-2 text-[15px] font-medium leading-7 text-ink">
+                      <p
+                        className={`mt-2 text-[15px] leading-7 ${
+                          service.detail ? "font-medium text-ink" : "text-ink-500"
+                        }`}
+                      >
                         {service.summary}
                       </p>
-                      <p className="mt-3 text-[15px] leading-7 text-ink-500">
-                        {service.detail}
-                      </p>
+                      {service.detail && (
+                        <p className="mt-3 text-[15px] leading-7 text-ink-500">
+                          {service.detail}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </Reveal>

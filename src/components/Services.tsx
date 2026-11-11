@@ -8,6 +8,7 @@ import { FaChartGantt, FaBuildingColumns } from "react-icons/fa6";
 import { GiEarthAmerica } from "react-icons/gi";
 import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
+import { balancedCols } from "@/lib/grid";
 import { services as defaultServices, type Service } from "@/data/services";
 
 const ICONS: Record<Service["icon"], IconType> = {
@@ -19,26 +20,35 @@ const ICONS: Record<Service["icon"], IconType> = {
 };
 
 /**
- * Centers an incomplete final row. The grid is 6 cols (3 cards) at lg and
- * 4 cols (2 cards) at sm; cards span 2. When the last row isn't full, we give
- * the orphan card(s) an explicit column start so the row sits centered.
- * Works for any card count, so adding a 6th service (3/3) just falls through.
+ * The grid uses twice as many tracks as cards per row, and each card spans 2.
+ * That lets a short last row sit centered. Column counts come from
+ * balancedCols(), so the last row is never a single card.
  */
-function centerLastRow(index: number, total: number): string {
+const LG_TRACKS: Record<number, string> = {
+  1: "lg:grid-cols-2",
+  2: "lg:grid-cols-4",
+  3: "lg:grid-cols-6",
+  4: "lg:grid-cols-8",
+};
+const LG_START: Record<number, string> = {
+  2: "lg:col-start-2",
+  3: "lg:col-start-3",
+  4: "lg:col-start-4",
+};
+
+function placement(index: number, total: number, cols: number): string {
   const c: string[] = [];
-
-  // lg — 3 per row
-  const lgRem = total % 3;
-  if (lgRem === 2) {
-    if (index === total - 2) c.push("lg:col-start-2");
-    if (index === total - 1) c.push("lg:col-start-4");
-  } else if (lgRem === 1 && index === total - 1) {
-    c.push("lg:col-start-3");
+  // Tablet: 2 per row. An odd last card is centered.
+  const smOrphan = total % 2 === 1 && index === total - 1;
+  if (smOrphan) c.push("sm:col-start-2");
+  // Desktop: center the short last row by offsetting its first card.
+  const rem = total % cols;
+  const firstOfLastRow = total - rem;
+  if (rem > 0 && index === firstOfLastRow) {
+    c.push(LG_START[cols - rem + 1] ?? "");
+  } else if (smOrphan) {
+    c.push("lg:col-start-auto");
   }
-
-  // sm — 2 per row
-  if (total % 2 === 1 && index === total - 1) c.push("sm:col-start-2");
-
   return c.join(" ");
 }
 
@@ -46,10 +56,12 @@ function ServiceCard({
   service,
   index,
   total,
+  cols,
 }: {
   service: Service;
   index: number;
   total: number;
+  cols: number;
 }) {
   const [open, setOpen] = useState(false);
   const Icon = ICONS[service.icon];
@@ -57,7 +69,7 @@ function ServiceCard({
   return (
     <Reveal
       delay={index * 0.08}
-      className={`col-span-1 h-full sm:col-span-2 ${centerLastRow(index, total)}`}
+      className={`col-span-1 h-full sm:col-span-2 ${placement(index, total, cols)}`}
     >
       <div className="flex h-full flex-col rounded-md border border-ink/10 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-blueprint/40 hover:shadow-md">
         <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
@@ -70,6 +82,8 @@ function ServiceCard({
           {service.summary}
         </p>
 
+        {service.detail && (
+        <>
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -92,6 +106,8 @@ function ServiceCard({
             <p className="text-[15px] leading-7 text-ink-500">{service.detail}</p>
           </div>
         </div>
+        </>
+        )}
       </div>
     </Reveal>
   );
@@ -99,13 +115,14 @@ function ServiceCard({
 
 export default function Services({
   services = defaultServices,
-  intro = "For more than 25 years, Cornerstone has helped North Texas developers and homebuilders turn raw land into build-ready residential lots — engineering and surveying, under one roof.",
+  intro = "",
 }: {
   /** Service cards to render. Defaults to the seed data in `src/data/services.ts`. */
   services?: Service[];
   /** Intro paragraph under the heading. */
   intro?: string;
 }) {
+  const cols = balancedCols(services.length);
   return (
     <section
       id="services"
@@ -118,27 +135,30 @@ export default function Services({
         <Reveal>
           <div>
             <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
-              What we do
+              What We Do
             </p>
             <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-              Our services
+              Our Services
             </h2>
             <div className="mt-4 h-0.5 w-16 bg-amber" />
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-ink-500">
-              For more than 25 years, Cornerstone has helped North Texas
-              developers and homebuilders turn raw land into build-ready
-              residential lots — engineering and surveying, under one roof.
-            </p>
+            {intro && (
+              <p className="mt-5 max-w-3xl text-lg leading-8 text-ink-500">
+                {intro}
+              </p>
+            )}
           </div>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:auto-rows-[1fr] sm:grid-cols-4 lg:grid-cols-6">
+        <div
+          className={`mt-12 grid grid-cols-1 gap-6 sm:auto-rows-[1fr] sm:grid-cols-4 ${LG_TRACKS[cols]}`}
+        >
           {services.map((service, i) => (
             <ServiceCard
               key={service.id}
               service={service}
               index={i}
               total={services.length}
+              cols={cols}
             />
           ))}
         </div>

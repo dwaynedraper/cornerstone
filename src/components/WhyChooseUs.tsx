@@ -1,10 +1,24 @@
-import { FaHardHat, FaLayerGroup, FaMapMarkedAlt, FaGlobeAmericas } from "react-icons/fa";
+import {
+  FaHardHat,
+  FaLayerGroup,
+  FaMapMarkedAlt,
+  FaGlobeAmericas,
+  FaAward,
+  FaLightbulb,
+  FaHandshake,
+  FaLeaf,
+} from "react-icons/fa";
 import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
+import { balancedCols, LG_COLS } from "@/lib/grid";
 import CadBackdrop from "@/components/CadBackdrop";
 import { whyPoints as defaultWhyPoints, type WhyPoint } from "@/data/why";
 
 const ICONS: Record<WhyPoint["icon"], IconType> = {
+  expertise: FaAward,
+  innovation: FaLightbulb,
+  client: FaHandshake,
+  sustainable: FaLeaf,
   builders: FaHardHat,
   oneFirm: FaLayerGroup,
   local: FaMapMarkedAlt,
@@ -13,9 +27,12 @@ const ICONS: Record<WhyPoint["icon"], IconType> = {
 
 export default function WhyChooseUs({
   points = defaultWhyPoints,
+  closing = "",
 }: {
-  /** Value props to render. Defaults to the seed data in `src/data/why.ts`. */
+  /** Value props to render. Defaults to the approved data in `src/data/why.ts`. */
   points?: WhyPoint[];
+  /** Closing paragraph under the cards. Empty hides it. */
+  closing?: string;
 }) {
   return (
     <section className="relative isolate overflow-hidden bg-paper py-20 sm:py-28">
@@ -24,18 +41,20 @@ export default function WhyChooseUs({
         <Reveal>
           <div>
             <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
-              Our advantage
+              Our Advantage
             </p>
             <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-              Why developers choose Cornerstone
+              Why Choose Us?
             </h2>
             <div className="mt-4 h-0.5 w-16 bg-amber" />
           </div>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:auto-rows-[1fr] sm:grid-cols-2 lg:grid-cols-4">
+        <div
+          className={`mt-12 grid grid-cols-1 gap-6 sm:auto-rows-[1fr] sm:grid-cols-2 ${LG_COLS[balancedCols(points.length)]}`}
+        >
           {points.map((point, i) => {
-            const Icon = ICONS[point.icon];
+            const Icon = ICONS[point.icon] ?? FaAward;
             return (
               <Reveal key={point.id} delay={i * 0.08} className="h-full">
                 <div className="flex h-full flex-col rounded-md border border-ink/10 bg-sand-light p-7">
@@ -53,6 +72,14 @@ export default function WhyChooseUs({
             );
           })}
         </div>
+
+        {closing && (
+          <Reveal>
+            <p className="mx-auto mt-16 max-w-4xl text-center font-heading text-xl font-medium leading-9 text-ink">
+              {closing}
+            </p>
+          </Reveal>
+        )}
       </div>
     </section>
   );

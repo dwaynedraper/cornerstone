@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton, ConfirmButton } from "@/components/admin/FormButtons";
 import AdminPage from "@/components/admin/AdminPage";
+import StatusBar from "@/components/admin/StatusBar";
 import { createWhy, updateWhy, deleteWhy, moveWhy } from "./actions";
 
 type WhyRow = {
@@ -10,9 +11,14 @@ type WhyRow = {
   description: string;
   sort_order: number;
   is_published: boolean;
+  is_suggestion?: boolean;
 };
 
 const ICON_OPTIONS = [
+  { value: "expertise", label: "Award (expertise)" },
+  { value: "innovation", label: "Lightbulb (innovation)" },
+  { value: "client", label: "Handshake (client focus)" },
+  { value: "sustainable", label: "Leaf (sustainability)" },
   { value: "builders", label: "Hard hat — built for builders" },
   { value: "oneFirm", label: "Layers — one firm" },
   { value: "local", label: "Map pin — local" },
@@ -32,7 +38,7 @@ function Fields({ point }: { point?: WhyRow }) {
         <span className={labelClass}>Icon</span>
         <select
           name="icon"
-          defaultValue={point?.icon ?? "builders"}
+          defaultValue={point?.icon ?? "expertise"}
           className={fieldClass}
         >
           {ICON_OPTIONS.map((o) => (
@@ -88,9 +94,17 @@ export default async function WhyAdmin() {
             className="rounded-lg border border-ink/10 bg-white p-6 shadow-xs"
           >
             <div className="mb-4 flex items-center justify-between gap-3">
-              <span className="font-heading text-xs font-semibold uppercase tracking-wider text-ink-400">
-                #{i + 1}
-              </span>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="font-heading text-xs font-semibold uppercase tracking-wider text-ink-400">
+                  #{i + 1}
+                </span>
+                <StatusBar
+                  table="why_points"
+                  id={p.id}
+                  isPublished={p.is_published}
+                  isSuggestion={p.is_suggestion}
+                />
+              </div>
               <div className="flex items-center gap-1.5">
                 <form action={moveWhy}>
                   <input type="hidden" name="id" value={p.id} />

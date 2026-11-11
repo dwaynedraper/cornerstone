@@ -98,7 +98,7 @@ export default function ContactForm() {
           name="message"
           rows={4}
           required
-          placeholder="Location, acreage, lot count, timeline — whatever you've got."
+          placeholder="Tell us a little about your project."
           className={inputClass}
         />
       </div>
@@ -108,7 +108,7 @@ export default function ContactForm() {
         disabled={status === "sending"}
         className="rounded-sm bg-blueprint px-7 py-3 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-blueprint-dark disabled:opacity-60"
       >
-        {status === "sending" ? "Sending…" : "Send it over"}
+        {status === "sending" ? "Sending…" : "Send message"}
       </button>
 
       {status === "error" && (
