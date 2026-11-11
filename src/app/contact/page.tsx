@@ -1,122 +1,102 @@
-import { Metadata } from 'next';
+import type { Metadata } from "next";
+import { PhoneIcon, EnvelopeIcon, MapPinIcon } from "@heroicons/react/24/outline";
+import ContactForm from "@/components/ContactForm";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbSchema, ORG_ID } from "@/lib/schema";
+import { getSiteCopy } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: 'Contact Us | Cornerstone Engineering and Surveying',
-  description: 'Get in touch with Cornerstone Engineering and Surveying. We are here to answer your questions and discuss your project needs.',
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Contact Us",
+  description:
+    "Get in touch with Cornerstone Engineering & Surveying in Arlington, TX. Reach a member of our team for information, quotes, or to learn more about our civil engineering and land surveying services. Call +1 817-940-6027.",
+  path: "/contact",
+});
 
-export default function Contact() {
+export const revalidate = 300;
+
+export default async function Contact() {
+  const copy = await getSiteCopy();
   return (
-    <div className="bg-surface py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl space-y-16 divide-y divide-gray-200 lg:mx-0 lg:max-w-none">
-          <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
+    <div>
+      <JsonLd data={breadcrumbSchema([{ name: "Contact Us", path: "/contact" }])} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          name: "Contact Us",
+          url: new URL("/contact", "https://www.cornerstoneengineeringandsurveying.com").toString(),
+          about: { "@id": ORG_ID },
+        }}
+      />
+
+      <section className="relative isolate overflow-hidden bg-paper">
+        <div aria-hidden className="absolute inset-0 blueprint-grid" />
+        <div className="relative mx-auto max-w-4xl px-6 py-16 sm:py-20 lg:px-8">
+          <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+            Reach Out
+          </p>
+          <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+            Get in touch
+          </h1>
+          <div className="mt-5 h-0.5 w-16 bg-amber" />
+          {copy.contactIntro && (
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-ink-500">
+              {copy.contactIntro}
+            </p>
+          )}
+        </div>
+      </section>
+
+      <section className="bg-sand-light py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-2">
             <div>
-              <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold-600">Reach Out</p>
-              <h1 className="mt-2 text-3xl font-heading font-bold tracking-tight text-navy">
-                Get in touch
-              </h1>
-              <div className="mt-4 w-16 h-1 bg-gold rounded-full" />
-              <p className="mt-6 leading-7 text-gray-600">
-                Reach out to a member of our team for information, quotes, or to
-                learn more about our services.
-              </p>
+              <h2 className="font-heading text-2xl font-semibold text-ink">
+                Cornerstone
+              </h2>
+
+              <div className="mt-8 space-y-5">
+                <a
+                  href={`mailto:${copy.contactEmail}`}
+                  className="flex items-center gap-4 rounded-md border border-ink/10 bg-white p-5 transition-colors hover:border-blueprint/40"
+                >
+                  <EnvelopeIcon className="h-6 w-6 flex-none text-blueprint" aria-hidden />
+                  <span className="sr-only">Email</span>
+                  <span className="font-heading text-lg font-semibold text-ink">
+                    {copy.contactEmail}
+                  </span>
+                </a>
+
+                <a
+                  href={`tel:${copy.contactPhone}`}
+                  className="flex items-center gap-4 rounded-md border border-ink/10 bg-white p-5 transition-colors hover:border-blueprint/40"
+                >
+                  <PhoneIcon className="h-6 w-6 flex-none text-blueprint" aria-hidden />
+                  <span className="sr-only">Phone number</span>
+                  <span className="font-heading text-lg font-semibold text-ink">
+                    {copy.contactPhoneDisplay}
+                  </span>
+                </a>
+
+                <div className="flex items-start gap-4 rounded-md border border-ink/10 bg-white p-5">
+                  <MapPinIcon className="mt-0.5 h-6 w-6 flex-none text-blueprint" aria-hidden />
+                  <span className="sr-only">Address</span>
+                  <address className="font-heading text-lg font-semibold not-italic text-ink">
+                    {copy.address.street}
+                    <br />
+                    {copy.address.city}, {copy.address.state} {copy.address.zip}
+                  </address>
+                </div>
+              </div>
             </div>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
-              <div className="rounded-xl bg-white p-10 shadow-sm border border-gray-100">
-                <h2 className="text-base font-heading font-semibold leading-7 text-navy">
-                  Cornerstone
-                </h2>
-                <dl className="mt-3 space-y-1 text-sm leading-6 text-gray-600">
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>
-                      <a
-                        href="mailto:info@cesinbox.com"
-                        className="font-semibold text-heritage hover:text-heritage-light transition-colors duration-200"
-                      >
-                        info@cesinbox.com
-                      </a>
-                    </dd>
-                  </div>
-                  <div className="mt-1">
-                    <dt className="sr-only">Phone number</dt>
-                    <dd>
-                      <a href="tel:+18179406027" className="hover:text-navy transition-colors duration-200">+1 817-940-6027</a>
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-              {/* <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Press
-                </h3>
-                <dl className="mt-3 space-y-1 text-sm leading-6 text-gray-600">
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>
-                      <a
-                        href="mailto:press@example.com"
-                        className="font-semibold text-[#651212]"
-                      >
-                        press@example.com
-                      </a>
-                    </dd>
-                  </div>
-                  <div className="mt-1">
-                    <dt className="sr-only">Phone number</dt>
-                    <dd>+1 (555) 905-3456</dd>
-                  </div>
-                </dl>
-              </div>
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Join our team
-                </h3>
-                <dl className="mt-3 space-y-1 text-sm leading-6 text-gray-600">
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>
-                      <a
-                        href="mailto:careers@example.com"
-                        className="font-semibold text-[#651212]"
-                      >
-                        careers@example.com
-                      </a>
-                    </dd>
-                  </div>
-                  <div className="mt-1">
-                    <dt className="sr-only">Phone number</dt>
-                    <dd>+1 (555) 905-4567</dd>
-                  </div>
-                </dl>
-              </div>
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Say hello
-                </h3>
-                <dl className="mt-3 space-y-1 text-sm leading-6 text-gray-600">
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>
-                      <a
-                        href="mailto:hello@example.com"
-                        className="font-semibold text-[#651212]"
-                      >
-                        hello@example.com
-                      </a>
-                    </dd>
-                  </div>
-                  <div className="mt-1">
-                    <dt className="sr-only">Phone number</dt>
-                    <dd>+1 (555) 905-5678</dd>
-                  </div>
-                </dl>
-              </div> */}
+
+            <div className="rounded-lg border border-ink/10 bg-white p-8 shadow-xs">
+              <ContactForm />
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

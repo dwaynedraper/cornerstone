@@ -1,0 +1,244 @@
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import { accents } from "@/components/admin/AdminPage";
+import Tour, { type TourStep } from "@/components/admin/Tour";
+import AnalyticsPanel from "@/components/admin/AnalyticsPanel";
+import { getAnalyticsReport } from "@/lib/analytics";
+
+const groups = [
+  {
+    heading: "Home page",
+    subtitle: "The first thing visitors see",
+    accent: "blueprint",
+    items: [
+      {
+        name: "Home text",
+        href: "/admin/home-text",
+        description:
+          "The hero text, the intro above Our Services, and the Why Choose Us closing line. Also holds optional pieces (stats bar, call-to-action band) that stay hidden until you fill them in. Suggested wording sits beside each field.",
+      },
+      {
+        name: "Hero photo",
+        href: "/admin/media",
+        description:
+          "The full-width background photo at the very top of the home page.",
+      },
+      {
+        name: "Services",
+        href: "/admin/services",
+        description:
+          "The service cards in the 'Our Services' block on the home page. Suggested versions are saved as drafts you can publish.",
+      },
+      {
+        name: "Why choose us",
+        href: "/admin/why",
+        description:
+          "The value points under 'Why Choose Us?' Suggested points are saved as drafts you can publish.",
+      },
+      {
+        name: "FAQ",
+        href: "/admin/faq",
+        description:
+          "Questions and answers for the home page. The section stays hidden until at least one is published. Suggested questions are waiting as drafts.",
+      },
+    ],
+  },
+  {
+    heading: "Services page",
+    subtitle: "Your dedicated /services page",
+    accent: "amber",
+    items: [
+      {
+        name: "Services page text",
+        href: "/admin/services-page-text",
+        description:
+          "The heading and intro paragraph at the top of the /services page.",
+      },
+      {
+        name: "Services list",
+        href: "/admin/services-page",
+        description:
+          "The services shown on the /services page — its own list, separate from the home-page block.",
+      },
+    ],
+  },
+  {
+    heading: "About page",
+    subtitle: "Your team and story",
+    accent: "blueprint",
+    items: [
+      {
+        name: "About text",
+        href: "/admin/about-text",
+        description:
+          "The About heading, intro paragraphs, callout, and Mitchell's founder bio.",
+      },
+      {
+        name: "Team",
+        href: "/admin/team",
+        description:
+          "The people and the groups they belong to — Leadership, Civil, Survey, and so on. Add, edit, and reorder.",
+      },
+    ],
+  },
+  {
+    heading: "Work",
+    subtitle: "Your portfolio",
+    accent: "amber",
+    items: [
+      {
+        name: "Projects",
+        href: "/admin/projects",
+        description:
+          "Your portfolio — the project cards, the full project pages, and each project's photo gallery.",
+      },
+    ],
+  },
+  {
+    heading: "Your account and team",
+    subtitle: "Sign-in, email preferences, and who has access",
+    accent: "neutral",
+    items: [
+      {
+        name: "My account",
+        href: "/admin/account",
+        description:
+          "Change your password and turn the Monday visitor email on or off.",
+      },
+      {
+        name: "People",
+        href: "/admin/people",
+        description:
+          "Everyone who can sign in. The owner can add or remove people here.",
+      },
+    ],
+  },
+  {
+    heading: "Across the whole site",
+    subtitle: "Shows on every page",
+    accent: "neutral",
+    items: [
+      {
+        name: "Contact info",
+        href: "/admin/contact",
+        description:
+          "Phone, email, office address, and the contact page intro. Used in the footer on every page and on the contact page.",
+      },
+    ],
+  },
+];
+
+const dashboardSteps: TourStep[] = [
+  {
+    title: "Welcome to your control center",
+    text: "This is where you edit your whole site. Quick tour — it only pops up the first time.",
+  },
+  {
+    selector: '[data-tour="category"]',
+    title: "Grouped by page",
+    text: "Everything's organized by the page it lives on. This block is your home page; the ones below are About, Work, and more.",
+  },
+  {
+    selector: '[data-tour="card"]',
+    title: "Click to edit",
+    text: "Open any card to edit that piece. Each one says exactly what's inside, so you're never guessing.",
+  },
+  {
+    selector: '[data-tour="view-site"]',
+    title: "See your live site",
+    text: "Open your real website anytime — changes show up within seconds of saving.",
+    align: "end",
+  },
+  {
+    selector: '[data-tour="help"]',
+    title: "Need a refresher?",
+    text: "This button replays the walkthrough whenever you want, on any page that has one.",
+    side: "left",
+    align: "end",
+  },
+];
+
+export default async function AdminDashboard({
+  searchParams,
+}: {
+  searchParams: Promise<{ range?: string }>;
+}) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const requested = Number((await searchParams).range);
+  const range = [7, 30, 90].includes(requested) ? requested : 30;
+  const report = await getAnalyticsReport(supabase, range);
+
+  return (
+    <div>
+      <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+        Dashboard
+      </p>
+      <h1 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink">
+        Edit your website
+      </h1>
+      <div className="mt-4 h-0.5 w-16 bg-amber" />
+      <p className="mt-5 max-w-2xl text-ink-500">
+        {user?.email ? `Signed in as ${user.email}. ` : ""}
+        Each block below is a page of your site. The cards say exactly what's
+        inside, and edits go live within a few seconds.
+      </p>
+
+      <div className="mt-10">
+        <AnalyticsPanel report={report} range={range} />
+      </div>
+
+      <div className="space-y-8">
+        {groups.map((group, gi) => {
+          const accent = accents[group.accent];
+          return (
+            <section
+              key={group.heading}
+              data-tour={gi === 0 ? "category" : undefined}
+              className="relative overflow-hidden rounded-xl border border-ink/10 shadow-xs"
+            >
+              {/* full-height colored spine */}
+              <div
+                aria-hidden
+                className={`absolute inset-y-0 left-0 w-1.5 ${accent.bar}`}
+              />
+              <div className={`${accent.bg} px-6 py-4 pl-7`}>
+                <h2 className="font-heading text-lg font-semibold text-ink">
+                  {group.heading}
+                </h2>
+                <p className="text-xs font-medium text-ink-500">
+                  {group.subtitle}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 bg-white p-6 pl-7 sm:grid-cols-2">
+                {group.items.map((item, ii) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    data-tour={gi === 0 && ii === 0 ? "card" : undefined}
+                    className="group rounded-lg border border-ink/10 bg-white p-5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-blueprint/40 hover:shadow-md"
+                  >
+                    <h3 className="font-heading text-base font-semibold text-ink group-hover:text-blueprint">
+                      {item.name}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-6 text-ink-500">
+                      {item.description}
+                    </p>
+                    <span className="mt-3 inline-block font-heading text-sm font-medium text-blueprint">
+                      Edit →
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+
+      <Tour tourId="dashboard" steps={dashboardSteps} />
+    </div>
+  );
+}

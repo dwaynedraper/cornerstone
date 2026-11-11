@@ -1,84 +1,98 @@
-import {
-  MapIcon,
-  BuildingOffice2Icon,
-  TruckIcon,
-  ChartBarIcon,
-} from "@heroicons/react/24/outline";
-import { Metadata } from 'next';
+import type { Metadata } from "next";
+import { MdDesignServices } from "react-icons/md";
+import { PiBlueprint } from "react-icons/pi";
+import { FaChartGantt, FaBuildingColumns } from "react-icons/fa6";
+import { GiEarthAmerica } from "react-icons/gi";
+import type { IconType } from "react-icons";
+import Reveal from "@/components/motion/Reveal";
+import Cta from "@/components/Cta";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbSchema, serviceListSchema } from "@/lib/schema";
+import { pageMetadata } from "@/lib/seo";
+import { type Service } from "@/data/services";
+import { getServices, getSiteCopy } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: 'Services | Cornerstone Engineering and Surveying',
-  description: 'Comprehensive civil engineering and land surveying services tailored to your project needs.',
+export const metadata: Metadata = pageMetadata({
+  title: "Civil Engineering & Land Surveying Services",
+  description:
+    "Civil engineering, land surveying, project management, and sustainable design from licensed professional engineers and registered professional land surveyors in Arlington, TX. Boundary determination, topographic mapping, construction layout, and site development.",
+  path: "/services",
+});
+
+const ICONS: Partial<Record<string, IconType>> & Record<Service["icon"], IconType> = {
+  civil: MdDesignServices,
+  structural: FaBuildingColumns,
+  survey: PiBlueprint,
+  management: FaChartGantt,
+  sustainable: GiEarthAmerica,
 };
 
-const features = [
-  {
-    name: "Civil Engineering",
-    description:
-      "From site development and infrastructure design to environmental compliance, we handle projects of all scales with precision and care.",
-    icon: MapIcon,
-  },
-  {
-    name: "Land Surveying",
-    description:
-      "Utilizing state-of-the-art equipment and techniques, we provide accurate and reliable surveying services for boundary determination, topographic mapping, and construction layout.",
-    icon: BuildingOffice2Icon,
-  },
-  {
-    name: "Project Management",
-    description:
-      "We oversee your project from concept to completion, ensuring seamless coordination and timely delivery.",
-    icon: TruckIcon,
-  },
-  {
-    name: "Sustainable Design",
-    description:
-      "Our commitment to environmental stewardship is reflected in our sustainable development practices.",
-    icon: ChartBarIcon,
-  },
-];
+export const revalidate = 300;
 
-export default function Services() {
+export default async function ServicesPage() {
+  const [services, copy] = await Promise.all([
+    getServices("services"),
+    getSiteCopy(),
+  ]);
   return (
-    <div className="bg-surface py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:text-center">
-          <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold-600">
+    <div>
+      <JsonLd data={breadcrumbSchema([{ name: "Services", path: "/services" }])} />
+      <JsonLd data={serviceListSchema(services, "/services")} />
+      <section className="relative isolate overflow-hidden bg-paper">
+        <div aria-hidden className="absolute inset-0 blueprint-grid" />
+        <div className="relative mx-auto max-w-4xl px-6 py-16 sm:py-20 lg:px-8">
+          <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
             Expert Solutions
           </p>
-          <h1 className="mt-2 text-3xl font-heading font-bold tracking-tight text-navy sm:text-4xl">
-            Comprehensive Civil Engineering and Surveying Services
+          <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+            {copy.servicesPageHeading}
           </h1>
-          <div className="mx-auto mt-4 w-16 h-1 bg-gold rounded-full" />
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            From precise land surveys to complex infrastructure design, our team
-            of experienced professionals delivers innovative solutions tailored
-            to your project&apos;s unique needs. We combine cutting-edge
-            technology with decades of expertise to ensure your project&apos;s
-            success.
-          </p>
+          <div className="mt-5 h-0.5 w-16 bg-amber" />
+          {copy.servicesPageIntro && (
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-ink-500">
+              {copy.servicesPageIntro}
+            </p>
+          )}
         </div>
-        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-            {features.map((feature) => (
-              <div key={feature.name} className="relative pl-16">
-                <dt className="text-base font-heading font-semibold leading-7 text-navy">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-gold">
-                    <feature.icon
-                      className="h-6 w-6 text-white"
-                      aria-hidden="true"
-                    />
+      </section>
+
+      <section className="bg-sand-light py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-2">
+            {services.map((service, i) => {
+              const Icon = ICONS[service.icon] ?? MdDesignServices;
+              return (
+                <Reveal key={service.id} delay={i * 0.08} className="h-full">
+                  <div className="flex h-full gap-5 rounded-md border border-ink/10 bg-white p-8">
+                    <div className="flex h-12 w-12 flex-none items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
+                      <Icon className="h-6 w-6" aria-hidden />
+                    </div>
+                    <div>
+                      <h2 className="font-heading text-xl font-semibold text-ink">
+                        {service.name}
+                      </h2>
+                      <p
+                        className={`mt-2 text-[15px] leading-7 ${
+                          service.detail ? "font-medium text-ink" : "text-ink-500"
+                        }`}
+                      >
+                        {service.summary}
+                      </p>
+                      {service.detail && (
+                        <p className="mt-3 text-[15px] leading-7 text-ink-500">
+                          {service.detail}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  {feature.name}
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-gray-600">
-                  {feature.description}
-                </dd>
-              </div>
-            ))}
-          </dl>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      </section>
+
+      <Cta />
     </div>
   );
 }

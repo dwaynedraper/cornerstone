@@ -1,143 +1,136 @@
 import Mitchell from "@/components/Mitchell";
+import Reveal from "@/components/motion/Reveal";
+import { balancedCols, LG_COLS } from "@/lib/grid";
+import { site } from "@/data/site";
 import { teamGroups as defaultTeamGroups, type TeamGroup } from "@/data/team";
+import { getSiteCopy } from "@/lib/content";
 
 interface TeamProps {
   /** Roster to render. Defaults to the data in `src/data/team.ts`. */
   groups?: TeamGroup[];
 }
 
-export default function Team({ groups = defaultTeamGroups }: TeamProps) {
+export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
+  const copy = await getSiteCopy();
   return (
     <div>
-      {/* ─── Hero banner for the About page ─── */}
-      <div className="bg-navy py-20 sm:py-28">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
-          <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold">Our Team</p>
-          <h1 className="mt-3 text-4xl font-heading font-bold tracking-tight text-white sm:text-5xl">
-            About Us
-          </h1>
-          <div className="mx-auto mt-6 w-16 h-1 bg-gradient-to-r from-heritage via-gold to-heritage rounded-full" />
-          <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-gray-300">
-            At the heart of our success lies a diverse and talented group of
-            professionals dedicated to excellence in civil engineering and
-            surveying. Our team brings together a wealth of experience, innovative
-            thinking, and a commitment to precision that sets us apart in the
-            industry.
+      {/* ─── About header ─── */}
+      <section className="relative isolate overflow-hidden bg-paper">
+        <div aria-hidden className="absolute inset-0 blueprint-grid" />
+        <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-24 lg:px-8">
+          <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+            Our Team
           </p>
+          <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+            {copy.aboutHeading}
+          </h1>
+          <div className="mx-auto mt-5 h-0.5 w-16 bg-amber" />
+          {copy.aboutSubhead && (
+            <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-ink-500">
+              {copy.aboutSubhead}
+            </p>
+          )}
         </div>
-      </div>
+      </section>
 
-      {/* ─── Two-column body content ─── */}
-      <div className="bg-surface py-16 sm:py-24">
+      {/* ─── Two-column intro ─── */}
+      <section className="bg-sand-light py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-16 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-            <div className="border-l-4 border-gold pl-8">
-              <p className="text-lg leading-8 text-gray-600">
-                From seasoned engineers with decades of expertise to bright young
-                talents bringing fresh perspectives, each member of our team plays a
-                crucial role in delivering outstanding results for our clients. We
-                pride ourselves on our collaborative approach, combining our
-                individual strengths to tackle complex challenges and drive projects
-                to successful completion.
-              </p>
-            </div>
-            <div className="border-l-4 border-gold pl-8">
-              <p className="text-lg leading-8 text-gray-600">
-                Our engineers and surveyors are not just technically proficient; they
-                are passionate problem-solvers who thrive on turning vision into
-                reality. Whether it&apos;s designing sustainable infrastructure,
-                conducting precise land surveys, or developing cutting-edge solutions
-                for urban development, our team approaches each project with
-                enthusiasm and meticulous attention to detail.
-              </p>
-            </div>
+            {copy.aboutIntro1 && (
+              <div className="border-l-2 border-blueprint pl-8">
+                <p className="text-lg leading-8 text-ink-500">{copy.aboutIntro1}</p>
+              </div>
+            )}
+            {copy.aboutIntro2 && (
+              <div className="border-l-2 border-blueprint pl-8">
+                <p className="text-lg leading-8 text-ink-500">{copy.aboutIntro2}</p>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ─── Highlight block ─── */}
-      <div className="bg-white py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-16 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-2 items-center">
-            <div>
-              <p className="text-lg leading-8 text-gray-600">
-                We believe in continuous learning and stay at the forefront of
-                industry advancements, ensuring that we bring the latest technologies
-                and methodologies to every project. Our commitment to professional
-                development means that when you work with us, you&apos;re partnering
-                with a team that&apos;s always evolving and improving.
-              </p>
-            </div>
-            <div className="bg-surface rounded-xl p-8 border border-gray-100">
-              <p className="text-xl leading-8 text-navy font-heading font-semibold text-center italic">
-                Get to know the individuals who make our company a leader in civil
-                engineering and surveying. Each team member below brings unique skills
-                and experiences that contribute to our collective success and your
-                project&apos;s triumph.
-              </p>
+      {/* ─── Learning paragraph + highlighted callout ─── */}
+      {(copy.aboutIntro3 || copy.aboutCallout) && (
+        <section className="bg-white py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-16 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+              {copy.aboutIntro3 && (
+                <p className="text-lg leading-8 text-ink-500">{copy.aboutIntro3}</p>
+              )}
+              {copy.aboutCallout && (
+                <div className="relative overflow-hidden rounded-md border border-blueprint/20 bg-paper p-8">
+                  <div aria-hidden className="absolute inset-0 blueprint-grid" />
+                  <p className="relative text-center font-heading text-xl font-semibold italic leading-8 text-ink">
+                    {copy.aboutCallout}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      )}
 
-      {/* ─── Founder section ─── */}
-      <div className="bg-surface">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-8">
+      {/* ─── Founder ─── */}
+      <section className="bg-paper">
+        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
           <Mitchell />
         </div>
-      </div>
+      </section>
 
-      {/* ─── Team sections by category ─── */}
-      <div className="bg-white py-16 sm:py-24">
+      {/* ─── Roster by category ─── */}
+      <section className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mb-16">
-            <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold-600">The People</p>
-            <h2 className="mt-2 text-3xl font-heading font-bold tracking-tight text-navy sm:text-4xl">
-              Our Team
-            </h2>
-            <div className="mt-4 w-16 h-1 bg-gold rounded-full" />
-          </div>
+          <Reveal>
+            <div className="mb-14">
+              <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+                The People
+              </p>
+              <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+                Our Team
+              </h2>
+              <div className="mt-4 h-0.5 w-16 bg-amber" />
+            </div>
+          </Reveal>
 
-          <div className="space-y-16">
+          <div className="space-y-14">
             {groups.map((group) => (
               <section key={group.id}>
-                {/* Team category heading */}
                 <div className="mb-8 flex items-center gap-4">
-                  <div className="w-1.5 h-8 bg-gradient-to-b from-gold to-heritage rounded-full" />
-                  <h3 className="text-xl font-heading font-bold tracking-tight text-navy sm:text-2xl">
+                  <div className="h-7 w-1 bg-blueprint" />
+                  <h3 className="font-heading text-xl font-semibold tracking-tight text-ink sm:text-2xl">
                     {group.name}
                   </h3>
-                  <div className="flex-1 h-px bg-gradient-to-r from-gold/30 to-transparent" />
+                  <div className="h-px flex-1 bg-ink/10" />
                 </div>
 
-                {/* Team member cards */}
                 <ul
                   role="list"
-                  className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                  className={`grid grid-cols-1 gap-6 sm:grid-cols-2 ${LG_COLS[balancedCols(group.members.length)]}`}
                 >
-                  {group.members.map((person) => {
+                  {group.members.map((person, i) => {
                     const initials = person.name
                       .split(" ")
                       .map((n) => n[0])
                       .join("");
                     return (
-                      <li
-                        key={person.id}
-                        className="group relative bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1"
-                      >
-                        {/* Gold top accent */}
-                        <div className="h-1 bg-gradient-to-r from-heritage via-gold to-gold" />
-                        <div className="p-6 text-center">
-                          {/* Initials avatar */}
-                          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-navy text-white font-heading font-bold text-xl mb-4 ring-2 ring-gold/30 group-hover:ring-gold/60 transition-all duration-300">
-                            {initials}
+                      <Reveal key={person.id} delay={i * 0.05}>
+                        <li className="group h-full overflow-hidden rounded-md border border-ink/10 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                          <div className="h-1 bg-amber" />
+                          <div className="p-6 text-center">
+                            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-ink font-heading text-xl font-semibold text-white ring-2 ring-blueprint/20 transition-all duration-300 group-hover:ring-blueprint/50">
+                              {initials}
+                            </div>
+                            <p className="font-heading text-base font-semibold tracking-tight text-ink">
+                              {person.name}
+                            </p>
+                            <p className="text-sm leading-6 text-ink-500">
+                              {person.role}
+                            </p>
                           </div>
-                          <p className="text-base font-heading font-semibold leading-7 tracking-tight text-navy">
-                            {person.name}
-                          </p>
-                          <p className="text-sm leading-6 text-gray-500">{person.role}</p>
-                        </div>
-                      </li>
+                        </li>
+                      </Reveal>
                     );
                   })}
                 </ul>
@@ -145,43 +138,53 @@ export default function Team({ groups = defaultTeamGroups }: TeamProps) {
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ─── Licensing ─── */}
-      <div className="bg-surface py-12">
+      <section className="bg-sand-light py-14">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="border-t border-gray-200 pt-12 mb-8">
-            <p className="text-sm font-heading font-semibold uppercase tracking-widest text-gold-600">Credentials</p>
-            <h2 className="mt-2 text-xl font-heading font-bold tracking-tight text-navy sm:text-xl">
-              Licensing
-            </h2>
-            <div className="mt-4 w-12 h-1 bg-gold rounded-full" />
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-              <p className="text-sm font-heading font-semibold text-navy">Engineering</p>
-              <p className="text-gray-500 mt-1">
-                Firm Registration Number: F-24969
-              </p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-              <p className="text-sm font-heading font-semibold text-navy">Surveying</p>
-              <p className="text-gray-500 mt-1">
-                Firm Registration Number: 10194747
-              </p>
-            </div>
-          </div>
-          {/* </div>
-        <div className="max-w-7xl px-6 py-8 flex justify-between"> */}
-          <p className="text-gray-500">
-            TEXAS BOARD OF PROFESSIONAL ENGINEERS & LAND SURVEYORS
-            <br /> 1917 S I-35 Frontage Road, Austin, TX 78741 | (512) 440-7723
+          <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+            Credentials
           </p>
-          <p className="text-heritage mt-4 font-semibold">
-            <a href="https://pels.texas.gov" className="hover:text-heritage-light transition-colors duration-200">https://pels.texas.gov</a>
+          <h2 className="mt-2 font-heading text-xl font-semibold tracking-tight text-ink">
+            Licensing
+          </h2>
+          <div className="mt-4 h-0.5 w-12 bg-amber" />
+
+          <div className="mb-10 mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="rounded-md border border-ink/10 bg-white p-6 shadow-xs">
+              <p className="font-heading text-sm font-semibold text-ink">
+                Engineering
+              </p>
+              <p className="mt-1 text-ink-500">
+                Firm Registration Number: {site.engineeringReg}
+              </p>
+            </div>
+            <div className="rounded-md border border-ink/10 bg-white p-6 shadow-xs">
+              <p className="font-heading text-sm font-semibold text-ink">
+                Surveying
+              </p>
+              <p className="mt-1 text-ink-500">
+                Firm Registration Number: {site.surveyingReg}
+              </p>
+            </div>
+          </div>
+
+          <p className="text-sm leading-6 text-ink-500">
+            Texas Board of Professional Engineers &amp; Land Surveyors
+            <br />
+            1917 S I-35 Frontage Road, Austin, TX 78741 | (512) 440-7723
+          </p>
+          <p className="mt-3 font-semibold text-blueprint">
+            <a
+              href="https://pels.texas.gov"
+              className="transition-colors hover:text-blueprint-dark"
+            >
+              https://pels.texas.gov
+            </a>
           </p>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

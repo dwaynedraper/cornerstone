@@ -1,55 +1,118 @@
-import { Montserrat } from "next/font/google";
+"use client";
+
 import Image from "next/image";
+import { m } from "framer-motion";
+import { PhoneIcon } from "@heroicons/react/24/outline";
 
-const mont = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-export default function Hero() {
+/**
+ * Home page hero. Text comes from the admin ("Home text"). Optional pieces
+ * (eyebrow, sentence, buttons) hide when left blank, which is how the approved
+ * live wording renders today.
+ */
+export default function Hero({
+  eyebrow = "Welcome to",
+  headline = "Cornerstone Engineering & Surveying",
+  subhead = "",
+  ctaLabel = "",
+  phone = "+18179406027",
+  phoneDisplay = "+1 817-940-6027",
+  imageSrc = "/IMG_0854.jpg",
+}: {
+  eyebrow?: string;
+  headline?: string;
+  subhead?: string;
+  /** Hero button text. Empty hides both hero buttons. */
+  ctaLabel?: string;
+  phone?: string;
+  phoneDisplay?: string;
+  imageSrc?: string;
+}) {
   return (
-    <div className={`relative bg-navy ${mont.className}`}>
-      {/* Decorative image and overlay */}
-      <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
+    <section className="relative isolate overflow-hidden bg-ink">
+      {/* Full-bleed project photo */}
+      <div aria-hidden className="absolute inset-0">
         <Image
-          alt="Cornerstone Engineering & Surveying project background"
-          src="/IMG_0854.jpg"
+          src={imageSrc}
+          alt=""
           fill
-          className="object-cover object-bottom"
           priority
+          sizes="100vw"
+          className="object-cover object-center"
         />
       </div>
-      {/* Rich gradient overlay for cinematic depth */}
+      {/* Dark wash for legibility */}
       <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/50 to-navy/30"
+        aria-hidden
+        className="absolute inset-0 bg-linear-to-t from-ink via-ink/75 to-ink/45"
       />
 
-      <div className="relative mx-auto flex max-w-4xl flex-col items-center px-6 py-36 text-center sm:py-64 lg:px-0">
-        <span className="text-lg tracking-[0.25em] uppercase text-gold-200 lg:text-xl font-heading font-medium">
-          Welcome to
-        </span>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight text-white lg:text-7xl text-center flex flex-col gap-1">
-          <span>Cornerstone</span>
-          <span>Engineering & Surveying</span>
-        </h1>
-        {/* Decorative accent line */}
-        <div className="mt-8 w-48 h-1 bg-gradient-to-r from-heritage via-gold to-heritage rounded-full" />
-        {/* <p className="mt-8 text-xl text-white font-semibold bg-black/40 rounded-lg p-8">
-          At Cornerstone Engineering & Surveying, we bring over 25 years of
-          expertise to every project, blending modern design techniques with
-          time-tested engineering and surveying principles. Our team of licensed
-          professional engineers and registered professional land surveyors is
-          dedicated to delivering innovative, sustainable, and cost-effective
-          solutions for our clients.
-        </p> */}
-        {/* <a
-          href="tel:+18179406027"
-          className="mt-8 text-xl inline-block rounded-md font-bold uppercase text-white bg-[#651212] px-8 py-3 hover:bg-[rgb(120,38,38)] hover:text-white"
-        >
-          Call Today!
-        </a> */}
+      <div className="relative mx-auto max-w-7xl px-6 py-32 sm:py-44 lg:px-8 lg:py-52">
+        <div className="max-w-3xl">
+          {eyebrow && (
+          <m.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-amber sm:text-sm"
+          >
+            {eyebrow}
+          </m.p>
+          )}
+
+          <m.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.08, ease: EASE }}
+            className="mt-5 font-heading text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl"
+          >
+            {headline}
+          </m.h1>
+
+          <m.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
+            style={{ transformOrigin: "left" }}
+            className="mt-8 h-1 w-24 bg-amber"
+          />
+
+          {subhead && (
+          <m.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.24, ease: EASE }}
+            className="mt-6 max-w-xl text-lg leading-8 text-gray-200"
+          >
+            {subhead}
+          </m.p>
+          )}
+
+          {ctaLabel && (
+          <m.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.32, ease: EASE }}
+            className="mt-10 flex flex-wrap items-center gap-3"
+          >
+            <a
+              href="/contact"
+              className="rounded-sm bg-blueprint px-7 py-3 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-blueprint-light"
+            >
+              {ctaLabel}
+            </a>
+            <a
+              href={`tel:${phone}`}
+              className="inline-flex items-center gap-2 rounded-sm border border-white/40 px-6 py-3 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-white/10"
+            >
+              <PhoneIcon className="h-4 w-4 text-amber" aria-hidden />
+              {phoneDisplay}
+            </a>
+          </m.div>
+          )}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
