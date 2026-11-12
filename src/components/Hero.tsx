@@ -32,7 +32,7 @@ export default function Hero({
   imageSrc?: string;
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-ink">
+    <section data-cta-zone="hero" className="relative isolate overflow-hidden bg-ink">
       {/* Full-bleed project photo */}
       <div aria-hidden className="absolute inset-0">
         <Image

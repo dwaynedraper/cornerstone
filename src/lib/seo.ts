@@ -41,5 +41,5 @@ export const HOME_TITLE =
   "Civil Engineering & Land Surveying in DFW | Cornerstone Engineering & Surveying";
 
 export const HOME_DESCRIPTION =
-  "Civil engineering and land surveying in Arlington, TX, serving Dallas-Fort Worth. Licensed engineers and surveyors with over 25 years of expertise. Call +1 817-940-6027.";
+  "Civil engineering and land surveying in Arlington, TX, serving Dallas-Fort Worth. Led by a licensed professional engineer with more than 25 years of experience. Call +1 817-940-6027.";
 

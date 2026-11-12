@@ -17,6 +17,8 @@ export type AnalyticsReport = {
   current: AnalyticsSummary;
   previous: AnalyticsSummary;
   today: number;
+  /** Set when the counter can't be read (table or function missing). */
+  setupProblem?: string;
 };
 
 const EMPTY: AnalyticsSummary = {
@@ -35,10 +37,14 @@ export function chicagoDate(deltaDays = 0): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago" }).format(d);
 }
 
-async function summary(sb: SupabaseClient, from: string, to: string): Promise<AnalyticsSummary> {
+async function summary(
+  sb: SupabaseClient,
+  from: string,
+  to: string,
+): Promise<{ data: AnalyticsSummary; error?: string }> {
   const { data, error } = await sb.rpc("analytics_summary", { p_from: from, p_to: to });
-  if (error || !data) return EMPTY;
-  return { ...EMPTY, ...(data as AnalyticsSummary) };
+  if (error) return { data: EMPTY, error: error.message };
+  return { data: { ...EMPTY, ...((data ?? {}) as AnalyticsSummary) } };
 }
 
 /**
@@ -52,12 +58,14 @@ export async function getAnalyticsReport(sb: SupabaseClient, days = 30): Promise
     const from = chicagoDate(-(days - 1));
     const prevTo = chicagoDate(-days);
     const prevFrom = chicagoDate(-(days * 2 - 1));
-    const [current, previous] = await Promise.all([
+    const [cur, prev] = await Promise.all([
       summary(sb, from, to),
       summary(sb, prevFrom, prevTo),
     ]);
+    const current = cur.data;
+    const previous = prev.data;
     const today = current.daily.find((d) => d.day === to)?.visitors ?? 0;
-    return { from, to, current, previous, today };
+    return { from, to, current, previous, today, setupProblem: cur.error };
   } catch {
     return null;
   }
@@ -73,4 +81,51 @@ export function changeLabel(now: number, before: number): string {
 
 export function pct(part: number, whole: number): string {
   return whole ? `${Math.round((part / whole) * 100)}%` : "0%";
+}
+
+/* ------------------------------------------------------------------
+   Actions (calls to action)
+   ------------------------------------------------------------------ */
+
+export type ActionsSummary = {
+  daily: { day: string; actions: number }[];
+  actions: number;
+  people: number;
+  by_cta: { cta: string; actions: number }[];
+  by_place: { cta: string; placement: string; path: string; actions: number }[];
+};
+
+export type ActionsReport = {
+  current: ActionsSummary;
+  previousActions: number;
+  today: number;
+  setupProblem?: string;
+};
+
+const EMPTY_ACTIONS: ActionsSummary = { daily: [], actions: 0, people: 0, by_cta: [], by_place: [] };
+
+async function actionsSummary(sb: SupabaseClient, from: string, to: string, cta: string | null) {
+  const { data, error } = await sb.rpc("cta_summary", { p_from: from, p_to: to, p_cta: cta });
+  if (error) return { data: EMPTY_ACTIONS, error: error.message };
+  return { data: { ...EMPTY_ACTIONS, ...((data ?? {}) as ActionsSummary) } };
+}
+
+/** Last `days` days of actions, optionally for one call to action. */
+export async function getActionsReport(
+  sb: SupabaseClient,
+  days = 30,
+  cta: string | null = null,
+): Promise<ActionsReport | null> {
+  try {
+    const to = chicagoDate(0);
+    const from = chicagoDate(-(days - 1));
+    const [cur, prev] = await Promise.all([
+      actionsSummary(sb, from, to, cta),
+      actionsSummary(sb, chicagoDate(-(days * 2 - 1)), chicagoDate(-days), cta),
+    ]);
+    const today = cur.data.daily.find((d) => d.day === to)?.actions ?? 0;
+    return { current: cur.data, previousActions: prev.data.actions, today, setupProblem: cur.error };
+  } catch {
+    return null;
+  }
 }

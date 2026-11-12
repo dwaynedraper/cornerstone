@@ -50,7 +50,7 @@ export default async function Contact() {
         </div>
       </section>
 
-      <section className="relative isolate overflow-hidden bg-sand-light py-16 sm:py-24">
+      <section data-cta-zone="contact-page" className="relative isolate overflow-hidden bg-sand-light py-16 sm:py-24">
         <Contours variant="a" />
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2">

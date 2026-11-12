@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
   const region = req.headers.get("x-vercel-ip-country-region");
 
   try {
-    await createAdminClient().from("page_views").insert({
+    const { error } = await createAdminClient().from("page_views").insert({
       day,
       path,
       country: country ? country.slice(0, 2) : null,
@@ -70,8 +70,12 @@ export async function POST(req: NextRequest) {
       referrer_host: referrerHost,
       visitor_hash: visitorHash,
     });
-  } catch {
-    /* analytics must never break the site */
+    // Shows up in Vercel's logs, so a broken counter is never silent again.
+    if (error) console.error("[analytics] page view not saved:", error.message);
+  } catch (err) {
+    // Analytics must never break the site. Most likely cause: the
+    // SUPABASE_SERVICE_ROLE_KEY variable isn't set in Vercel.
+    console.error("[analytics] page view not saved:", err instanceof Error ? err.message : err);
   }
   return new NextResponse(null, { status: 204 });
 }

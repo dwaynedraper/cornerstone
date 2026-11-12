@@ -12,7 +12,7 @@ export default async function Cta() {
   const phoneDisplay = copy.contactPhoneDisplay;
   if (!heading) return null;
   return (
-    <section className="relative isolate overflow-hidden bg-blueprint-dark py-20 sm:py-24">
+    <section data-cta-zone="cta-band" className="relative isolate overflow-hidden bg-blueprint-dark py-20 sm:py-24">
       <div
         aria-hidden
         className="absolute inset-0"
