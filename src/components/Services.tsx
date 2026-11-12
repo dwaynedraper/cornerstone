@@ -10,6 +10,8 @@ import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
 import { balancedCols } from "@/lib/grid";
 import { services as defaultServices, type Service } from "@/data/services";
+import Reticle from "@/components/Reticle";
+import GridReveal from "@/components/GridReveal";
 
 const ICONS: Record<Service["icon"], IconType> = {
   civil: MdDesignServices,
@@ -71,10 +73,11 @@ function ServiceCard({
       delay={index * 0.08}
       className={`col-span-1 h-full sm:col-span-2 ${placement(index, total, cols)}`}
     >
-      <div className="flex h-full flex-col rounded-md border border-ink/10 bg-white p-7 transition-all duration-300 hover:-translate-y-0.5 hover:border-blueprint/40 hover:shadow-[0_12px_28px_-18px_rgba(18,58,102,0.35)]">
+      <div className="reg-ticks group flex h-full flex-col rounded-md border border-ink/10 bg-white p-7 transition-all duration-300 hover:-translate-y-0.5 hover:border-blueprint/40 hover:shadow-[0_12px_28px_-18px_rgba(18,58,102,0.35)]">
         <div className="flex items-center justify-between">
-          <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
+          <div className="relative flex h-12 w-12 items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
             <Icon className="h-6 w-6" aria-hidden />
+            <Reticle />
           </div>
           <span aria-hidden className="figure-num">
             {String(index + 1).padStart(2, "0")}
@@ -135,6 +138,7 @@ export default function Services({
     >
       {/* Blueprint grid motif, carried over from the hero */}
       <div aria-hidden className="absolute inset-0 blueprint-grid-strong" />
+      <GridReveal />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal>

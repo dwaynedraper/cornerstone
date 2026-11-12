@@ -31,11 +31,11 @@ export default async function Mitchell() {
             )}
           </div>
 
-          <div className="rounded-lg border border-ink/10 bg-sand-light p-8">
+          <div className="reg-ticks rounded-lg border border-ink/10 bg-sand-light p-8">
             <h3 className="mb-1 font-heading text-lg font-semibold text-ink">
               Credentials &amp; Affiliations
             </h3>
-            <div className="mb-6 h-0.5 w-12 bg-amber" />
+            <div className="plot-line mb-6 h-0.5 w-12 bg-amber" />
 
             <ul role="list" className="space-y-8 text-ink-500">
               <li className="flex gap-x-3">

@@ -11,6 +11,9 @@ import { breadcrumbSchema, serviceListSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 import { type Service } from "@/data/services";
 import { getServices, getSiteCopy } from "@/lib/content";
+import GridReveal from "@/components/GridReveal";
+import Contours from "@/components/Contours";
+import Reticle from "@/components/Reticle";
 
 export const metadata: Metadata = pageMetadata({
   title: "Civil Engineering & Land Surveying Services",
@@ -40,6 +43,7 @@ export default async function ServicesPage() {
       <JsonLd data={serviceListSchema(services, "/services")} />
       <section className="relative isolate overflow-hidden bg-paper">
         <div aria-hidden className="absolute inset-0 blueprint-grid" />
+        <GridReveal />
         <div className="relative mx-auto max-w-4xl px-6 py-16 sm:py-20 lg:px-8">
           <p className="eyebrow text-blueprint">
             Expert Solutions
@@ -55,16 +59,18 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      <section className="bg-sand-light py-16 sm:py-24">
+      <section className="relative isolate overflow-hidden bg-sand-light py-16 sm:py-24">
+        <Contours variant="b" />
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-2">
             {services.map((service, i) => {
               const Icon = ICONS[service.icon] ?? MdDesignServices;
               return (
                 <Reveal key={service.id} delay={i * 0.08} className="h-full">
-                  <div className="flex h-full gap-5 rounded-md border border-ink/10 bg-white p-8">
-                    <div className="flex h-12 w-12 flex-none items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
+                  <div className="reg-ticks group flex h-full gap-5 rounded-md border border-ink/10 bg-white p-8">
+                    <div className="relative flex h-12 w-12 flex-none items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
                       <Icon className="h-6 w-6" aria-hidden />
+                      <Reticle />
                     </div>
                     <div>
                       <h2 className="font-heading text-xl font-semibold text-ink">

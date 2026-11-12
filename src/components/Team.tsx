@@ -3,6 +3,8 @@ import Reveal from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 import { teamGroups as defaultTeamGroups, type TeamGroup } from "@/data/team";
 import { getSiteCopy } from "@/lib/content";
+import GridReveal from "@/components/GridReveal";
+import Contours from "@/components/Contours";
 
 interface TeamProps {
   /** Roster to render. Defaults to the data in `src/data/team.ts`. */
@@ -16,6 +18,7 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
       {/* ─── About header ─── */}
       <section className="relative isolate overflow-hidden bg-paper">
         <div aria-hidden className="absolute inset-0 blueprint-grid" />
+        <GridReveal />
         <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-24 lg:px-8">
           <p className="eyebrow text-blueprint">
             Our Team
@@ -32,7 +35,8 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
       </section>
 
       {/* ─── Two-column intro ─── */}
-      <section className="bg-sand-light py-16 sm:py-24">
+      <section className="relative isolate overflow-hidden bg-sand-light py-16 sm:py-24">
+        <Contours variant="b" />
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-16 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-2">
             {copy.aboutIntro1 && (
@@ -151,7 +155,7 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
           </h2>
 
           <div className="mb-10 mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <div className="rounded-md border border-ink/10 bg-white p-6 shadow-xs">
+            <div className="reg-ticks rounded-md border border-ink/10 bg-white p-6 shadow-xs">
               <p className="font-heading text-sm font-semibold text-ink">
                 Engineering
               </p>
@@ -159,7 +163,7 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
                 Firm Registration Number: {site.engineeringReg}
               </p>
             </div>
-            <div className="rounded-md border border-ink/10 bg-white p-6 shadow-xs">
+            <div className="reg-ticks rounded-md border border-ink/10 bg-white p-6 shadow-xs">
               <p className="font-heading text-sm font-semibold text-ink">
                 Surveying
               </p>

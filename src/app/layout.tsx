@@ -87,7 +87,22 @@ export default async function RootLayout({
   return (
     // Font variables live on <html> so the Tailwind theme tokens defined on
     // :root (--font-heading, --font-body) can resolve them.
-    <html lang="en" className={`${redHatText.variable} ${redHatDisplay.variable}`}>
+    <html
+      lang="en"
+      className={`${redHatText.variable} ${redHatDisplay.variable}`}
+      // The inline script below adds "plot-ready" before React loads.
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Turns on the pen-plotter line draw before first paint, so lines
+            never flash in and then disappear. Skipped for reduced motion. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('plot-ready')}catch(e){}",
+          }}
+        />
+      </head>
       <body
         className="bg-paper font-body text-ink"
       >

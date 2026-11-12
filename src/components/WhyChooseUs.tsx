@@ -11,7 +11,8 @@ import {
 import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
 import { balancedCols, LG_COLS } from "@/lib/grid";
-import CadBackdrop from "@/components/CadBackdrop";
+import Contours from "@/components/Contours";
+import Reticle from "@/components/Reticle";
 import { whyPoints as defaultWhyPoints, type WhyPoint } from "@/data/why";
 
 const ICONS: Record<WhyPoint["icon"], IconType> = {
@@ -36,7 +37,7 @@ export default function WhyChooseUs({
 }) {
   return (
     <section className="relative isolate overflow-hidden bg-paper py-20 sm:py-28">
-      <CadBackdrop className="text-[#1a64c8] opacity-10" />
+      <Contours variant="a" />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal>
           <div>
@@ -56,9 +57,10 @@ export default function WhyChooseUs({
             const Icon = ICONS[point.icon] ?? FaAward;
             return (
               <Reveal key={point.id} delay={i * 0.08} className="h-full">
-                <div className="flex h-full flex-col rounded-md border border-ink/10 border-t-2 border-t-blueprint bg-sand-light p-7">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
+                <div className="reg-ticks plot-top group flex h-full flex-col rounded-md border border-ink/10 border-t-2 bg-sand-light p-7">
+                  <div className="relative flex h-11 w-11 items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
                     <Icon className="h-6 w-6" aria-hidden />
+                    <Reticle />
                   </div>
                   <h3 className="mt-4 font-heading text-lg font-semibold text-ink">
                     {point.title}

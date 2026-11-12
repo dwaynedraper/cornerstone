@@ -175,3 +175,94 @@ p {
 ::selection {
   background: rgb(231 174 75 / 0.35);
 }
+
+/* ------------------------------------------------------------------
+   Blueprint touches
+   ------------------------------------------------------------------ */
+
+/* Grid that lights up near the cursor (GridReveal.tsx). Same 40px pitch as
+   the blueprint-grid utilities so the lines sit exactly on top. */
+.grid-reveal {
+  opacity: 0;
+  transition: opacity 0.3s;
+  background-image:
+    repeating-linear-gradient(0deg, var(--gr) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(90deg, var(--gr) 0 1px, transparent 1px 40px);
+  -webkit-mask-image: radial-gradient(220px circle at var(--mx, -999px) var(--my, -999px), #000 0%, transparent 70%);
+  mask-image: radial-gradient(220px circle at var(--mx, -999px) var(--my, -999px), #000 0%, transparent 70%);
+}
+.grid-reveal-light { --gr: rgb(18 92 186 / 0.24); }
+.grid-reveal-dark { --gr: rgb(150 196 255 / 0.32); }
+.hero-grid {
+  background-image:
+    repeating-linear-gradient(0deg, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 40px);
+}
+
+/* Corner registration ticks, like crop marks on a printed sheet.
+   The element needs position: relative and no overflow clipping. */
+.reg-ticks { position: relative; }
+.reg-ticks::before,
+.reg-ticks::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  border-color: rgb(27 83 144 / 0.55);
+  border-style: solid;
+}
+.reg-ticks::before { top: -6px; left: -6px; border-width: 1px 0 0 1px; }
+.reg-ticks::after { bottom: -6px; right: -6px; border-width: 0 1px 1px 0; }
+
+/* Survey reticle that frames an icon when its card is hovered (Reticle.tsx). */
+.reticle {
+  position: absolute;
+  inset: -7px;
+  pointer-events: none;
+  color: var(--color-blueprint);
+  opacity: 0;
+  transform: scale(1.25);
+  transition: opacity 0.25s, transform 0.25s;
+}
+.reticle svg { display: block; width: 100%; height: 100%; }
+.group:hover .reticle,
+.group:focus-visible .reticle { opacity: 1; transform: scale(1); }
+
+/* Hatched offset behind a photo, borrowed from how cut sections are drawn. */
+.section-hatch {
+  position: absolute;
+  inset: 14px -14px -14px 14px;
+  z-index: 0;
+  border: 1px solid rgb(27 83 144 / 0.35);
+  border-radius: 6px;
+  background: repeating-linear-gradient(135deg, rgb(27 83 144 / 0.22) 0 1px, transparent 1px 9px);
+  pointer-events: none;
+}
+
+/* Pen-plotter draw (PlotterDraw.tsx). Only active when the layout script has
+   added .plot-ready to <html>, which it skips for reduced-motion visitors. */
+.plot-top {
+  border-top-color: transparent !important;
+  background-image: linear-gradient(var(--color-blueprint), var(--color-blueprint));
+  background-origin: border-box;
+  background-repeat: no-repeat;
+  background-size: 100% 2px;
+}
+.plot-ready .eyebrow::before {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.1s;
+}
+.plot-ready .eyebrow.is-drawn::before { transform: scaleX(1); }
+.plot-ready .plot-line {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1) 0.15s;
+}
+.plot-ready .plot-line.is-drawn { transform: scaleX(1); }
+.plot-ready .plot-top {
+  background-size: 0 2px;
+  transition: background-size 1s cubic-bezier(0.65, 0, 0.35, 1) 0.2s;
+}
+.plot-ready .plot-top.is-drawn { background-size: 100% 2px; }

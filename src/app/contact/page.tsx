@@ -5,6 +5,8 @@ import JsonLd from "@/components/JsonLd";
 import { breadcrumbSchema, ORG_ID } from "@/lib/schema";
 import { getSiteCopy } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
+import GridReveal from "@/components/GridReveal";
+import Contours from "@/components/Contours";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact Us",
@@ -32,6 +34,7 @@ export default async function Contact() {
 
       <section className="relative isolate overflow-hidden bg-paper">
         <div aria-hidden className="absolute inset-0 blueprint-grid" />
+        <GridReveal />
         <div className="relative mx-auto max-w-4xl px-6 py-16 sm:py-20 lg:px-8">
           <p className="eyebrow text-blueprint">
             Reach Out
@@ -47,7 +50,8 @@ export default async function Contact() {
         </div>
       </section>
 
-      <section className="bg-sand-light py-16 sm:py-24">
+      <section className="relative isolate overflow-hidden bg-sand-light py-16 sm:py-24">
+        <Contours variant="a" />
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2">
             <div>
@@ -58,7 +62,7 @@ export default async function Contact() {
               <div className="mt-8 space-y-5">
                 <a
                   href={`mailto:${copy.contactEmail}`}
-                  className="flex items-center gap-4 rounded-md border border-ink/10 bg-white p-5 transition-colors hover:border-blueprint/40"
+                  className="reg-ticks flex items-center gap-4 rounded-md border border-ink/10 bg-white p-5 transition-colors hover:border-blueprint/40"
                 >
                   <EnvelopeIcon className="h-6 w-6 flex-none text-blueprint" aria-hidden />
                   <span className="sr-only">Email</span>
@@ -69,7 +73,7 @@ export default async function Contact() {
 
                 <a
                   href={`tel:${copy.contactPhone}`}
-                  className="flex items-center gap-4 rounded-md border border-ink/10 bg-white p-5 transition-colors hover:border-blueprint/40"
+                  className="reg-ticks flex items-center gap-4 rounded-md border border-ink/10 bg-white p-5 transition-colors hover:border-blueprint/40"
                 >
                   <PhoneIcon className="h-6 w-6 flex-none text-blueprint" aria-hidden />
                   <span className="sr-only">Phone number</span>
@@ -78,7 +82,7 @@ export default async function Contact() {
                   </span>
                 </a>
 
-                <div className="flex items-start gap-4 rounded-md border border-ink/10 bg-white p-5">
+                <div className="reg-ticks flex items-start gap-4 rounded-md border border-ink/10 bg-white p-5">
                   <MapPinIcon className="mt-0.5 h-6 w-6 flex-none text-blueprint" aria-hidden />
                   <span className="sr-only">Address</span>
                   <address className="font-heading text-lg font-semibold not-italic text-ink">
@@ -90,8 +94,11 @@ export default async function Contact() {
               </div>
             </div>
 
-            <div className="rounded-lg border border-ink/10 bg-white p-8 shadow-xs">
-              <ContactForm />
+            <div className="relative">
+              <div aria-hidden className="section-hatch" />
+              <div className="relative rounded-lg border border-ink/10 bg-white p-8 shadow-xs">
+                <ContactForm />
+              </div>
             </div>
           </div>
         </div>

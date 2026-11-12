@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { getPublishedProjects } from "@/lib/content";
 import Reveal from "@/components/motion/Reveal";
 import Cta from "@/components/Cta";
+import GridReveal from "@/components/GridReveal";
 
 export const revalidate = 300;
 
@@ -24,6 +25,7 @@ export default async function WorkPage() {
     <div>
       <section className="relative isolate overflow-hidden bg-paper">
         <div aria-hidden className="absolute inset-0 blueprint-grid-strong" />
+        <GridReveal />
         <div className="relative mx-auto max-w-4xl px-6 py-16 sm:py-20 lg:px-8">
           <p className="eyebrow text-blueprint">
             Selected work
