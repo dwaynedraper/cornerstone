@@ -10,6 +10,8 @@ import type { IconType } from "react-icons";
 import Reveal from "@/components/motion/Reveal";
 import { balancedCols } from "@/lib/grid";
 import { services as defaultServices, type Service } from "@/data/services";
+import Reticle from "@/components/Reticle";
+import GridReveal from "@/components/GridReveal";
 
 const ICONS: Record<Service["icon"], IconType> = {
   civil: MdDesignServices,
@@ -71,9 +73,15 @@ function ServiceCard({
       delay={index * 0.08}
       className={`col-span-1 h-full sm:col-span-2 ${placement(index, total, cols)}`}
     >
-      <div className="flex h-full flex-col rounded-md border border-ink/10 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-blueprint/40 hover:shadow-md">
-        <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
-          <Icon className="h-6 w-6" aria-hidden />
+      <div className="reg-ticks group flex h-full flex-col rounded-md border border-ink/10 bg-white p-7 transition-all duration-300 hover:-translate-y-0.5 hover:border-blueprint/40 hover:shadow-[0_12px_28px_-18px_rgba(18,58,102,0.35)]">
+        <div className="flex items-center justify-between">
+          <div className="relative flex h-12 w-12 items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
+            <Icon className="h-6 w-6" aria-hidden />
+            <Reticle />
+          </div>
+          <span aria-hidden className="figure-num">
+            {String(index + 1).padStart(2, "0")}
+          </span>
         </div>
         <h3 className="mt-5 font-heading text-lg font-semibold text-ink">
           {service.name}
@@ -130,17 +138,17 @@ export default function Services({
     >
       {/* Blueprint grid motif, carried over from the hero */}
       <div aria-hidden className="absolute inset-0 blueprint-grid-strong" />
+      <GridReveal />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal>
           <div>
-            <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+            <p className="eyebrow text-blueprint">
               What We Do
             </p>
             <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
               Our Services
             </h2>
-            <div className="mt-4 h-0.5 w-16 bg-amber" />
             {intro && (
               <p className="mt-5 max-w-3xl text-lg leading-8 text-ink-500">
                 {intro}

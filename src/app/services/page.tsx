@@ -11,6 +11,9 @@ import { breadcrumbSchema, serviceListSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 import { type Service } from "@/data/services";
 import { getServices, getSiteCopy } from "@/lib/content";
+import GridReveal from "@/components/GridReveal";
+import Contours from "@/components/Contours";
+import Reticle from "@/components/Reticle";
 
 export const metadata: Metadata = pageMetadata({
   title: "Civil Engineering & Land Surveying Services",
@@ -40,14 +43,14 @@ export default async function ServicesPage() {
       <JsonLd data={serviceListSchema(services, "/services")} />
       <section className="relative isolate overflow-hidden bg-paper">
         <div aria-hidden className="absolute inset-0 blueprint-grid" />
+        <GridReveal />
         <div className="relative mx-auto max-w-4xl px-6 py-16 sm:py-20 lg:px-8">
-          <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+          <p className="eyebrow text-blueprint">
             Expert Solutions
           </p>
           <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
             {copy.servicesPageHeading}
           </h1>
-          <div className="mt-5 h-0.5 w-16 bg-amber" />
           {copy.servicesPageIntro && (
             <p className="mt-7 max-w-2xl text-lg leading-8 text-ink-500">
               {copy.servicesPageIntro}
@@ -56,16 +59,18 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      <section className="bg-sand-light py-16 sm:py-24">
+      <section className="relative isolate overflow-hidden bg-sand-light py-16 sm:py-24">
+        <Contours variant="b" />
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-2">
             {services.map((service, i) => {
               const Icon = ICONS[service.icon] ?? MdDesignServices;
               return (
                 <Reveal key={service.id} delay={i * 0.08} className="h-full">
-                  <div className="flex h-full gap-5 rounded-md border border-ink/10 bg-white p-8">
-                    <div className="flex h-12 w-12 flex-none items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
+                  <div className="reg-ticks group flex h-full gap-5 rounded-md border border-ink/10 bg-white p-8">
+                    <div className="relative flex h-12 w-12 flex-none items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
                       <Icon className="h-6 w-6" aria-hidden />
+                      <Reticle />
                     </div>
                     <div>
                       <h2 className="font-heading text-xl font-semibold text-ink">

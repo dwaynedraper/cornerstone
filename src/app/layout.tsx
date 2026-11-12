@@ -13,18 +13,18 @@ import JsonLd from "@/components/JsonLd";
 import { Analytics } from "@vercel/analytics/next";
 
 // Fonts are self-hosted (no request to Google at build or run time).
-// Same families as before: Inter for body, Libre Franklin for headings.
-const inter = localFont({
-  src: "./fonts/Inter-Variable.woff2",
+// Red Hat Display for headings, Red Hat Text for body. Both are variable fonts.
+const redHatText = localFont({
+  src: "./fonts/RedHatText-Variable.woff2",
   variable: "--ff-body",
-  weight: "100 900",
+  weight: "300 700",
   display: "swap",
 });
 
-const libreFranklin = localFont({
-  src: "./fonts/LibreFranklin-Variable.woff2",
+const redHatDisplay = localFont({
+  src: "./fonts/RedHatDisplay-Variable.woff2",
   variable: "--ff-heading",
-  weight: "100 900",
+  weight: "300 900",
   display: "swap",
 });
 
@@ -85,9 +85,26 @@ export default async function RootLayout({
 }>) {
   const [workEnabled, copy] = await Promise.all([isWorkEnabled(), getSiteCopy()]);
   return (
-    <html lang="en">
+    // Font variables live on <html> so the Tailwind theme tokens defined on
+    // :root (--font-heading, --font-body) can resolve them.
+    <html
+      lang="en"
+      className={`${redHatText.variable} ${redHatDisplay.variable}`}
+      // The inline script below adds "plot-ready" before React loads.
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Turns on the pen-plotter line draw before first paint, so lines
+            never flash in and then disappear. Skipped for reduced motion. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('plot-ready')}catch(e){}",
+          }}
+        />
+      </head>
       <body
-        className={`${inter.variable} ${libreFranklin.variable} bg-paper font-body text-ink`}
+        className="bg-paper font-body text-ink"
       >
         <JsonLd data={organizationSchema(copy)} />
         <MotionProvider>

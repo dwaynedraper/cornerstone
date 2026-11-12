@@ -6,7 +6,7 @@ export default async function Mitchell() {
   return (
     <div id="mitchell-lenamond" className="relative isolate my-12 overflow-hidden rounded-lg border border-ink/10 bg-white px-6 py-12 shadow-xs sm:py-16 lg:px-12">
       <div className="mx-auto mb-10 max-w-7xl">
-        <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+        <p className="eyebrow text-blueprint">
           Founder, PE
         </p>
         <h2 className="mt-2 text-pretty font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
@@ -17,7 +17,6 @@ export default async function Mitchell() {
             {copy.founderTitle}
           </p>
         )}
-        <div className="mt-4 h-0.5 w-16 bg-amber" />
       </div>
 
       <div className="mx-auto max-w-7xl">
@@ -32,11 +31,11 @@ export default async function Mitchell() {
             )}
           </div>
 
-          <div className="rounded-lg border border-ink/10 bg-sand-light p-8">
+          <div className="reg-ticks rounded-lg border border-ink/10 bg-sand-light p-8">
             <h3 className="mb-1 font-heading text-lg font-semibold text-ink">
               Credentials &amp; Affiliations
             </h3>
-            <div className="mb-6 h-0.5 w-12 bg-amber" />
+            <div className="plot-line mb-6 h-0.5 w-12 bg-amber" />
 
             <ul role="list" className="space-y-8 text-ink-500">
               <li className="flex gap-x-3">
