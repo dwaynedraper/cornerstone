@@ -52,13 +52,12 @@ export default function Projects({
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal>
           <div>
-            <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-amber">
+            <p className="eyebrow text-amber">
               Selected work
             </p>
             <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-white sm:text-4xl">
               Built across North Texas
             </h2>
-            <div className="mt-4 h-0.5 w-16 bg-amber" />
           </div>
         </Reveal>
 

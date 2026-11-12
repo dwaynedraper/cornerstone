@@ -31,13 +31,12 @@ export default function Faq({
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
         <Reveal>
           <div>
-            <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+            <p className="eyebrow text-blueprint">
               Questions
             </p>
             <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
               Frequently asked
             </h2>
-            <div className="mt-4 h-0.5 w-16 bg-amber" />
           </div>
         </Reveal>
 

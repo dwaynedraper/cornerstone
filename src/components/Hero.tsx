@@ -55,7 +55,7 @@ export default function Hero({
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: EASE }}
-            className="font-heading text-xs font-semibold uppercase tracking-[0.25em] text-amber sm:text-sm"
+            className="eyebrow text-amber"
           >
             {eyebrow}
           </m.p>

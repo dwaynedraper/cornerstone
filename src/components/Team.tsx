@@ -17,13 +17,12 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
       <section className="relative isolate overflow-hidden bg-paper">
         <div aria-hidden className="absolute inset-0 blueprint-grid" />
         <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-24 lg:px-8">
-          <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+          <p className="eyebrow text-blueprint">
             Our Team
           </p>
           <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
             {copy.aboutHeading}
           </h1>
-          <div className="mx-auto mt-5 h-0.5 w-16 bg-amber" />
           {copy.aboutSubhead && (
             <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-ink-500">
               {copy.aboutSubhead}
@@ -83,13 +82,12 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal>
             <div className="mb-14">
-              <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+              <p className="eyebrow text-blueprint">
                 The People
               </p>
               <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                 Our Team
               </h2>
-              <div className="mt-4 h-0.5 w-16 bg-amber" />
             </div>
           </Reveal>
 
@@ -145,13 +143,12 @@ export default async function Team({ groups = defaultTeamGroups }: TeamProps) {
       {/* ─── Licensing ─── */}
       <section className="bg-sand-light py-14">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+          <p className="eyebrow text-blueprint">
             Credentials
           </p>
           <h2 className="mt-2 font-heading text-xl font-semibold tracking-tight text-ink">
             Licensing
           </h2>
-          <div className="mt-4 h-0.5 w-12 bg-amber" />
 
           <div className="mb-10 mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="rounded-md border border-ink/10 bg-white p-6 shadow-xs">

@@ -41,13 +41,12 @@ export default async function ServicesPage() {
       <section className="relative isolate overflow-hidden bg-paper">
         <div aria-hidden className="absolute inset-0 blueprint-grid" />
         <div className="relative mx-auto max-w-4xl px-6 py-16 sm:py-20 lg:px-8">
-          <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+          <p className="eyebrow text-blueprint">
             Expert Solutions
           </p>
           <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
             {copy.servicesPageHeading}
           </h1>
-          <div className="mt-5 h-0.5 w-16 bg-amber" />
           {copy.servicesPageIntro && (
             <p className="mt-7 max-w-2xl text-lg leading-8 text-ink-500">
               {copy.servicesPageIntro}

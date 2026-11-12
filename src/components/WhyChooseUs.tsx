@@ -40,13 +40,12 @@ export default function WhyChooseUs({
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal>
           <div>
-            <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-blueprint">
+            <p className="eyebrow text-blueprint">
               Our Advantage
             </p>
             <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
               Why Choose Us?
             </h2>
-            <div className="mt-4 h-0.5 w-16 bg-amber" />
           </div>
         </Reveal>
 
@@ -57,7 +56,7 @@ export default function WhyChooseUs({
             const Icon = ICONS[point.icon] ?? FaAward;
             return (
               <Reveal key={point.id} delay={i * 0.08} className="h-full">
-                <div className="flex h-full flex-col rounded-md border border-ink/10 bg-sand-light p-7">
+                <div className="flex h-full flex-col rounded-md border border-ink/10 border-t-2 border-t-blueprint bg-sand-light p-7">
                   <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-blueprint-50 text-blueprint">
                     <Icon className="h-6 w-6" aria-hidden />
                   </div>

@@ -115,3 +115,63 @@
   border-color: rgba(35, 39, 44, 0.15);
   color: #23272c;
 }
+
+/* ------------------------------------------------------------------
+   Typographic polish (Red Hat pairing)
+   Kept outside @layer on purpose so it applies over Tailwind utilities
+   and every heading on the site stays consistent.
+   ------------------------------------------------------------------ */
+body {
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headlines break into even lines and get typesetter-style tracking */
+h1, h2, h3 {
+  font-weight: 700;
+  text-wrap: balance;
+}
+h1 { letter-spacing: -0.032em; }
+h2 { letter-spacing: -0.026em; }
+h3 { letter-spacing: -0.02em; }
+
+/* Paragraphs avoid a single orphan word on the last line */
+p {
+  text-wrap: pretty;
+  hanging-punctuation: first;
+}
+
+/* Small section labels: tracked capitals with a short amber survey rule */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--ff-body), sans-serif;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-amber);
+  flex: none;
+}
+
+/* Card figure numbers (01, 02...) in even-width digits */
+.figure-num {
+  font-family: var(--ff-body), sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-400);
+}
+
+::selection {
+  background: rgb(231 174 75 / 0.35);
+}
