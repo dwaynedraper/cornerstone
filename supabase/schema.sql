@@ -227,7 +227,7 @@ insert into public.site_settings (key, value) values
 ('hero_eyebrow',          $c$Civil Engineering + Land Surveying · North Texas$c$),
 ('hero_headline',         $c$Cornerstone Engineering & Surveying$c$),
 ('hero_subhead',          $c$We take raw land to recorded, build-ready lots — and keep your pipeline moving for the next phase.$c$),
-('services_intro',        $c$For more than 25 years, Cornerstone has helped North Texas developers and homebuilders turn raw land into build-ready residential lots — engineering and surveying, under one roof.$c$),
+('services_intro',        $c$With more than 25 years of experience, Cornerstone helps North Texas developers and homebuilders turn raw land into build-ready residential lots, with engineering and surveying under one roof.$c$),
 ('about_heading',         $c$The people behind your projects$c$),
 ('about_subhead',         $c$A licensed, hands-on team of engineers and surveyors who know North Texas land development — and how to keep a builder's pipeline moving.$c$),
 ('about_intro_1',         $c$From seasoned engineers with decades of expertise to sharp young talent bringing fresh perspective, every member of our team plays a role in delivering build-ready results. We pride ourselves on a collaborative approach — combining individual strengths to tackle complex sites and drive projects to completion.$c$),

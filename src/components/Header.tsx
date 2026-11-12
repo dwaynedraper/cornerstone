@@ -92,6 +92,7 @@ export default function Header({ showWork = false }: { showWork?: boolean }) {
             ))}
             <a
               href="/contact"
+              data-cta="nav_contact"
               className="rounded-sm bg-blueprint px-5 py-2.5 font-heading text-sm font-medium text-white transition-colors duration-200 hover:bg-blueprint-dark"
             >
               Contact Us
@@ -135,6 +136,7 @@ export default function Header({ showWork = false }: { showWork?: boolean }) {
                 <div className="py-6">
                   <a
                     href="/contact"
+                    data-cta="nav_contact"
                     className="-mx-3 block rounded-md bg-blueprint px-3 py-2.5 text-center font-heading text-base font-medium text-white hover:bg-blueprint-dark"
                   >
                     Contact Us

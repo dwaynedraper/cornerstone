@@ -3,7 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { accents } from "@/components/admin/AdminPage";
 import Tour, { type TourStep } from "@/components/admin/Tour";
 import AnalyticsPanel from "@/components/admin/AnalyticsPanel";
-import { getAnalyticsReport } from "@/lib/analytics";
+import { getActionsReport, getAnalyticsReport } from "@/lib/analytics";
+import { isCta } from "@/lib/cta";
 
 const groups = [
   {
@@ -161,15 +162,21 @@ const dashboardSteps: TourStep[] = [
 export default async function AdminDashboard({
   searchParams,
 }: {
-  searchParams: Promise<{ range?: string }>;
+  searchParams: Promise<{ range?: string; view?: string; cta?: string }>;
 }) {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const requested = Number((await searchParams).range);
+  const params = await searchParams;
+  const requested = Number(params.range);
   const range = [7, 30, 90].includes(requested) ? requested : 30;
-  const report = await getAnalyticsReport(supabase, range);
+  const view = params.view === "actions" ? "actions" : "visitors";
+  const cta = isCta(params.cta) ? params.cta : null;
+  const [report, actions] = await Promise.all([
+    getAnalyticsReport(supabase, range),
+    view === "actions" ? getActionsReport(supabase, range, cta) : Promise.resolve(null),
+  ]);
 
   return (
     <div>
@@ -187,7 +194,7 @@ export default async function AdminDashboard({
       </p>
 
       <div className="mt-10">
-        <AnalyticsPanel report={report} range={range} />
+        <AnalyticsPanel report={report} range={range} view={view} actions={actions} cta={cta} />
       </div>
 
       <div className="space-y-8">

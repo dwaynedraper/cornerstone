@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getResend, EMAIL_FROM } from "@/lib/email";
 import { site } from "@/data/site";
+import { recordCta, shouldCount } from "@/lib/track";
 
 // Where inquiries land. Comma-separate CONTACT_TO for multiple recipients.
 const TO = (process.env.CONTACT_TO || site.email)
@@ -60,6 +61,9 @@ export async function POST(request: Request) {
       { status: 502 },
     );
   }
+
+  // Count the send for the admin dashboard (skips admins, bots and previews).
+  if (shouldCount(request)) await recordCta(request, "contact_form", "form", "/contact");
 
   return NextResponse.json({ ok: true });
 }

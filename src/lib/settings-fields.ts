@@ -61,22 +61,20 @@ export const HOME_TEXT: SettingGroup[] = [
         label: "Intro paragraph above Our Services",
         multiline: true,
         default:
-          "At Cornerstone Engineering & Surveying, we bring over 25 years of expertise to every project, blending modern design techniques with time-tested engineering and surveying principles. Our team of licensed professional engineers and registered professional land surveyors is dedicated to delivering innovative, sustainable, and cost-effective solutions for our clients.",
+          "Our founder and CEO brings more than 25 years of engineering experience to every project. At Cornerstone Engineering & Surveying, we pair modern design techniques with time-tested principles, and our licensed professional engineers and registered professional land surveyors are dedicated to delivering innovative, sustainable, and cost-effective solutions for our clients.",
         suggested:
-          "For more than 25 years, Cornerstone has helped North Texas developers and homebuilders turn raw land into build-ready residential lots, with engineering and surveying under one roof.",
+          "With more than 25 years of experience, Cornerstone helps North Texas developers and homebuilders turn raw land into build-ready residential lots, with engineering and surveying under one roof.",
       },
       {
         key: "stat_years",
         label: "Stats bar: years",
         hint: "Leave blank to hide the stats bar",
-        default: "",
-        suggested: "25+",
+        default: "25+",
       },
       {
         key: "stat_states",
         label: "Stats bar: states licensed",
-        default: "",
-        suggested: "15+",
+        default: "15+",
       },
     ],
   },
